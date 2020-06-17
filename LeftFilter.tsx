@@ -58,22 +58,7 @@ export default function CreateCandidateForm(props) {
               console.log(e);
             }}
           >
-            LeftFilter
-            <Box mx={-3} mb={-1} mt={1}>
-              <DialogActions>
-                <Button onClick={props.handleClose} color="primary">
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  color="primary"
-                  disabled={!formikProps.isValid}
-                  onClick={formikProps.onSubmit}
-                >
-                  Submit
-                </Button>
-              </DialogActions>
-            </Box>
+            Bala start Work
           </form>
         );
       }}
