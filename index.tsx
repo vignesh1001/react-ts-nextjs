@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Hello from './Hello';
+import LeftFilter from './LeftFilter';
+
 import './style.css';
 
 interface AppProps { }
@@ -20,6 +22,7 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Hello name={this.state.name} />
+        <LeftFilter />
         <p>
           Start editing to see some magic happen :)
         </p>
