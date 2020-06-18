@@ -23,27 +23,8 @@ const handleDelete = () => {
   alert("You clicked the delete icon.");
 };
 
-const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: ""
-};
-const validationSchema = yup.object({
-  name: yup.string("Enter a name").required("Name is required"),
-  email: yup
-    .string("Enter your email")
-    .email("Enter a valid email")
-    .required("Email is required"),
-  password: yup
-    .string("")
-    .min(8, "Password must contain at least 8 characters")
-    .required("Enter your password"),
-  confirmPassword: yup
-    .string("Enter your password")
-    .required("Confirm your password")
-    .oneOf([yup.ref("password")], "Password does not match")
-});
+const initialValues = {};
+const validationSchema = yup.object({});
 
 const mystyle = {
   color: "black",
@@ -55,7 +36,8 @@ export default function LeftFilter(props) {
     filterTitle: "",
     filterSkill: "",
     filterTitleList: [],
-    filterSkillList: []
+    filterSkillList: [],
+    filterJobSites: ['Dice','Monster','','']
   });
   const handleChange = e => {
     const { target, keyCode } = e;
@@ -143,7 +125,6 @@ export default function LeftFilter(props) {
                 style={mystyle}
               />
             ))}
-
             <div style={{ paddingTop: 40 }}>
               <FormControl component="fieldset">
                 <FormLabel component="legend" style={{ color: "#00bfff" }}>
