@@ -21,11 +21,7 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <div>
-        <Hello name={this.state.name} />
         <LeftFilter />
-        <p>
-          Start editing to see some magic happen :)
-        </p>
       </div>
     );
   }
