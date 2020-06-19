@@ -19,9 +19,6 @@ import { makeStyles, createStyles, Theme } from "@material-ui/core/styles";
 import { Chip } from "@material-ui/core";
 import React, { useState } from "react";
 import Avatar from "@material-ui/core/Avatar";
-const handleDelete = () => {
-  alert("You clicked the delete icon.");
-};
 
 const initialValues = {};
 const validationSchema = yup.object({});
@@ -30,6 +27,15 @@ const mystyle = {
   color: "black",
   backgroundColor: "#00bfff"
 };
+const buttonStyle = {
+  color: "black",
+  marginTop: 5,
+  marginRight: 12,
+  backgroundColor: "#00bfff"
+};
+const chipsStyle = {
+  ...buttonStyle
+};
 
 export default function LeftFilter(props) {
   const [state, setState] = useState({
@@ -37,8 +43,17 @@ export default function LeftFilter(props) {
     filterSkill: "",
     filterTitleList: [],
     filterSkillList: [],
-    filterJobSites: ['Dice','Monster','','']
+    filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
+    selectedFilterJobSites: []
   });
+  const handleDelete = (listName, e) => {
+    console.log(state[listName]);
+    state[listName].splice(state[listName].indexOf(e), 1);
+    setState({ ...state, [listName]: state[listName] });
+  };
+  const handleSearchIcon = () => {
+    alert("You clicked the delete icon.");
+  };
   const handleChange = e => {
     const { target, keyCode } = e;
     const { name, value } = target;
@@ -52,6 +67,17 @@ export default function LeftFilter(props) {
       setState({ ...state, [name]: "", [name + "List"]: state[name + "List"] });
     }
   };
+  const handleCheckBox = e => {
+    const { target } = e;
+    const { name, value } = target;
+    const index = state.selectedFilterJobSites.indexOf(value);
+    if(index===-1){
+      state.selectedFilterJobSites.push(value);
+    } else {
+      state.selectedFilterJobSites.splice(index,1);
+    }
+    setState({...state});
+  }
   return (
     <Formik validationSchema={validationSchema} initialValues={initialValues}>
       {formikProps => {
@@ -77,7 +103,7 @@ export default function LeftFilter(props) {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="start">
-                      <SearchIcon />
+                      <SearchIcon onClick={handleSearchIcon} />
                     </InputAdornment>
                   )
                 }}
@@ -89,7 +115,7 @@ export default function LeftFilter(props) {
                 Filter the job by title
               </FormHelperText>
               {state.filterTitleList.map(item => (
-                <Button variant="contained" size="small" style={mystyle}>
+                <Button variant="contained" size="small" style={buttonStyle}>
                   {item}
                 </Button>
               ))}
@@ -121,8 +147,8 @@ export default function LeftFilter(props) {
               <Chip
                 size="medium"
                 label={i}
-                onDelete={handleDelete}
-                style={mystyle}
+                onDelete={() => handleDelete("filterSkillList", i)}
+                style={chipsStyle}
               />
             ))}
             <div style={{ paddingTop: 40 }}>
@@ -137,33 +163,18 @@ export default function LeftFilter(props) {
                     marginTop: -25
                   }}
                 >
-                  4
+                  {state.selectedFilterJobSites.length}
                 </Avatar>
                 <FormGroup aria-label="position" style={{ color: "#00bfff" }}>
-                  <FormControlLabel
-                    value="Dice"
-                    control={<Checkbox color="primary" />}
-                    label="Dice"
-                    labelPlacement="end"
-                  />
-                  <FormControlLabel
-                    value="Monster"
-                    control={<Checkbox color="primary" />}
-                    label="Monster"
-                    labelPlacement="end"
-                  />
-                  <FormControlLabel
-                    value="LinkedIn"
-                    control={<Checkbox color="primary" />}
-                    label="LinkedIn"
-                    labelPlacement="end"
-                  />
-                  <FormControlLabel
-                    value="Career Builder"
-                    control={<Checkbox color="primary" />}
-                    label="Career Builder"
-                    labelPlacement="end"
-                  />
+                  {state.filterJobSites.map(item => (
+                    <FormControlLabel
+                      value={item}
+                      control={<Checkbox color="primary" />}
+                      label={item}
+                      labelPlacement="end"
+                      onChange={handleCheckBox}
+                    />
+                  ))}
                 </FormGroup>
               </FormControl>
             </div>
