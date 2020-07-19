@@ -1,10 +1,11 @@
 import React from "react";
-import { Grid, FormHelperText } from "@material-ui/core";
+import { Grid, FormHelperText, Button } from "@material-ui/core";
 import { Formik } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 import ContactBasics from "./ContactBasics";
 import EmploymentDetails from "./EmploymentDetails";
+import TechnicalProfile from "./TechnicalProfile";
 
 const initialValues = {
   fullName: "",
@@ -23,7 +24,12 @@ const initialValues = {
   availability: "",
   securityClearance: "",
   travelPreferences: "",
-  openToRelocate: ""
+  openToRelocate: "",
+  positionTitle: "",
+  professionalExperience: "",
+  primarySkills: "",
+  otherSkills: "",
+  additionalNotes: ""
 };
 
 const validationSchema = yup.object({
@@ -80,6 +86,36 @@ function AddCandidateForm(props) {
             <Grid container spacing={1}>
               <ContactBasics {...props} />
               <EmploymentDetails {...props} />
+              <TechnicalProfile {...props} />
+              <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
+                <Button
+                  variant="contained"
+                  style={{
+                    width: 174,
+                    height: 36,
+                    borderRadius: 4,
+                    fontSize: 14,
+                    color: '#FFF',
+                    backgroundColor: "#234071"
+                  }}
+                >
+                  Save Candidate
+                </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    width: 185,
+                    height: 36,
+                    borderRadius: 4,
+                    fontSize: 14,
+                    marginLeft: 10,
+                    color: '#FFF',
+                    backgroundColor: "#e32686"
+                  }}
+                >
+                  Submit Candidate
+                </Button>
+              </Grid>
             </Grid>
           </form>
         );

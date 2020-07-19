@@ -3,13 +3,11 @@ import { TextField, FormHelperText, Box } from "@material-ui/core";
 import { useField } from "formik";
 
 const styles = {
-  height: 24,
   labelOffset: 110,
   focused: true,
   textFiledStyle: {
     color: "#4a4a4a",
     width: "100%",
-    height: 24,
     lineHeight: 1.5,
     borderRadius: 6,
     fontSize: 16,
@@ -24,6 +22,7 @@ const styles = {
 
 function Textfield(props) {
   const [filed, meta] = useField(props);
+  const height = props.multiline ? 100 : 24;
   return (
     <React.Fragment>
       <Box my={1}>
@@ -34,29 +33,29 @@ function Textfield(props) {
           error={meta.touched && Boolean(meta.error)}
           InputLabelProps={{
             style: {
-              height: styles.height,
+              height,
               ...(!styles.focused && { top: `${styles.labelOffset}px` })
             }
           }}
           inputProps={{
             maxLength: props.maxlength || 50,
             style: {
-              height: styles.height,
+              height,
               padding: "0 14px"
             }
           }}
           style={styles.textFiledStyle}
         />
       </Box>
-      <FormHelperText
+      {(!(meta.touched && Boolean(meta.error))) && <FormHelperText
         id="helper-text-filterSkills"
         style={{
           ...styles.helpTextStyle,
-          marginTop: meta.touched && meta.error ? 20 : -5
+          marginTop: meta.touched && meta.error ? height : -5
         }}
       >
         {props.displayLabel}
-      </FormHelperText>
+      </FormHelperText>}
     </React.Fragment>
   );
 }
