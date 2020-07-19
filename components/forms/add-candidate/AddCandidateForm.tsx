@@ -12,7 +12,7 @@ const initialValues = {
 };
 
 const validationSchema = yup.object({
-  fullName: yup.string("Enter a name").required("Name is required"),
+  fullName: yup.string("Enter a full name").required("Name is required"),
   emailAddress: yup
     .string("Enter your email")
     .email("Enter a valid email")
@@ -55,7 +55,7 @@ function AddCandidateForm(props) {
               console.log(e);
             }}
           >
-            <Grid container spacing={3}>
+            <Grid container spacing={1}>
               <ContactBasics {...props}/>
             </Grid>
           </form>

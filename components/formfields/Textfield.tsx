@@ -2,9 +2,25 @@ import React from "react";
 import { TextField, FormHelperText, Box } from "@material-ui/core";
 import { useField } from "formik";
 
-const height = 24;
-const labelOffset = 110;
-const focused = true;
+const styles = {
+  height: 24,
+  labelOffset: 110,
+  focused: true,
+  textFiledStyle: {
+    color: "#4a4a4a",
+    width: "100%",
+    height: 24,
+    lineHeight: 1.5,
+    borderRadius: 6,
+    fontSize: 16,
+    border: "1px solid #195091"
+  },
+  helpTextStyle: {
+    color: "#195091",
+    fontSize: 12,
+    paddingLeft: 10
+  }
+};
 
 function Textfield(props) {
   const [filed, meta] = useField(props);
@@ -18,36 +34,25 @@ function Textfield(props) {
           error={meta.touched && Boolean(meta.error)}
           InputLabelProps={{
             style: {
-              height,
-              ...(!focused && { top: `${labelOffset}px` })
+              height: styles.height,
+              ...(!styles.focused && { top: `${styles.labelOffset}px` })
             }
           }}
-          inputProps={
-            {
-            maxLength:props.maxlength || 50,
+          inputProps={{
+            maxLength: props.maxlength || 50,
             style: {
-              height,
+              height: styles.height,
               padding: "0 14px"
             }
           }}
-          style={{
-            color: "#4a4a4a",
-            width: "100%",
-            height: 24,
-            lineHeight: 1.5,
-            borderRadius: 6,
-            fontSize: 16,
-            border: "1px solid #195091"
-          }}
+          style={styles.textFiledStyle}
         />
       </Box>
       <FormHelperText
         id="helper-text-filterSkills"
         style={{
-          color: "#195091",
-          fontSize: 12,
-          paddingLeft: 10,
-          marginTop: meta.touched && meta.error ? 20 : -3
+          ...styles.helpTextStyle,
+          marginTop: meta.touched && meta.error ? 20 : -5
         }}
       >
         {props.displayLabel}
