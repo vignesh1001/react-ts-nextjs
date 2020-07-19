@@ -1,46 +1,55 @@
 import React from "react";
-import TextField from "@material-ui/core/TextField";
-import FormHelperText from "@material-ui/core/FormHelperText";
+import { TextField, FormHelperText, Box } from "@material-ui/core";
+import { useField } from "formik";
 
 const height = 24;
-const labelOffset = 0;
+const labelOffset = 110;
 const focused = true;
 
 function Textfield(props) {
+  const [filed, meta] = useField(props);
   return (
     <React.Fragment>
-      <TextField
-        {...props}
-        /* styles the label component */
-        InputLabelProps={{
-          style: {
-            height,
-            ...(!focused && { top: `${labelOffset}px` })
-          }
-        }}
-        /* styles the input component */
-        inputProps={{
-          style: {
-            height,
-            padding: "0 14px"
-          }
-        }}
+      <Box my={1}>
+        <TextField
+          {...props}
+          {...filed}
+          helperText={meta.touched ? meta.error : ""}
+          error={meta.touched && Boolean(meta.error)}
+          /* styles the label component */
+          InputLabelProps={{
+            style: {
+              height,
+              ...(!focused && { top: `${labelOffset}px` })
+            }
+          }}
+          /* styles the input component */
+          inputProps={{
+            style: {
+              height,
+              padding: "0 14px"
+            }
+          }}
+          style={{
+            color: "#4a4a4a",
+            width: "100%",
+            height: 24,
+            lineHeight: 1.5,
+            borderRadius: 6,
+            fontSize: 16,
+            border: "1px solid #195091"
+          }}
+        />
+      </Box>
+      <FormHelperText
+        id="helper-text-filterSkills"
         style={{
-          color: "#4a4a4a",
-          width: "100%",
-          height: 24,
-          lineHeight: 1.5,
-          borderRadius: 6,
-          fontSize: 16,
-          border: "1px solid #195091"
+          color: "#195091",
+          fontSize: 12,
+          paddingLeft: 10,
+          marginTop: meta.touched && meta.error ? 20 : 2
         }}
-      />
-      <FormHelperText id="helper-text-filterSkills" style={{
-    color: "#195091",
-    fontSize: 12,
-    paddingLeft: 10,
-    marginTop: 2
-  }}>
+      >
         {props.displayLabel}
       </FormHelperText>
     </React.Fragment>
