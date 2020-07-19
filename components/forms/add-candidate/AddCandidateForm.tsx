@@ -2,8 +2,8 @@ import React from "react";
 import { Grid, FormHelperText } from "@material-ui/core";
 import { Formik } from "formik";
 import * as yup from "yup";
-import Textfield from "../formfields/Textfield";
 import PropTypes from "prop-types";
+import ContactBasics from "./ContactBasics";
 
 const initialValues = {
   fullName: "",
@@ -56,41 +56,7 @@ function AddCandidateForm(props) {
             }}
           >
             <Grid container spacing={3}>
-              <Grid container>
-                <Grid
-                  item
-                  lg={12}
-                  style={{ paddingBottom: 0, paddingLeft: 20 }}
-                >
-                  <h3 style={styles.headerStyle}>Candidate Basics</h3>
-                </Grid>
-              </Grid>
-              <Grid item lg={4}>
-                <Textfield
-                  name="fullName"
-                  id="fullName"
-                  variant="outlined"
-                  displayLabel="First Name"
-                  fullWidth
-                  required
-                />
-              </Grid>
-              <Grid item lg={4}>
-                <Textfield
-                  name="emailAddress"
-                  id="emailAddress"
-                  variant="outlined"
-                  displayLabel="Emaill Address"
-                />
-              </Grid>
-              <Grid item lg={4}>
-                <Textfield
-                  name="phone"
-                  id="phone"
-                  variant="outlined"
-                  displayLabel="Phone Number"
-                />
-              </Grid>
+              <ContactBasics {...props}/>
             </Grid>
           </form>
         );

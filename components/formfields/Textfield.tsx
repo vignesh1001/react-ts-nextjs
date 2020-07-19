@@ -16,15 +16,15 @@ function Textfield(props) {
           {...filed}
           helperText={meta.touched ? meta.error : ""}
           error={meta.touched && Boolean(meta.error)}
-          /* styles the label component */
           InputLabelProps={{
             style: {
               height,
               ...(!focused && { top: `${labelOffset}px` })
             }
           }}
-          /* styles the input component */
-          inputProps={{
+          inputProps={
+            {
+            maxLength:props.maxlength || 50,
             style: {
               height,
               padding: "0 14px"
@@ -47,7 +47,7 @@ function Textfield(props) {
           color: "#195091",
           fontSize: 12,
           paddingLeft: 10,
-          marginTop: meta.touched && meta.error ? 20 : 2
+          marginTop: meta.touched && meta.error ? 20 : -3
         }}
       >
         {props.displayLabel}

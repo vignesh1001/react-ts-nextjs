@@ -1,5 +1,5 @@
 import React from "react";
-import AddCandidateForm from "../components/forms/AddCandidateForm";
+import AddCandidateForm from "../components/forms/add-candidate/AddCandidateForm";
 import { Box, Grid } from "@material-ui/core";
 import Header from "../components/Header";
 import { connect } from "react-redux";
