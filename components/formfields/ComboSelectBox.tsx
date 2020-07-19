@@ -23,7 +23,7 @@ const styles = {
   }
 };
 
-function Textfield(props) {
+function ComboSelectBox(props) {
   const [filed, meta] = useField(props);
   return (
     <React.Fragment>
@@ -68,4 +68,4 @@ function Textfield(props) {
   );
 }
 
-export default Textfield;
+export default ComboSelectBox;

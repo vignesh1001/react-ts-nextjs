@@ -2,6 +2,7 @@ import React from "react";
 import { Grid,TextField } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Textfield from "../../formfields/Textfield";
+import ComboSelectBox from "../../formfields/ComboSelectBox";
 
 
 const styles = {
@@ -19,12 +20,11 @@ const top100Films = [
 
 function renderAutocomplete() {
   return (
-    <Autocomplete
+    <ComboSelectBox
       id="combo-box-demo"
       options={top100Films}
       getOptionLabel={(option) => option.title}
       style={{ width: 300 }}
-      renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
     />
   );
 }
