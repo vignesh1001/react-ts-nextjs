@@ -2,14 +2,18 @@ import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Hello from './Hello';
 import LeftFilter from './LeftFilter';
-
+import withRedux from "next-redux-wrapper";
+import withReduxSaga from "next-redux-saga";
 import './style.css';
+import AddCandidate from './pages/AddCandidate';
+import store from "./store";
+import { Provider } from 'react-redux'
 
 interface AppProps { }
 interface AppState {
   name: string;
 }
-
+const s = store();
 class App extends Component<AppProps, AppState> {
   constructor(props) {
     super(props);
@@ -21,7 +25,9 @@ class App extends Component<AppProps, AppState> {
   render() {
     return (
       <div>
-        <LeftFilter />
+        <Provider store={s}>
+          <AddCandidate />
+        </Provider>
       </div>
     );
   }
