@@ -1,47 +1,51 @@
 import React from "react";
-import { Grid,TextField } from "@material-ui/core";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import { Grid, TextField, Link } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import Textfield from "../../formfields/Textfield";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
+import RadioGroupBox from "../../formfields/RadioGroupBox";
+import SimpleUploadLink from "../../formfields/SimpleUploadLink";
+import Heading from "./Heading";
 
-
-const styles = {
-  headerStyle: {
-    color: "#374c97",
-    marginBottom: 0,
-    marginTop: 0
-  }
-};
 const top100Films = [
-  { title: 'The Shawshank Redemption', year: 1994 },
-  { title: 'The Godfather', year: 1972 },
-  { title: 'The Godfather: Part II', year: 1974 }
+  { title: "The Shawshank Redemption", value: 1994 },
+  { title: "The Godfather", value: 1972 },
+  { title: "The Godfather: Part II", value: 1974 }
+];
+const countryList = [
+  { title: "US", value: 1 },
+  { title: "UK", value: 2 },
+  { title: "India", value: 3 }
 ];
 
-function renderAutocomplete() {
-  return (
-    <ComboSelectBox
-      id="combo-box-demo"
-      options={top100Films}
-      getOptionLabel={(option) => option.title}
-      style={{ width: 300 }}
-    />
-  );
-}
-function renderSection(name) {
-  return (
-    <Grid container style={{ paddingBottom: 0, paddingTop: 0 }}>
-      <Grid item lg={12} style={{ paddingBottom: 0, paddingLeft: 10 }}>
-        <h3 style={styles.headerStyle}>{name}</h3>
-      </Grid>
-    </Grid>
-  );
+const styles={
+  fieldWrapper: { paddingTop: 0 }
 }
 function ContactBasics(props) {
+  const handleCapture = ({ target }) => {
+    const fileReader = new FileReader();
+    const name = target.accept.includes("image") ? "images" : "videos";
+    fileReader.readAsDataURL(target.files[0]);
+    fileReader.onload = e => {
+      debugger;
+    };
+  };
   return (
     <React.Fragment>
-      {renderSection("Candidate Basics")}
-      <Grid item xs={6} sm={4} style={{ paddingTop: 0 }}>
+      <Heading title="Candidate Basics" />
+      <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
+        <label style={{ color: "#195091", paddingLeft: 8, paddingTop: 15 }}>
+          Resume{" "}
+        </label>
+        <SimpleUploadLink
+          onChange={handleCapture}
+          labelText="Add"
+          name="candidate_resume"
+          id="candidate_resume"
+          accept="image/*"
+        />
+      </Grid>
+      <Grid item xs={6} sm={4} style={styles.fieldWrapper}>
         <Textfield
           name="fullName"
           id="fullName"
@@ -51,7 +55,7 @@ function ContactBasics(props) {
           required
         />
       </Grid>
-      <Grid item xs={6} sm={4} style={{ paddingTop: 0 }}>
+      <Grid item xs={6} sm={4} style={styles.fieldWrapper}>
         <Textfield
           name="emailAddress"
           id="emailAddress"
@@ -59,7 +63,7 @@ function ContactBasics(props) {
           displayLabel="Emaill Address"
         />
       </Grid>
-      <Grid item xs={4} sm={4} style={{ paddingTop: 0 }}>
+      <Grid item xs={4} sm={4} style={styles.fieldWrapper}>
         <Textfield
           name="phone"
           id="phone"
@@ -68,8 +72,8 @@ function ContactBasics(props) {
           maxlength="12"
         />
       </Grid>
-      {renderSection("Location")}
-      <Grid item xs={6} sm={3} style={{ paddingTop: 0 }}>
+      <Heading title="Location" />
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
         <Textfield
           name="city"
           id="city"
@@ -78,7 +82,7 @@ function ContactBasics(props) {
           maxlength="12"
         />
       </Grid>
-      <Grid item xs={6} sm={3} style={{ paddingTop: 0 }}>
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
         <Textfield
           name="state"
           id="state"
@@ -87,7 +91,7 @@ function ContactBasics(props) {
           maxlength="12"
         />
       </Grid>
-      <Grid item xs={6} sm={3} style={{ paddingTop: 0 }}>
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
         <Textfield
           name="zip"
           id="zip"
@@ -96,35 +100,54 @@ function ContactBasics(props) {
           maxlength="12"
         />
       </Grid>
-      <Grid item xs={6} sm={3} style={{ paddingTop: 0 }}>
-        <Textfield
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
+        <ComboSelectBox
           name="country"
           id="country"
-          variant="outlined"
           displayLabel="Country"
-          maxlength="12"
+          options={countryList}
+          style={{ width: "100%", height: 24 }}
         />
       </Grid>
-      {renderSection("Profile Information")}
-      <Grid item xs={6} sm={3} style={{ paddingTop: 0 }}>
-        {renderAutocomplete()}
-      </Grid>
-      <Grid item xs={6} sm={3} style={{ paddingTop: 0 }}>
-        <Textfield
-          name="country"
-          id="country"
-          variant="outlined"
-          displayLabel="Country"
-          maxlength="12"
+      <Heading title="Profile Information" />
+      <Grid item xs={12} sm={6} style={styles.fieldWrapper}>
+        <ComboSelectBox
+          name="immigrationStatus"
+          id="immigrationStatus"
+          displayLabel="Immigration Status"
+          options={top100Films}
+          style={{ width: "100%", height: 24 }}
         />
       </Grid>
-      <Grid item xs={6} sm={3} style={{ paddingTop: 0 }}>
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
         <Textfield
-          name="country"
-          id="country"
+          name="SSN"
+          id="SSN"
           variant="outlined"
-          displayLabel="Country"
-          maxlength="12"
+          displayLabel="SSN (last 4 digits)"
+          maxlength="3"
+        />
+      </Grid>
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
+        <Textfield
+          name="dob"
+          id="dob"
+          variant="outlined"
+          displayLabel="Date Of Birth"
+          maxlength="3"
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
+        <label style={{ color: "#195091", paddingLeft: 8, paddingTop: 15 }}>
+          Work Authorization Form{" "}
+        </label>
+        <SimpleUploadLink
+          onChange={handleCapture}
+          labelText="Add"
+          name="workAuthForm"
+          id="workAuthForm"
+          multiple
+          accept="image/*"
         />
       </Grid>
     </React.Fragment>

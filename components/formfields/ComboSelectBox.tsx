@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, FormHelperText, Box } from "@material-ui/core";
+import { TextField, FormHelperText, Box,Select,MenuItem } from "@material-ui/core";
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { useField } from "formik";
 
@@ -20,20 +20,53 @@ const styles = {
     color: "#195091",
     fontSize: 12,
     paddingLeft: 10
+  },
+  helpTextErrorStyle: {
+    color: "#f44336",
+    fontSize: 12,
+    paddingLeft: 10
   }
 };
 
 function ComboSelectBox(props) {
   const [filed, meta] = useField(props);
+  
   return (
     <React.Fragment>
       <Box my={1}>
-        <Autocomplete
+        <Select
           {...props}
           {...filed}
-          id="combo-box-demo"
-          renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-        />
+          variant="outlined"
+          onChange={(e)=>{filed['value']=e.target.value;
+          filed.onChange(e);
+          meta.value=e.target.value}}
+          error={meta.touched && Boolean(meta.error)}
+          helperText={meta.touched ? meta.error : ""}
+          type="select"
+          InputLabelProps={{
+            style: {
+              height: styles.height,
+              ...(!styles.focused && { top: `${styles.labelOffset}px` })
+            }
+          }}
+          inputProps={{
+            maxLength: props.maxlength || 50,
+            style: {
+              height: styles.height,
+              padding: "0 14px"
+            }
+          }}
+        >
+          {
+            props.options.map(item=><MenuItem value={item.value}>{item.title}</MenuItem>)
+          }
+        </Select>
+        {meta.touched && Boolean(meta.error) && <FormHelperText color="primary" style={{
+          ...styles.helpTextErrorStyle,
+          marginTop: meta.touched && meta.error ? 10 : -5
+        }}>{meta.error}</FormHelperText>}
+        
         {/*<TextField
           {...props}
           {...filed}
@@ -55,15 +88,15 @@ function ComboSelectBox(props) {
           style={styles.textFiledStyle}
         />*/}
       </Box>
-      <FormHelperText
+      {(!(meta.touched && Boolean(meta.error))) &&<FormHelperText
         id="helper-text-filterSkills"
         style={{
           ...styles.helpTextStyle,
-          marginTop: meta.touched && meta.error ? 20 : -5
+          marginTop: -5
         }}
       >
         {props.displayLabel}
-      </FormHelperText>
+      </FormHelperText>}
     </React.Fragment>
   );
 }

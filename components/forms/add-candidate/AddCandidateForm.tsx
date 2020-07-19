@@ -4,11 +4,26 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
 import ContactBasics from "./ContactBasics";
+import EmploymentDetails from "./EmploymentDetails";
 
 const initialValues = {
   fullName: "",
   emailAddress: "",
-  phone: ""
+  phone: "",
+  city: "",
+  state: "",
+  zip: "",
+  country: "",
+  immigrationStatus: "",
+  SSN: "",
+  dob: "",
+  employeementType: "",
+  empWorkType: "Hourly",
+  rate: "",
+  availability: "",
+  securityClearance: "",
+  travelPreferences: "",
+  openToRelocate: ""
 };
 
 const validationSchema = yup.object({
@@ -20,7 +35,14 @@ const validationSchema = yup.object({
   phone: yup
     .string("")
     .min(12, "Phone must contain at least 12 characters")
-    .required("Enter your Phone")
+    .required("Enter your Phone"),
+  city: yup.string("Enter your city").required("City is required"),
+  state: yup.string("Enter your state").required("State is required"),
+  zip: yup.string("Enter your zip").required("Zip is required"),
+  country: yup.string("Enter your country").required("Country is required"),
+  immigrationStatus: yup
+    .string("Enter your Immigration Status")
+    .required("Immigration Status is required")
 });
 
 const styles = {
@@ -56,7 +78,8 @@ function AddCandidateForm(props) {
             }}
           >
             <Grid container spacing={1}>
-              <ContactBasics {...props}/>
+              <ContactBasics {...props} />
+              <EmploymentDetails {...props} />
             </Grid>
           </form>
         );
