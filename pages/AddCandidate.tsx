@@ -7,16 +7,17 @@ function AddCandidate(props){
 
     return (
         <React.Fragment>
-        <Header {...props} />
+        {/*<Header {...props} />
         <Box my={4}>
             <Grid container>
               <Grid item xs={3} style={{ paddingLeft: 24, paddingRight: 24 }}>
               </Grid>
               <Grid item xs={9} style={{ paddingRight: 24 }}>
                 <AddCandidateForm {...props}/>
-                </Grid>
+              </Grid>
             </Grid>
-        </Box>
+        </Box>*/}
+        <AddCandidateForm {...props}/>
         </React.Fragment>
     )
 }
