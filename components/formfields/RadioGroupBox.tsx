@@ -6,6 +6,7 @@ const styles = {
   height: 24,
   labelOffset: 110,
   focused: true,
+
   textFiledStyle: {
     color: "#4a4a4a",
     width: "100%",
@@ -22,13 +23,36 @@ function RadioGroupBox(props) {
       {...props}
       {...filed}
       style={styles.textFiledStyle}
-      color="#a40c58"
+      iconcolor="#a40c58"
+      iconStyle={{
+        style: {
+          color: "#953967"
+        }
+      }}
     >
       {props.options &&
         props.options.map(item => (
           <FormControlLabel
+            iconStyle={{
+              style: {
+                color: "#953967"
+              }
+            }}
             value={item.value}
-            control={<Radio color="primary" />}
+            InputLabelProps={{
+              style: {
+                color: "#953967"
+              }
+            }}
+            control={
+              <Radio
+                iconStyle={{
+                  style: {
+                    color: "#953967"
+                  }
+                }}
+              />
+            }
             label={item.title}
           />
         ))}

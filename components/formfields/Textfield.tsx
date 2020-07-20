@@ -34,6 +34,7 @@ function Textfield(props) {
           InputLabelProps={{
             style: {
               height,
+              padding: "0 14px",
               ...(!styles.focused && { top: `${styles.labelOffset}px` })
             }
           }}
@@ -41,7 +42,8 @@ function Textfield(props) {
             maxLength: props.maxlength || 50,
             style: {
               height,
-              padding: "0 14px"
+              padding: "3px 14px",
+              margin: props.multiline ? "-17px -15px": 0,
             }
           }}
           style={styles.textFiledStyle}

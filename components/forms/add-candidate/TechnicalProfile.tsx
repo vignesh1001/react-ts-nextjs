@@ -71,7 +71,7 @@ function TechnicalProfile() {
           displayLabel="Additional Notes"
         />
       </Grid>
-      <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
+      <Grid item xs={6} sm={9} style={styles.fieldWrapper}>
         <label
           style={{
             color: "#195091",
@@ -90,7 +90,7 @@ function TechnicalProfile() {
           accept="image/*"
         />
       </Grid>
-      <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
         <ComboSelectBox
           name="yearOfCompletion"
           id="yearOfCompletion"
