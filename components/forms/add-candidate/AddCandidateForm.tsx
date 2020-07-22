@@ -29,7 +29,8 @@ const initialValues = {
   professionalExperience: "",
   primarySkills: "",
   otherSkills: "",
-  additionalNotes: ""
+  additionalNotes: "",
+  yearOfCompletion: "",
 };
 
 const validationSchema = yup.object({

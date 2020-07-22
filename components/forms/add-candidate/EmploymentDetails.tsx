@@ -30,7 +30,7 @@ function EmploymentDetails() {
           id="employmentType"
           displayLabel="Employment Type"
           options={employmentType}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -58,7 +58,7 @@ function EmploymentDetails() {
           id="availability"
           displayLabel="Availability"
           options={employmentType}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -67,7 +67,7 @@ function EmploymentDetails() {
           id="securityClearance"
           displayLabel="Security Clearance"
           options={employmentType}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -77,7 +77,7 @@ function EmploymentDetails() {
           variant="outlined"
           displayLabel="Travel Preferences"
           options={employmentType}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -87,7 +87,7 @@ function EmploymentDetails() {
           displayLabel="Open to Relocate"
           variant="outlined"
           options={openToRelocate}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
     </React.Fragment>

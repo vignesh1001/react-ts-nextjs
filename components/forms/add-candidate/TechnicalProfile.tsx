@@ -96,7 +96,7 @@ function TechnicalProfile() {
           id="yearOfCompletion"
           displayLabel="Year Of Completion"
           options={yearOfCompletion}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
       <Grid item xs={12} sm={12} style={styles.fieldWrapper}>

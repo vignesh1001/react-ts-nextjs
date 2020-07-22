@@ -106,7 +106,7 @@ function ContactBasics(props) {
           id="country"
           displayLabel="Country"
           options={countryList}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
       <Heading title="Profile Information" />
@@ -116,7 +116,7 @@ function ContactBasics(props) {
           id="immigrationStatus"
           displayLabel="Immigration Status"
           options={top100Films}
-          style={{ width: "100%", height: 24 }}
+          style={{ width: "100%", height: 32 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
