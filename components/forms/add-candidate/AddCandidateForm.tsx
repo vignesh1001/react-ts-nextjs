@@ -31,6 +31,9 @@ const initialValues = {
   otherSkills: "",
   additionalNotes: "",
   yearOfCompletion: "",
+  education: [],
+  certifications: [],
+  references: [],
 };
 
 const validationSchema = yup.object({
@@ -75,19 +78,16 @@ const styles = {
 };
 function AddCandidateForm(props) {
   return (
-    <Formik validationSchema={validationSchema} initialValues={initialValues}>
+    <Formik validationSchema={validationSchema} initialValues={initialValues} onSubmit={e => {
+              console.log(e);
+            }}>
       {formikProps => {
         return (
-          <form
-            onSubmit={e => {
-              e.preventDefault();
-              console.log(e);
-            }}
-          >
+          <form>
             <Grid container spacing={1}>
-              <ContactBasics {...props} />
-              <EmploymentDetails {...props} />
-              <TechnicalProfile {...props} />
+              <ContactBasics {...props} formikProps={formikProps}/>
+              <EmploymentDetails {...props}  formikProps={formikProps}/>
+              <TechnicalProfile {...props}  formikProps={formikProps}/>
               <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
                 <Button
                   variant="contained"
@@ -104,6 +104,8 @@ function AddCandidateForm(props) {
                 </Button>
                 <Button
                   variant="contained"
+                  disabled={!formikProps.isValid}
+                  onClick={formikProps.handleSubmit}
                   style={{
                     width: 185,
                     height: 36,

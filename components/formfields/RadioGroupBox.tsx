@@ -17,12 +17,12 @@ const styles = {
   }
 };
 function RadioGroupBox(props) {
-  const [filed, meta] = useField(props);
+  const [filed] = useField(props);
   return (
     <RadioGroup
       {...props}
       {...filed}
-      style={styles.textFiledStyle}
+      style={props.style?{...styles.textFiledStyle,...props.style}:styles.textFiledStyle}
       iconcolor="#a40c58"
       iconStyle={{
         style: {

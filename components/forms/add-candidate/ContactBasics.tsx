@@ -1,7 +1,7 @@
 import React from "react";
 import { Grid, TextField, Link } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
-import Textfield from "../../formfields/Textfield";
+import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
 import RadioGroupBox from "../../formfields/RadioGroupBox";
 import SimpleUploadLink from "../../formfields/SimpleUploadLink";

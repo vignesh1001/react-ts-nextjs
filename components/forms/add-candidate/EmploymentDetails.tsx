@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid, TextField } from "@material-ui/core";
-import Textfield from "../../formfields/Textfield";
+import { Grid } from "@material-ui/core";
+import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
 import RadioGroupBox from "../../formfields/RadioGroupBox";
 import Heading from "./Heading";
@@ -49,6 +49,7 @@ function EmploymentDetails() {
           variant="outlined"
           options={workType}
           color="#a40c58"
+          style={{width:110}}
         />
       </Grid>
 
