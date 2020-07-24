@@ -33,8 +33,12 @@ const initialValues = {
   yearOfCompletion: "",
   education: [],
   certifications: [],
-  references: [],
+  hasReferences: false,
   candidate_resume: [],
+  referanceFullName: "",
+  referancePosition: "",
+  referancePhone: "",
+  referanceRelation: ""
 };
 
 const validationSchema = yup.object({
@@ -53,18 +57,18 @@ const validationSchema = yup.object({
   country: yup.string("Enter your country").required("Country is required"),
   immigrationStatus: yup
     .string("Enter your Immigration Status")
-    .required("Immigration Status is required"),
+    .required("Immigration Status is required")
 });
 function AddCandidateForm(props) {
   return (
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={(e) => {
+      onSubmit={e => {
         console.log(e);
       }}
     >
-      {(formikProps) => {
+      {formikProps => {
         return (
           <form>
             <Grid
@@ -84,7 +88,7 @@ function AddCandidateForm(props) {
                     borderRadius: 4,
                     fontSize: 14,
                     color: "#FFF",
-                    backgroundColor: "#234071",
+                    backgroundColor: "#234071"
                   }}
                 >
                   Save Candidate
@@ -102,7 +106,7 @@ function AddCandidateForm(props) {
                     color: "#FFF",
                     backgroundColor: !formikProps.isValid
                       ? "#f4a0cb"
-                      : "#e32686",
+                      : "#e32686"
                   }}
                 >
                   Submit Candidate
@@ -117,7 +121,7 @@ function AddCandidateForm(props) {
 }
 
 AddCandidateForm.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default AddCandidateForm;

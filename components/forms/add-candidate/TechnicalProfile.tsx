@@ -10,7 +10,13 @@ const yearOfCompletion = [
   { title: "2001", value: "2001" },
   { title: "2002", value: "2002" },
   { title: "2003", value: "2003" },
-  { title: "2004", value: "2004" },
+  { title: "2004", value: "2004" }
+];
+const referanceRelations = [
+  { title: "Friend", value: "Friend" },
+  { title: "Brother", value: "Brother" },
+  { title: "Sister", value: "Sister" },
+  { title: "Uncle", value: "Uncle" }
 ];
 const styles = {
   fieldWrapper: { paddingTop: 0 },
@@ -18,8 +24,8 @@ const styles = {
     color: "black",
     marginTop: 5,
     marginRight: 12,
-    backgroundColor: "#00bfff",
-  },
+    backgroundColor: "#00bfff"
+  }
 };
 function TechnicalProfile(props) {
   const handleDelete = (listName, e) => {
@@ -28,6 +34,12 @@ function TechnicalProfile(props) {
       1
     );
     props.formikProps.setFieldValue(name, props.formikProps.values[listName]);
+  };
+  const addNewReferences = () => {
+    props.formikProps.setFieldValue(
+      "hasReferences",
+      !props.formikProps.values.hasReferences
+    );
   };
   return (
     <React.Fragment>
@@ -82,7 +94,7 @@ function TechnicalProfile(props) {
             color: "#195091",
             paddingLeft: 8,
             paddingTop: 15,
-            paddingRight: 4,
+            paddingRight: 4
           }}
         >
           Education{" "}
@@ -91,12 +103,12 @@ function TechnicalProfile(props) {
           style={{
             color: "#f4308f",
             textDecoration: "underline",
-            cursor: "pointer",
+            cursor: "pointer"
           }}
         >
           Add
         </label>
-        {props.formikProps.values.education.map((i) => (
+        {props.formikProps.values.education.map(i => (
           <Chip
             key={"education_chip" + i}
             size="medium"
@@ -121,7 +133,7 @@ function TechnicalProfile(props) {
             color: "#195091",
             paddingLeft: 8,
             paddingTop: 15,
-            paddingRight: 4,
+            paddingRight: 4
           }}
         >
           Certification(s){" "}
@@ -130,12 +142,12 @@ function TechnicalProfile(props) {
           style={{
             color: "#f4308f",
             textDecoration: "underline",
-            cursor: "pointer",
+            cursor: "pointer"
           }}
         >
           Add
         </label>
-        {props.formikProps.values.certifications.map((i) => (
+        {props.formikProps.values.certifications.map(i => (
           <Chip
             key={"certifications_chip" + i}
             size="medium"
@@ -151,29 +163,58 @@ function TechnicalProfile(props) {
             color: "#195091",
             paddingLeft: 8,
             paddingTop: 15,
-            paddingRight: 4,
+            paddingRight: 4
           }}
         >
           References{" "}
         </label>
         <label
+          onClick={addNewReferences}
           style={{
             color: "#f4308f",
             textDecoration: "underline",
-            cursor: "pointer",
+            cursor: "pointer"
           }}
         >
-          Add
+          {!props.formikProps.values.hasReferences ? "Add" : "Remove"}
         </label>
-        {props.formikProps.values.references.map((i) => (
-          <Chip
-            size="medium"
-            key={"references_chip" + i}
-            label={i}
-            onDelete={() => handleDelete("references", i)}
-            style={styles.chipsStyle}
-          />
-        ))}
+        {props.formikProps.values.hasReferences && (
+          <React.Fragment>
+            <Grid item xs={3} sm={3} style={styles.fieldWrapper}>
+              <Textfield
+                name="referanceFullName"
+                id="referanceFullName"
+                variant="outlined"
+                displayLabel="Full Name"
+              />
+            </Grid>
+            <Grid item xs={3} sm={3} style={styles.fieldWrapper}>
+              <Textfield
+                name="referancePosition"
+                id="referancePosition"
+                variant="outlined"
+                displayLabel="Position / Company"
+              />
+            </Grid>
+            <Grid item xs={3} sm={3} style={styles.fieldWrapper}>
+              <Textfield
+                name="referancePhone"
+                id="referancePhone"
+                variant="outlined"
+                displayLabel="Phone"
+              />
+            </Grid>
+            <Grid item xs={3} sm={3} style={styles.fieldWrapper}>
+              <ComboSelectBox
+                name="referanceRelation"
+                id="referanceRelation"
+                displayLabel="Relationship"
+                options={referanceRelations}
+                style={{ width: "100%", height: 32 }}
+              />
+            </Grid>
+          </React.Fragment>
+        )}
       </Grid>
     </React.Fragment>
   );
@@ -182,10 +223,9 @@ TechnicalProfile.propTypes = {
   formikProps: PropTypes.shape({
     values: PropTypes.shape({
       certifications: PropTypes.arrayOf(PropTypes.string),
-      education: PropTypes.arrayOf(PropTypes.string),
-      references: PropTypes.arrayOf(PropTypes.string),
+      education: PropTypes.arrayOf(PropTypes.string)
     }),
-    setFieldValue: PropTypes.func.isRequired,
-  }),
+    setFieldValue: PropTypes.func.isRequired
+  })
 };
 export default TechnicalProfile;
