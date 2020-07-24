@@ -3,14 +3,14 @@ import Heading from "./Heading";
 import { Grid, Chip } from "@material-ui/core";
 import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
-import SimpleUploadLink from "../../formfields/SimpleUploadLink";
+import PropTypes from "prop-types";
 
 const yearOfCompletion = [
   { title: "2000", value: "2000" },
   { title: "2001", value: "2001" },
   { title: "2002", value: "2002" },
   { title: "2003", value: "2003" },
-  { title: "2004", value: "2004" }
+  { title: "2004", value: "2004" },
 ];
 const styles = {
   fieldWrapper: { paddingTop: 0 },
@@ -18,25 +18,10 @@ const styles = {
     color: "black",
     marginTop: 5,
     marginRight: 12,
-    backgroundColor: "#00bfff"
-  }
+    backgroundColor: "#00bfff",
+  },
 };
 function TechnicalProfile(props) {
-  debugger;
-  const handleFileUpload = ({ target }) => {
-    const { name, files } = target;
-    //const fileReader = new FileReader();
-    const namen = target.accept.includes("image") ? "images" : "videos";
-    //fileReader.readAsDataURL(target.files[0]);
-    // fileReader.onload = e => {
-    //  debugger;
-    // };
-    var fileList = props.formikProps.values[name];
-    for (var i = 0; i < files.length; i++) {
-      fileList.push(files[i]);
-    }
-    props.formikProps.setFieldValue(name, fileList);
-  };
   const handleDelete = (listName, e) => {
     props.formikProps.values[listName].splice(
       props.formikProps.values[listName].indexOf(e),
@@ -97,23 +82,25 @@ function TechnicalProfile(props) {
             color: "#195091",
             paddingLeft: 8,
             paddingTop: 15,
-            paddingRight: 4
+            paddingRight: 4,
           }}
         >
           Education{" "}
         </label>
-        <SimpleUploadLink
-          onChange={handleFileUpload}
-          labelText="Add"
-          name="education"
-          id="education"
-          multiple
-          accept="image/*"
-        />
-        {props.formikProps.values.education.map(i => (
+        <label
+          style={{
+            color: "#f4308f",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Add
+        </label>
+        {props.formikProps.values.education.map((i) => (
           <Chip
+            key={"education_chip" + i}
             size="medium"
-            label={i.name}
+            label={i}
             onDelete={() => handleDelete("education", i)}
             style={styles.chipsStyle}
           />
@@ -134,23 +121,25 @@ function TechnicalProfile(props) {
             color: "#195091",
             paddingLeft: 8,
             paddingTop: 15,
-            paddingRight: 4
+            paddingRight: 4,
           }}
         >
           Certification(s){" "}
         </label>
-        <SimpleUploadLink
-          onChange={handleFileUpload}
-          labelText="Add"
-          name="certifications"
-          id="certifications"
-          multiple
-          accept="image/*"
-        />{" "}
-        {props.formikProps.values.certifications.map(i => (
+        <label
+          style={{
+            color: "#f4308f",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Add
+        </label>
+        {props.formikProps.values.certifications.map((i) => (
           <Chip
+            key={"certifications_chip" + i}
             size="medium"
-            label={i.name}
+            label={i}
             onDelete={() => handleDelete("certifications", i)}
             style={styles.chipsStyle}
           />
@@ -162,22 +151,25 @@ function TechnicalProfile(props) {
             color: "#195091",
             paddingLeft: 8,
             paddingTop: 15,
-            paddingRight: 4
+            paddingRight: 4,
           }}
         >
           References{" "}
         </label>
-        <SimpleUploadLink
-          onChange={handleFileUpload}
-          labelText="Add"
-          name="references"
-          id="references"
-          accept="image/*"
-        />
-        {props.formikProps.values.references.map(i => (
+        <label
+          style={{
+            color: "#f4308f",
+            textDecoration: "underline",
+            cursor: "pointer",
+          }}
+        >
+          Add
+        </label>
+        {props.formikProps.values.references.map((i) => (
           <Chip
             size="medium"
-            label={i.name}
+            key={"references_chip" + i}
+            label={i}
             onDelete={() => handleDelete("references", i)}
             style={styles.chipsStyle}
           />
@@ -186,5 +178,14 @@ function TechnicalProfile(props) {
     </React.Fragment>
   );
 }
-
+TechnicalProfile.propTypes = {
+  formikProps: PropTypes.shape({
+    values: PropTypes.shape({
+      certifications: PropTypes.arrayOf(PropTypes.string),
+      education: PropTypes.arrayOf(PropTypes.string),
+      references: PropTypes.arrayOf(PropTypes.string),
+    }),
+    setFieldValue: PropTypes.func.isRequired,
+  }),
+};
 export default TechnicalProfile;

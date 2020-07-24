@@ -7,19 +7,19 @@ import Heading from "./Heading";
 
 const employmentType = [
   { title: "Hourly", value: "Hourly" },
-  { title: "Yearly", value: "Yearly" }
+  { title: "Yearly", value: "Yearly" },
 ];
 const workType = [
   { title: "Hourly", value: "Hourly" },
-  { title: "Yearly", value: "Yearly" }
+  { title: "Yearly", value: "Yearly" },
 ];
 const openToRelocate = [
   { title: "Yes", value: "Yes" },
-  { title: "No", value: "No" }
+  { title: "No", value: "No" },
 ];
-const styles={
-  fieldWrapper: { paddingTop: 0 }
-}
+const styles = {
+  fieldWrapper: { paddingTop: 0 },
+};
 function EmploymentDetails() {
   return (
     <React.Fragment>
@@ -49,7 +49,7 @@ function EmploymentDetails() {
           variant="outlined"
           options={workType}
           color="#a40c58"
-          style={{width:110}}
+          style={{ width: 110 }}
         />
       </Grid>
 

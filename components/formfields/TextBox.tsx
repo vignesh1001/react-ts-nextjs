@@ -1,6 +1,7 @@
 import React from "react";
 import { TextField, FormHelperText, Box } from "@material-ui/core";
 import { useField } from "formik";
+import PropTypes from "prop-types";
 
 const styles = {
   labelOffset: 110,
@@ -11,16 +12,16 @@ const styles = {
     lineHeight: 1.5,
     borderRadius: 6,
     fontSize: 16,
-    border: "1px solid #195091"
+    border: "1px solid #195091",
   },
   helpTextStyle: {
     color: "#195091",
     fontSize: 12,
-    paddingLeft: 10
-  }
+    paddingLeft: 10,
+  },
 };
 
-function Textfield(props) {
+function TextBox(props) {
   const [filed, meta] = useField(props);
   const height = props.multiline ? 100 : 24;
   return (
@@ -35,31 +36,38 @@ function Textfield(props) {
             style: {
               height,
               padding: "0 14px",
-              ...(!styles.focused && { top: `${styles.labelOffset}px` })
-            }
+              ...(!styles.focused && { top: `${styles.labelOffset}px` }),
+            },
           }}
           inputProps={{
             maxLength: props.maxlength || 50,
             style: {
               height,
               padding: "3px 14px",
-              margin: props.multiline ? "-17px -15px": 0,
-            }
+              margin: props.multiline ? "-17px -15px" : 0,
+            },
           }}
           style={styles.textFiledStyle}
         />
       </Box>
-      {(!(meta.touched && Boolean(meta.error))) && <FormHelperText
-        id="helper-text-filterSkills"
-        style={{
-          ...styles.helpTextStyle,
-          marginTop: meta.touched && meta.error ? height : -5
-        }}
-      >
-        {props.displayLabel}
-      </FormHelperText>}
+      {!(meta.touched && Boolean(meta.error)) && (
+        <FormHelperText
+          id="helper-text-filterSkills"
+          style={{
+            ...styles.helpTextStyle,
+            marginTop: meta.touched && meta.error ? height : -5,
+          }}
+        >
+          {props.displayLabel}
+        </FormHelperText>
+      )}
     </React.Fragment>
   );
 }
 
-export default Textfield;
+TextBox.propTypes = {
+  multiline: PropTypes.string.isRequired,
+  maxlength: PropTypes.string.isRequired,
+  displayLabel: PropTypes.string.isRequired,
+};
+export default TextBox;

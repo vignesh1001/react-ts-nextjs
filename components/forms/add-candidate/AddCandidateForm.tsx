@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, FormHelperText, Button } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { Formik } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
@@ -34,6 +34,7 @@ const initialValues = {
   education: [],
   certifications: [],
   references: [],
+  candidate_resume: [],
 };
 
 const validationSchema = yup.object({
@@ -52,42 +53,28 @@ const validationSchema = yup.object({
   country: yup.string("Enter your country").required("Country is required"),
   immigrationStatus: yup
     .string("Enter your Immigration Status")
-    .required("Immigration Status is required")
+    .required("Immigration Status is required"),
 });
-
-const styles = {
-  textField: {
-    color: "#4a4a4a",
-    width: "100%",
-    height: 24,
-    lineHeight: 1.5,
-    borderRadius: 6,
-    fontSize: 16,
-    border: "2px solid #195091"
-  },
-  helperText: {
-    color: "#195091",
-    fontSize: 12,
-    paddingLeft: 10,
-    marginTop: -3
-  },
-  headerStyle: {
-    color: "#374c97",
-    marginBottom: 0
-  }
-};
 function AddCandidateForm(props) {
   return (
-    <Formik validationSchema={validationSchema} initialValues={initialValues} onSubmit={e => {
-              console.log(e);
-            }}>
-      {formikProps => {
+    <Formik
+      validationSchema={validationSchema}
+      initialValues={initialValues}
+      onSubmit={(e) => {
+        console.log(e);
+      }}
+    >
+      {(formikProps) => {
         return (
           <form>
-            <Grid container spacing={1}>
-              <ContactBasics {...props} formikProps={formikProps}/>
-              <EmploymentDetails {...props}  formikProps={formikProps}/>
-              <TechnicalProfile {...props}  formikProps={formikProps}/>
+            <Grid
+              container
+              spacing={1}
+              style={{ backgroundColor: "#FFF", padding: "30px 30px" }}
+            >
+              <ContactBasics {...props} formikProps={formikProps} />
+              <EmploymentDetails {...props} formikProps={formikProps} />
+              <TechnicalProfile {...props} formikProps={formikProps} />
               <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
                 <Button
                   variant="contained"
@@ -96,8 +83,8 @@ function AddCandidateForm(props) {
                     height: 36,
                     borderRadius: 4,
                     fontSize: 14,
-                    color: '#FFF',
-                    backgroundColor: "#234071"
+                    color: "#FFF",
+                    backgroundColor: "#234071",
                   }}
                 >
                   Save Candidate
@@ -112,8 +99,10 @@ function AddCandidateForm(props) {
                     borderRadius: 4,
                     fontSize: 14,
                     marginLeft: 10,
-                    color: '#FFF',
-                    backgroundColor: "#e32686"
+                    color: "#FFF",
+                    backgroundColor: !formikProps.isValid
+                      ? "#f4a0cb"
+                      : "#e32686",
                   }}
                 >
                   Submit Candidate
@@ -128,7 +117,7 @@ function AddCandidateForm(props) {
 }
 
 AddCandidateForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default AddCandidateForm;

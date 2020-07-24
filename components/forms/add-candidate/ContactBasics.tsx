@@ -1,50 +1,71 @@
 import React from "react";
-import { Grid, TextField, Link } from "@material-ui/core";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import { Grid, Chip } from "@material-ui/core";
 import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
-import RadioGroupBox from "../../formfields/RadioGroupBox";
 import SimpleUploadLink from "../../formfields/SimpleUploadLink";
 import Heading from "./Heading";
+import PropTypes from "prop-types";
 
 const top100Films = [
   { title: "The Shawshank Redemption", value: 1994 },
   { title: "The Godfather", value: 1972 },
-  { title: "The Godfather: Part II", value: 1974 }
+  { title: "The Godfather: Part II", value: 1974 },
 ];
 const countryList = [
   { title: "US", value: 1 },
   { title: "UK", value: 2 },
-  { title: "India", value: 3 }
+  { title: "India", value: 3 },
 ];
 
-const styles={
-  fieldWrapper: { paddingTop: 0 }
-}
+const styles = {
+  fieldWrapper: { paddingTop: 0 },
+  chipsStyle: {
+    color: "black",
+    marginTop: 5,
+    marginRight: 12,
+    backgroundColor: "#00bfff",
+  },
+};
 function ContactBasics(props) {
-  const handleCapture = ({ target }) => {
-    const fileReader = new FileReader();
-    const name = target.accept.includes("image") ? "images" : "videos";
-    fileReader.readAsDataURL(target.files[0]);
-    fileReader.onload = e => {
-      debugger;
-    };
+  const handleFileUpload = ({ target }) => {
+    const { name, files } = target;
+    var fileList = props.formikProps.values[name];
+    for (var i = 0; i < files.length; i++) {
+      fileList.push(files[i]);
+    }
+    props.formikProps.setFieldValue(name, fileList);
+  };
+  const handleDelete = (listName, e) => {
+    props.formikProps.values[listName].splice(
+      props.formikProps.values[listName].indexOf(e),
+      1
+    );
+    props.formikProps.setFieldValue(name, props.formikProps.values[listName]);
   };
   return (
     <React.Fragment>
-      <Heading title="Candidate Basics" />
       <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
         <label style={{ color: "#195091", paddingLeft: 8, paddingTop: 15 }}>
           Resume{" "}
         </label>
         <SimpleUploadLink
-          onChange={handleCapture}
+          onChange={handleFileUpload}
           labelText="Add"
           name="candidate_resume"
           id="candidate_resume"
-          accept="image/*"
-        />
+          accept=".doc,.docx,.ppt,.pdf"
+        />{" "}
+        {props.formikProps.values.candidate_resume.map((i) => (
+          <Chip
+            key={"candidate_resume_chip" + i.name}
+            size="medium"
+            label={i.name}
+            onDelete={() => handleDelete("candidate_resume", i)}
+            style={styles.chipsStyle}
+          />
+        ))}
       </Grid>
+      <Heading title="Candidate Basics" />
       <Grid item xs={6} sm={4} style={styles.fieldWrapper}>
         <Textfield
           name="fullName"
@@ -142,7 +163,7 @@ function ContactBasics(props) {
           Work Authorization Form{" "}
         </label>
         <SimpleUploadLink
-          onChange={handleCapture}
+          onChange={handleFileUpload}
           labelText="Add"
           name="workAuthForm"
           id="workAuthForm"
@@ -153,5 +174,15 @@ function ContactBasics(props) {
     </React.Fragment>
   );
 }
+
+ContactBasics.propTypes = {
+  formikProps: PropTypes.shape({
+    values: PropTypes.shape({
+      candidate_resume: PropTypes.arrayOf(PropTypes.string.isRequired),
+    }).isRequired,
+    setFieldValue: PropTypes.func.isRequired,
+  }),
+  labelText: PropTypes.string.isRequired,
+};
 
 export default ContactBasics;
