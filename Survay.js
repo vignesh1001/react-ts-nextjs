@@ -18,7 +18,7 @@ import {
   removeMetaData,
   _removeOfflineExpiredSurveys,
   updatePendingAssessmentState,
-  getAllPendingAssessments,
+  getAllPendingAssessments
 } from "../../common";
 import "./SurveyPage.css";
 import SurveySidebar from "../../components/PatientAssessments/SurveySidebar/SurveySidebar";
@@ -62,7 +62,7 @@ class SurveyPage extends Component {
       timerValue: "",
       waitingForSelection: false,
       sectionStatus: {},
-      changesSaved: false,
+      changesSaved: false
     };
 
     this.submitting = false;
@@ -85,7 +85,7 @@ class SurveyPage extends Component {
     this.sidebarRef = React.createRef();
   }
 
-  isSOC = (surveyName) => {
+  isSOC = surveyName => {
     return surveyName === "CIDP SOC" || surveyName === "CIDP Repeat Visit";
   };
 
@@ -98,7 +98,7 @@ class SurveyPage extends Component {
 
   queueAutosave = () => {
     this.setState({
-      changesSaved: true,
+      changesSaved: true
     });
     this.mapSectionStatus();
     if (!this.autoSaveTimer) {
@@ -110,7 +110,7 @@ class SurveyPage extends Component {
     // don't update local storage on auto save timer if the user has already deleted this patient's card
     if (
       getAllPendingAssessments(true).find(
-        (record) => record.MRN === this.props.patient.MRN
+        record => record.MRN === this.props.patient.MRN
       )
     ) {
       this.saveToLocalStorage();
@@ -132,7 +132,7 @@ class SurveyPage extends Component {
     }
   }
 
-  onPageClick = (e) => {
+  onPageClick = e => {
     if (this.sidebarRef && this.sidebarRef.current) {
       this.sidebarRef.current.closeSidebar();
     }
@@ -143,13 +143,13 @@ class SurveyPage extends Component {
       return;
     }
     var targObjects = {};
-    comments.forEach((comment) => {
-      this.state.pages.forEach((page) => {
-        page.questions.forEach((question) => {
+    comments.forEach(comment => {
+      this.state.pages.forEach(page => {
+        page.questions.forEach(question => {
           if (question.questionId === comment.questionId) {
-            question.groupQuestionAnswers.forEach((answer) => {
+            question.groupQuestionAnswers.forEach(answer => {
               if (answer.answerId === comment.answerId) {
-                answer.groupQuestionAnswerKeywords.forEach((kw) => {
+                answer.groupQuestionAnswerKeywords.forEach(kw => {
                   const value = kw.groupQuestionAnswerKeywordDescription;
                   var target = "INVALID_TARGET";
                   var spl = value.split("%%");
@@ -172,11 +172,11 @@ class SurveyPage extends Component {
       });
     });
     var answerCopy = this.state.answerIndexes;
-    Object.keys(targObjects).forEach((target) => {
+    Object.keys(targObjects).forEach(target => {
       const newAnswer = targObjects[target].join("; ");
       this.state.pages.forEach((page, pageIndex) => {
         page.questions.forEach((question, questionIndex) => {
-          question.groupQuestionKeywords.forEach((kw) => {
+          question.groupQuestionKeywords.forEach(kw => {
             const keyword = kw.groupQuestionKeyword;
             const value = kw.groupQuestionKeywordDescription;
             if (keyword === "CEX_CommentField") {
@@ -184,9 +184,9 @@ class SurveyPage extends Component {
                 var newObj = {
                   page: pageIndex,
                   qIndex: questionIndex,
-                  answer: newAnswer,
+                  answer: newAnswer
                 };
-                const oldAnswer = answerCopy.findIndex((obj) => {
+                const oldAnswer = answerCopy.findIndex(obj => {
                   return obj.page === pageIndex && obj.qIndex === questionIndex;
                 });
                 if (oldAnswer > -1) {
@@ -203,7 +203,7 @@ class SurveyPage extends Component {
 
     this.setState(
       {
-        answerIndexes: answerCopy,
+        answerIndexes: answerCopy
       },
       () => {
         this.saveToLocalStorage(true);
@@ -225,7 +225,7 @@ class SurveyPage extends Component {
           return true;
         }
         const answer = this.state.answerIndexes.find(
-          (ans) => ans.page === this.state.index && ans.qIndex === index
+          ans => ans.page === this.state.index && ans.qIndex === index
         );
         if (!answer || answer.answer === "" || answer.answer === "null") {
           return false;
@@ -234,7 +234,7 @@ class SurveyPage extends Component {
       }
     );
     this.setState({
-      questionsAnswered: validateCompleted,
+      questionsAnswered: validateCompleted
     });
   }
   handleAnswerChange(index, answer) {
@@ -252,7 +252,7 @@ class SurveyPage extends Component {
     const answerObject = {
       page: this.state.index,
       qIndex: index,
-      answer: answer,
+      answer: answer
     };
     var isRequired = false;
     if (
@@ -279,7 +279,7 @@ class SurveyPage extends Component {
     this.setState(
       {
         answerIndexes: answers,
-        questionsAnswered: validateCompleted,
+        questionsAnswered: validateCompleted
       },
       () => {
         this.queueAutosave();
@@ -309,13 +309,13 @@ class SurveyPage extends Component {
 
   mapSectionStatus() {
     var statuses = {};
-    this.props.assessments.forEach((asmt) => {
+    this.props.assessments.forEach(asmt => {
       var st = {};
       this.checkSavedDraftEntry(
         asmt.surveyId,
         this.props.patient.MRN,
         true
-      ).then((draft) => {
+      ).then(draft => {
         const answers = draft.answers;
 
         const pages = this.getPageArray(asmt.surveyName);
@@ -324,7 +324,7 @@ class SurveyPage extends Component {
           let curStatus = "";
           if (pageIndex > -1) {
             page.questions.forEach((question, qIndex) => {
-              question.groupQuestionKeywords.forEach((kw) => {
+              question.groupQuestionKeywords.forEach(kw => {
                 if (kw.groupQuestionKeyword === "CEX_Section") {
                   curSection = kw.groupQuestionKeywordDescription;
                   curStatus = "";
@@ -333,7 +333,7 @@ class SurveyPage extends Component {
 
               if (question.questionType !== "Label" && curSection) {
                 const answer = answers.find(
-                  (ans) => ans.page === pageIndex && ans.qIndex === qIndex
+                  ans => ans.page === pageIndex && ans.qIndex === qIndex
                 );
                 const required = question.required;
                 if (answer) {
@@ -358,7 +358,7 @@ class SurveyPage extends Component {
               const answer = answers.find(
                 // Do-While is important here
                 // eslint-disable-next-line
-                (ans) =>
+                ans =>
                   ans.page === index && ans.qIndex === controllingQuestionIndex
               );
               if (answer) {
@@ -411,7 +411,7 @@ class SurveyPage extends Component {
             MRN: this.props.patient.MRN,
             DOB: moment(new Date(Date.parse(this.props.patient.DOB))).format(
               "MM/DD/YYYY"
-            ),
+            )
           }
         );
         localStorage.setItem(
@@ -476,7 +476,7 @@ class SurveyPage extends Component {
         this.setState({
           isLoading: true,
           allQuestionsCompleted: false,
-          progress: 100,
+          progress: 100
         });
 
         localStorage.setItem(
@@ -498,7 +498,7 @@ class SurveyPage extends Component {
             this.state.survey.surveyName === REPEAT_VISIT_SURVEY
           ) {
             this.setState({
-              waitingForSelection: true,
+              waitingForSelection: true
             });
             this.setState({ isLoading: false });
             this.submitting = false;
@@ -516,12 +516,12 @@ class SurveyPage extends Component {
         this.state.pages,
         this.state.answerIndexes,
         this.props
-      ).then((completion) => {
+      ).then(completion => {
         if (!completion || completion == null) {
           this.setState({
             hasError: true,
             error:
-              "Unable to submit this survey at this time. This survey has been saved as a draft. Please resubmit at a later time.",
+              "Unable to submit this survey at this time. This survey has been saved as a draft. Please resubmit at a later time."
           });
           this.setState({ isLoading: false });
           this.submitting = false;
@@ -562,7 +562,7 @@ class SurveyPage extends Component {
             progress: 100,
             isSubmitClick: true,
             completionId: completion.completionId,
-            indexProgressStack: [],
+            indexProgressStack: []
           },
           () => {
             if (this.state.surveyList.length === 1) {
@@ -576,7 +576,7 @@ class SurveyPage extends Component {
               ) {
                 this.setState({
                   waitingForSelection: true,
-                  selectedSurvey: -1,
+                  selectedSurvey: -1
                 });
                 this.setState({ isLoading: false });
                 this.submitting = false;
@@ -592,11 +592,9 @@ class SurveyPage extends Component {
     });
   }
 
-  getNextIndex = (ind) => {
+  getNextIndex = ind => {
     const surveyIds = this.state.surveyList;
-    var curIndex = surveyIds.findIndex(
-      (id) => this.state.survey.surveyId === id
-    );
+    var curIndex = surveyIds.findIndex(id => this.state.survey.surveyId === id);
 
     if (ind) {
       curIndex = ind;
@@ -669,7 +667,7 @@ class SurveyPage extends Component {
       currentPage.questions.forEach((question, qIndex) => {
         const isRequired = question.required;
 
-        var foundObject = answerIndexes.find((answer) => {
+        var foundObject = answerIndexes.find(answer => {
           return answer.qIndex === qIndex && answer.page === this.state.index;
         });
 
@@ -677,7 +675,7 @@ class SurveyPage extends Component {
           var answerObject = {
             page: this.state.index,
             qIndex: qIndex,
-            answer: "",
+            answer: ""
           };
 
           answerIndexes.push(answerObject);
@@ -706,7 +704,7 @@ class SurveyPage extends Component {
       });
     }
 
-    //updating pending assessments even when we click on next button 
+    //updating pending assessments even when we click on next button
     updatePendingAssessmentState(
       this.props.patient.MRN,
       this.state.selectedSurvey,
@@ -716,7 +714,7 @@ class SurveyPage extends Component {
         MRN: this.props.patient.MRN,
         DOB: moment(new Date(Date.parse(this.props.patient.DOB))).format(
           "MM/DD/YYYY"
-        ),
+        )
       }
     );
 
@@ -745,7 +743,7 @@ class SurveyPage extends Component {
           if (
             this.state.pages[this.state.index].questions &&
             !this.state.pages[this.state.index].questions.find(
-              (item) => item.required
+              item => item.required
             )
           ) {
             if (this.state.index + 1 < this.state.pages.length) {
@@ -755,12 +753,13 @@ class SurveyPage extends Component {
         }
       }
       if (nextPage === -1 && !this.state.allQuestionsCompleted) {
-        this.setState({ allQuestionsCompleted: true, progress:"100" }, 
-        
-        () => {
-          this.saveToLocalStorage();
-        });
+        this.setState(
+          { allQuestionsCompleted: true, progress: "100" },
 
+          () => {
+            this.saveToLocalStorage();
+          }
+        );
       } else {
         /* reset question values back to false */
         const questionsToComplete = this.state.pages[nextPage].questions.map(
@@ -774,7 +773,7 @@ class SurveyPage extends Component {
 
         const previousPage = {
           index: this.state.index,
-          progress: this.state.progress,
+          progress: this.state.progress
         };
 
         const historyStack = this.state.indexProgressStack;
@@ -787,7 +786,7 @@ class SurveyPage extends Component {
             prevProgress: this.state.progress,
             progress: Math.round((nextPage / this.state.pages.length) * 100),
             questionsAnswered: questionsToComplete,
-            indexProgressStack: historyStack,
+            indexProgressStack: historyStack
           },
           () => {
             this.saveToLocalStorage();
@@ -851,13 +850,13 @@ class SurveyPage extends Component {
     }
 
     this.setState(
-      (state) => ({
+      state => ({
         progress: state.prevProgress,
         prevProgress: prevP,
         index: state.prevIndex,
         prevIndex: prevI,
         questionsAnswered: questionsToComplete,
-        errorFields: {},
+        errorFields: {}
       }),
       () => {
         this.divRef.current.scrollTo(0, 0);
@@ -865,9 +864,9 @@ class SurveyPage extends Component {
     );
   }
 
-  getPageArray = (surveyName) => {
+  getPageArray = surveyName => {
     const survey = this.props.assessments.find(
-      (asmt) => asmt.surveyName === surveyName
+      asmt => asmt.surveyName === surveyName
     );
     if (
       typeof survey == "undefined" ||
@@ -877,7 +876,7 @@ class SurveyPage extends Component {
     }
     const pages = [];
 
-    survey.assessmentGroups.forEach((group) => {
+    survey.assessmentGroups.forEach(group => {
       // if we are iterating through the last group (which is always called "None")
       if (group.groupName === "None") {
         // then we can end the function
@@ -886,7 +885,7 @@ class SurveyPage extends Component {
         pages.push({
           groupId: group.groupId,
           groupName: group.groupName,
-          questions: group.groupQuestions,
+          questions: group.groupQuestions
         });
       }
     });
@@ -923,7 +922,7 @@ class SurveyPage extends Component {
       {
         pages: pages,
         questionsAnswered: questionsToComplete,
-        isLoading: false,
+        isLoading: false
       },
       () => {
         this.suppressSave = false;
@@ -933,9 +932,9 @@ class SurveyPage extends Component {
   }
 
   //check if a survey's threshold has been met
-  checkThreshold = (surveyId) => {
+  checkThreshold = surveyId => {
     const assmt = this.props.assessments.find(
-      (assessment) => assessment.surveyId === surveyId
+      assessment => assessment.surveyId === surveyId
     );
     if (assmt) {
       return assmt.isTakeable;
@@ -960,12 +959,12 @@ class SurveyPage extends Component {
         hasError: false,
         allQuestionsCompleted: false,
         answerIndexes: [],
-        pages: [],
+        pages: []
       },
       () => {
         const assessments = this.props.assessments;
         let pages = [];
-        assessments.forEach((assessment) => {
+        assessments.forEach(assessment => {
           if (assessment.surveyId === selSurvey) {
             pages = this.getPageArray(assessment.surveyName);
             this.setState(
@@ -973,14 +972,14 @@ class SurveyPage extends Component {
                 waitingForSelection: false,
                 survey: assessment,
                 selectedSurvey: selSurvey,
-                SurveyTitle: assessment.surveyName,
+                SurveyTitle: assessment.surveyName
                 // isLoading: false,
               },
               () => {
                 this.checkSavedDraftEntry(
                   selSurvey,
                   this.props.patient.MRN
-                ).then((draft) => {
+                ).then(draft => {
                   this.setState(
                     {
                       answerIndexes: draft.answers || [],
@@ -988,7 +987,7 @@ class SurveyPage extends Component {
                       progress: pages
                         ? Math.round((pageIndex / pages.length) * 100)
                         : 0,
-                      changesSaved: draft.answers.length > 0,
+                      changesSaved: draft.answers.length > 0
                     },
                     () => {
                       this.initializePageArray();
@@ -1029,7 +1028,7 @@ class SurveyPage extends Component {
       }
       return {
         answers: answers,
-        progress: progress,
+        progress: progress
       };
     } else if (offlineDraft && offlineDraft.answers.length > 0) {
       return offlineDraft;
@@ -1040,19 +1039,19 @@ class SurveyPage extends Component {
           if (res != null && res.answers != null && !res.error) {
             return {
               answers: JSON.parse(res.answers),
-              progress: 0,
+              progress: 0
             };
           } else {
             return {
               answers: [],
-              progress: 0,
+              progress: 0
             };
           }
         }
       } else {
         return {
           answers: [],
-          progress: 0,
+          progress: 0
         };
       }
     }
@@ -1062,19 +1061,19 @@ class SurveyPage extends Component {
   checkSavedOfflineEntry(surveyId, mrn) {
     const keys = Object.keys(localStorage);
     const offlineKey = keys.find(
-      (key) =>
+      key =>
         key.endsWith("offline") && key.includes(surveyId) && key.includes(mrn)
     );
     if (offlineKey !== undefined) {
       const answers = JSON.parse(localStorage.getItem(offlineKey));
       return {
         answers: answers,
-        progress: 0,
+        progress: 0
       };
     }
     return {
       answers: [],
-      progress: 0,
+      progress: 0
     };
   }
 
@@ -1103,7 +1102,7 @@ class SurveyPage extends Component {
       }
 
       this.setState({
-        selectedSurvey: selSurvey,
+        selectedSurvey: selSurvey
       });
       this.loadSurvey(selSurvey);
       this.mapSectionStatus();
@@ -1115,7 +1114,7 @@ class SurveyPage extends Component {
     this.setState({
       hasError: true,
       error,
-      info,
+      info
     });
   }
 
@@ -1123,14 +1122,14 @@ class SurveyPage extends Component {
     //when we click on the survey we should make the error fields empty if there any
     //if not do, the previous error fields will be passed to the new survey
     this.setState({
-      errorFields: {},
+      errorFields: {}
     });
     if (typeof page == "number") {
       this.saveToLocalStorage();
       this.loadSurvey(surveyId, page);
       if (this.state.selectedSurvey === surveyId) {
         this.setState({
-          index: page,
+          index: page
         });
       }
       return;
@@ -1161,7 +1160,7 @@ class SurveyPage extends Component {
     this.setState({
       selectedSurveyId: surveyId,
       selectedSectionIndex,
-      selectedSectionName,
+      selectedSectionName
     });
   };
   handleNextandPrevPages = (state, nextPage) => {
@@ -1203,7 +1202,7 @@ class SurveyPage extends Component {
       return <div>{loadMessage}</div>;
     }
     //add progress object to each assessment for sidebar
-    const assessments = this.props.assessments.map((assessment) => {
+    const assessments = this.props.assessments.map(assessment => {
       var progress = localStorage.getItem(
         mrn + assessment.surveyId + "_progress"
       );
@@ -1243,7 +1242,7 @@ class SurveyPage extends Component {
     }
 
     if (this.state.hasError) {
-      return <h1 className='HeadingMediumLight'>{this.state.error}</h1>;
+      return <h1 className="HeadingMediumLight">{this.state.error}</h1>;
     }
     if (this.state.allQuestionsCompleted && this.state.progress !== 100) {
       return (
@@ -1255,7 +1254,7 @@ class SurveyPage extends Component {
           lastPage={this.lastPage}
           mrn={this.state.mrn}
           pages={this.state.pages}
-          answers={this.state.answerIndexes.filter((ans) => {
+          answers={this.state.answerIndexes.filter(ans => {
             const page = ans.page;
             const qIndex = ans.qIndex;
             const pageArr = this.state.pages[page];
@@ -1276,7 +1275,7 @@ class SurveyPage extends Component {
     }
 
     return (
-      <div id='SurveyContainer' ref={this.divRef}>
+      <div id="SurveyContainer" ref={this.divRef}>
         {sidebar}
         <div
           id={
@@ -1286,8 +1285,9 @@ class SurveyPage extends Component {
               : "SurveyPage"
           }
           style={{ clear: "both", paddingBottom: 30 }}
-          onClick={this.onPageClick}>
-          <div id='SurveyPageTextHeaderContent'>
+          onClick={this.onPageClick}
+        >
+          <div id="SurveyPageTextHeaderContent">
             <h3
               id={
                 this.state.SurveyTitle === "CIDP SOC" ||
@@ -1295,7 +1295,8 @@ class SurveyPage extends Component {
                   ? "CIDPSOCSurveyModalTitle"
                   : "SurveyModalTitle"
               }
-              className='HeadingMediumLight SurveyModalTitle'>
+              className="HeadingMediumLight SurveyModalTitle"
+            >
               {(() => {
                 if (this.state.SurveyTitle === "CIDP SOC") {
                   return "CIDP Start of Care";
@@ -1304,7 +1305,7 @@ class SurveyPage extends Component {
                 }
               })()}
             </h3>
-            <div className='HeadingSmallLight' id='ChangesSavedText'>
+            <div className="HeadingSmallLight" id="ChangesSavedText">
               {this.state.changesSaved
                 ? "Changes have been saved"
                 : "No changes made"}
@@ -1318,10 +1319,11 @@ class SurveyPage extends Component {
             style={{
               clear: "both",
               flex: 1,
-              flexDirection: "column",
+              flexDirection: "column"
             }}
             className={this.state.slideClass}
-            onClick={this.onPageClick}>
+            onClick={this.onPageClick}
+          >
             <Row>
               <Col>
                 <SurveyQuestions
@@ -1337,30 +1339,33 @@ class SurveyPage extends Component {
           <ProgressBar progress={this.state.progress} />
         </div>
         <div
-          className='BottomSeparator BottomSeperatorDiv'
-          onClick={this.onPageClick}>
+          className="BottomSeparator BottomSeperatorDiv"
+          onClick={this.onPageClick}
+        >
           <div
-            className='SecondaryLink PreviousContainer'
-            style={userIsExternal() ? { width: "90%" } : {}}>
+            className="SecondaryLink PreviousContainer"
+            style={userIsExternal() ? { width: "90%" } : {}}
+          >
             <Link
-              id='PreviousLink'
-              className='BodyLargeLight'
+              id="PreviousLink"
+              className="BodyLargeLight"
               style={{
                 color: "var(--InteractionBlue)",
                 display:
                   this.state.index === 0 || this.state.progress === 100
                     ? "none"
-                    : "block",
+                    : "block"
               }}
-              onClick={this.previousPage}>
+              onClick={this.previousPage}
+            >
               Previous
             </Link>
           </div>
           {!userIsExternal() && (
-            <div className='SecondaryLink NonPreviousContainer'>
+            <div className="SecondaryLink NonPreviousContainer">
               <Link
-                id='SaveLink'
-                className='BodyLargeLight'
+                id="SaveLink"
+                className="BodyLargeLight"
                 style={{
                   width: "100%",
                   textAlign: "right",
@@ -1369,18 +1374,20 @@ class SurveyPage extends Component {
                     this.state.SurveyTitle === "CIDP SOC" ||
                     this.state.SurveyTitle === REPEAT_VISIT_SURVEY
                       ? "none"
-                      : "block",
+                      : "block"
                 }}
-                onClick={this.saveAsDraftClick}>
+                onClick={this.saveAsDraftClick}
+              >
                 Save as draft
               </Link>
             </div>
           )}
-          <div className='SecondaryLink NonPreviousContainer'>
+          <div className="SecondaryLink NonPreviousContainer">
             <Link
-              id='NextLink'
-              className='BodyLargeBold NextLink'
-              onClick={this.nextPage}>
+              id="NextLink"
+              className="BodyLargeBold NextLink"
+              onClick={this.nextPage}
+            >
               Next
             </Link>
           </div>

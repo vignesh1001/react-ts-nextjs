@@ -7,12 +7,12 @@ import ContactBasics from "./ContactBasics";
 import EmploymentDetails from "./EmploymentDetails";
 import TechnicalProfile from "./TechnicalProfile";
 
-const styles ={
+const styles = {
   labelStyle: {
     fontSize: 14,
-    color: 'red',
+    color: "red"
   }
-}
+};
 const initialValues = {
   fullName: "Vignesh",
   emailAddress: "",
@@ -83,10 +83,11 @@ function AddCandidateForm(props) {
               style={{ backgroundColor: "#FFF", padding: "30px 30px" }}
             >
               <Grid item xs={6} sm={6}>
-                <span style={styles.labelStyle}>Full Name</span> {initialValues.fullName}
+                <span style={styles.labelStyle}>Full Name</span>{" "}
+                {initialValues.fullName}
               </Grid>
               <Grid item xs={6} sm={6}>
-              2
+                2
               </Grid>
               <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
                 <Button
