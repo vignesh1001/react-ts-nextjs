@@ -27,7 +27,7 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          <PreviewCandidate />
+          <AddCandidate />
         </Provider>
       </div>
     );

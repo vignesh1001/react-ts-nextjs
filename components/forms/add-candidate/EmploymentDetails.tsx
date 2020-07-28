@@ -3,15 +3,33 @@ import { Grid } from "@material-ui/core";
 import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
 import RadioGroupBox from "../../formfields/RadioGroupBox";
+import PropTypes from "prop-types";
 import Heading from "./Heading";
 
 const employmentType = [
-  { title: "Hourly", value: "Hourly" },
-  { title: "Yearly", value: "Yearly" },
+  { title: "W2 with Benefits", value: "W2 with Benefits" },
+  { title: "W2 Non-Benefits", value: "W2 Non-Benefits" },
+  { title: "Corp-to-Corp", value: "Corp-to-Corp" },
 ];
 const workType = [
   { title: "Hourly", value: "Hourly" },
   { title: "Yearly", value: "Yearly" },
+];
+const availabilityType = [
+  { title: "Immediate", value: "Immediate" },
+  { title: "One-week notice", value: "One-week notice" },
+  { title: "Two weeks’ notice", value: "Two weeks’ notice" },
+  { title: "Three-weeks’ notice", value: "Three-weeks’ notice" },
+  { title: "One-month notice", value: "One-month notice" },
+];
+const scType = [
+  { title: "Yes", value: "Yes" },
+  { title: "No", value: "No" },
+];
+const tpType = [
+  { title: "Yes", value: "Yes" },
+  { title: "No", value: "No" },
+  { title: "Partial", value: "Partial" },
 ];
 const openToRelocate = [
   { title: "Yes", value: "Yes" },
@@ -20,7 +38,10 @@ const openToRelocate = [
 const styles = {
   fieldWrapper: { paddingTop: 0 },
 };
-function EmploymentDetails() {
+function EmploymentDetails(props) {
+  const { formikProps } = props;
+  const isW2Benefits =
+    formikProps.values.employeementType === "W2 with Benefits";
   return (
     <React.Fragment>
       <Heading title="Employment" />
@@ -30,7 +51,7 @@ function EmploymentDetails() {
           id="employmentType"
           displayLabel="Employment Type"
           options={employmentType}
-          style={{ width: "100%", height: 32 }}
+          style={{ width: "100%", height: 49, borderRadius: 4 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -52,14 +73,44 @@ function EmploymentDetails() {
           style={{ width: 110 }}
         />
       </Grid>
-
+      {isW2Benefits && (
+        <React.Fragment>
+          <Grid item xs={3} sm={3} style={styles.fieldWrapper}>
+            <Textfield
+              name="annualBaseSalary"
+              id="annualBaseSalary"
+              variant="outlined"
+              displayLabel="Annual Base Salary"
+              maxlength="3"
+            />
+          </Grid>
+          <Grid item xs={3} sm={3} style={styles.fieldWrapper}>
+            <Textfield
+              name="annualBonusPct"
+              id="annualBonusPct"
+              variant="outlined"
+              displayLabel="Annual Bonus in %"
+              maxlength="3"
+            />
+          </Grid>
+          <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
+            <Textfield
+              name="empBenefits"
+              id="empBenefits"
+              variant="outlined"
+              displayLabel="Benefits"
+              maxlength="100"
+            />
+          </Grid>
+        </React.Fragment>
+      )}
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
         <ComboSelectBox
           name="availability"
           id="availability"
           displayLabel="Availability"
-          options={employmentType}
-          style={{ width: "100%", height: 32 }}
+          options={availabilityType}
+          style={{ width: "100%", height: 49, borderRadius: 4 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -67,8 +118,8 @@ function EmploymentDetails() {
           name="securityClearance"
           id="securityClearance"
           displayLabel="Security Clearance"
-          options={employmentType}
-          style={{ width: "100%", height: 32 }}
+          options={scType}
+          style={{ width: "100%", height: 49, borderRadius: 4 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -77,8 +128,8 @@ function EmploymentDetails() {
           id="travelPreferences"
           variant="outlined"
           displayLabel="Travel Preferences"
-          options={employmentType}
-          style={{ width: "100%", height: 32 }}
+          options={tpType}
+          style={{ width: "100%", height: 49, borderRadius: 4 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -88,11 +139,20 @@ function EmploymentDetails() {
           displayLabel="Open to Relocate"
           variant="outlined"
           options={openToRelocate}
-          style={{ width: "100%", height: 32 }}
+          style={{ width: "100%", height: 49, borderRadius: 4 }}
         />
       </Grid>
     </React.Fragment>
   );
 }
-
+EmploymentDetails.propTypes = {
+  formikProps: PropTypes.shape({
+    values: PropTypes.shape({
+      certifications: PropTypes.arrayOf(PropTypes.string),
+      education: PropTypes.arrayOf(PropTypes.string),
+      employeementType: PropTypes.string,
+    }),
+    setFieldValue: PropTypes.func.isRequired,
+  }),
+};
 export default EmploymentDetails;

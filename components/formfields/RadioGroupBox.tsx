@@ -9,7 +9,7 @@ const styles = {
   focused: true,
 
   textFiledStyle: {
-    color: "#4a4a4a",
+    color: "#1a5091",
     width: "100%",
     height: 24,
     lineHeight: 1.5,

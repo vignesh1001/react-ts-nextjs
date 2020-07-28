@@ -78,6 +78,7 @@ function TechnicalProfile(props) {
           displayLabel="Other Skills"
         />
       </Grid>
+      <Heading title="Additional Notes" />
       <Grid item xs={12} sm={12} style={styles.fieldWrapper}>
         <Textfield
           name="additionalNotes"
@@ -85,14 +86,12 @@ function TechnicalProfile(props) {
           variant="outlined"
           multiline
           rows={4}
-          displayLabel="Additional Notes"
         />
       </Grid>
       <Grid item xs={6} sm={9} style={styles.fieldWrapper}>
         <label
           style={{
-            color: "#195091",
-            paddingLeft: 8,
+            color: "#374c97",
             paddingTop: 15,
             paddingRight: 4
           }}
@@ -124,14 +123,13 @@ function TechnicalProfile(props) {
           id="yearOfCompletion"
           displayLabel="Year Of Completion"
           options={yearOfCompletion}
-          style={{ width: "100%", height: 32 }}
+          style={{ width: "100%", height: 49, borderRadius: 4 }}
         />
       </Grid>
       <Grid item xs={12} sm={12} style={styles.fieldWrapper}>
         <label
           style={{
-            color: "#195091",
-            paddingLeft: 8,
+            color: "#374c97",
             paddingTop: 15,
             paddingRight: 4
           }}
@@ -160,8 +158,7 @@ function TechnicalProfile(props) {
       <Grid item xs={12} sm={12} style={styles.fieldWrapper}>
         <label
           style={{
-            color: "#195091",
-            paddingLeft: 8,
+            color: "#374c97",
             paddingTop: 15,
             paddingRight: 4
           }}
@@ -210,7 +207,7 @@ function TechnicalProfile(props) {
                 id="referanceRelation"
                 displayLabel="Relationship"
                 options={referanceRelations}
-                style={{ width: "100%", height: 32 }}
+                style={{ width: "100%", height: 49, borderRadius: 4 }}
               />
             </Grid>
           </React.Fragment>
@@ -223,7 +220,8 @@ TechnicalProfile.propTypes = {
   formikProps: PropTypes.shape({
     values: PropTypes.shape({
       certifications: PropTypes.arrayOf(PropTypes.string),
-      education: PropTypes.arrayOf(PropTypes.string)
+      education: PropTypes.arrayOf(PropTypes.string),
+      hasReferences: PropTypes.bool.isRequired
     }),
     setFieldValue: PropTypes.func.isRequired
   })

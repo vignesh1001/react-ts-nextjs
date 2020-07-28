@@ -6,19 +6,19 @@ import SimpleUploadLink from "../../formfields/SimpleUploadLink";
 import Heading from "./Heading";
 import PropTypes from "prop-types";
 
-const top100Films = [
-  { title: "The Shawshank Redemption", value: 1994 },
-  { title: "The Godfather", value: 1972 },
-  { title: "The Godfather: Part II", value: 1974 },
+const immiStatus = [
+  { title: "US Citizen", value: "US Citizen" },
+  { title: "Green Card", value: "Green Card" },
+  { title: "H1B", value: "H1B" },
+  { title: "H4 EAD", value: "H4 EAD" },
+  { title: "OPT EAD", value: "OPT EAD" },
+  { title: "L2 EAD", value: "L2 EAD" },
+  { title: "TN Visa", value: "TN Visa" },
 ];
-const countryList = [
-  { title: "US", value: 1 },
-  { title: "UK", value: 2 },
-  { title: "India", value: 3 },
-];
+const countryList = [{ title: "USA", value: "USA" }];
 
 const styles = {
-  fieldWrapper: { paddingTop: 0 },
+  fieldWrapper: { paddingTop: 0, paddingRight: 12 },
   chipsStyle: {
     color: "black",
     marginTop: 5,
@@ -44,8 +44,8 @@ function ContactBasics(props) {
   };
   return (
     <React.Fragment>
-      <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
-        <label style={{ color: "#195091", paddingLeft: 8, paddingTop: 15 }}>
+      <Grid item xs={12} sm={12} style={{ paddingTop: 6, paddingLeft: 0 }}>
+        <label style={{ color: "#195091", fontSize: 16, paddingLeft: 2 }}>
           Resume{" "}
         </label>
         <SimpleUploadLink
@@ -127,7 +127,7 @@ function ContactBasics(props) {
           id="country"
           displayLabel="Country"
           options={countryList}
-          style={{ width: "100%", height: 32 }}
+          style={{ width: "100%", height: 49, borderRadius: 4, border: '2px solid #195091' }}
         />
       </Grid>
       <Heading title="Profile Information" />
@@ -136,8 +136,8 @@ function ContactBasics(props) {
           name="immigrationStatus"
           id="immigrationStatus"
           displayLabel="Immigration Status"
-          options={top100Films}
-          style={{ width: "100%", height: 32 }}
+          options={immiStatus}
+          style={{ width: "100%", height: 49, borderRadius: 4 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -158,8 +158,8 @@ function ContactBasics(props) {
           maxlength="3"
         />
       </Grid>
-      <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
-        <label style={{ color: "#195091", paddingLeft: 8, paddingTop: 15 }}>
+      <Grid item xs={12} sm={12} style={{ paddingTop: 6, paddingLeft: 2 }}>
+        <label style={{ color: "#374c97", paddingTop: 15 }}>
           Work Authorization Form{" "}
         </label>
         <SimpleUploadLink

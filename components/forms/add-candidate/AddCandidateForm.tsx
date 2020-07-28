@@ -6,6 +6,8 @@ import PropTypes from "prop-types";
 import ContactBasics from "./ContactBasics";
 import EmploymentDetails from "./EmploymentDetails";
 import TechnicalProfile from "./TechnicalProfile";
+import PreviewCandidate from "./PreviewCandidate";
+import { addCandidateSave } from "../../../actions";
 
 const initialValues = {
   fullName: "",
@@ -18,7 +20,10 @@ const initialValues = {
   immigrationStatus: "",
   SSN: "",
   dob: "",
-  employeementType: "",
+  employeementType: "Normal",
+  annualBaseSalary: "",
+  annualBonusPct: "",
+  empBenefits: "",
   empWorkType: "Hourly",
   rate: "",
   availability: "",
@@ -38,7 +43,10 @@ const initialValues = {
   referanceFullName: "",
   referancePosition: "",
   referancePhone: "",
-  referanceRelation: ""
+  referanceRelation: "",
+  notify: "",
+  recrutingManager: "",
+  submitToRequirement: "",
 };
 
 const validationSchema = yup.object({
@@ -57,28 +65,45 @@ const validationSchema = yup.object({
   country: yup.string("Enter your country").required("Country is required"),
   immigrationStatus: yup
     .string("Enter your Immigration Status")
-    .required("Immigration Status is required")
+    .required("Immigration Status is required"),
 });
 function AddCandidateForm(props) {
+  const [state, setState] = React.useState({ isPreview: false });
+  const togglePreviewMode = () =>
+    setState({ ...state, isPreview: !state.isPreview });
   return (
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={e => {
-        console.log(e);
+      onSubmit={(e) => {
+        togglePreviewMode();
+        props.dispatch(addCandidateSave(e));
       }}
     >
-      {formikProps => {
+      {(formikProps) => {
         return (
           <form>
             <Grid
               container
               spacing={1}
-              style={{ backgroundColor: "#FFF", padding: "30px 30px" }}
+              style={{
+                backgroundColor: "#FFF",
+                padding: "30px 90px 30px 40px",
+              }}
             >
-              <ContactBasics {...props} formikProps={formikProps} />
-              <EmploymentDetails {...props} formikProps={formikProps} />
-              <TechnicalProfile {...props} formikProps={formikProps} />
+              {state.isPreview ? (
+                <PreviewCandidate
+                  {...props}
+                  formikProps={formikProps}
+                  onEdit={togglePreviewMode}
+                />
+              ) : (
+                <React.Fragment>
+                  <ContactBasics {...props} formikProps={formikProps} />
+                  <EmploymentDetails {...props} formikProps={formikProps} />
+                  <TechnicalProfile {...props} formikProps={formikProps} />
+                </React.Fragment>
+              )}
               <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
                 <Button
                   variant="contained"
@@ -88,7 +113,7 @@ function AddCandidateForm(props) {
                     borderRadius: 4,
                     fontSize: 14,
                     color: "#FFF",
-                    backgroundColor: "#234071"
+                    backgroundColor: "#234071",
                   }}
                 >
                   Save Candidate
@@ -106,7 +131,7 @@ function AddCandidateForm(props) {
                     color: "#FFF",
                     backgroundColor: !formikProps.isValid
                       ? "#f4a0cb"
-                      : "#e32686"
+                      : "#e32686",
                   }}
                 >
                   Submit Candidate
@@ -121,7 +146,7 @@ function AddCandidateForm(props) {
 }
 
 AddCandidateForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default AddCandidateForm;
