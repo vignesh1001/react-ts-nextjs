@@ -46,7 +46,7 @@ const initialValues = {
   referanceRelation: "",
   notify: "",
   recrutingManager: "",
-  submitToRequirement: "",
+  submitToRequirement: ""
 };
 
 const validationSchema = yup.object({
@@ -57,15 +57,28 @@ const validationSchema = yup.object({
     .required("Email is required"),
   phone: yup
     .string("")
-    .min(12, "Phone must contain at least 12 characters")
+    .min(10, "Phone must contain at least 10 characters")
     .required("Enter your Phone"),
-  city: yup.string("Enter your city").required("City is required"),
-  state: yup.string("Enter your state").required("State is required"),
+  city: yup.string("Enter your City").required("City is required"),
+  state: yup.string("Enter your State").required("State is required"),
   zip: yup.string("Enter your zip").required("Zip is required"),
   country: yup.string("Enter your country").required("Country is required"),
   immigrationStatus: yup
     .string("Enter your Immigration Status")
     .required("Immigration Status is required"),
+  rate: yup.string("Enter rate").required("Rate is required"),
+  availability: yup
+    .string("Enter Availability")
+    .required("Availability is required"),
+  positionTitle: yup
+    .string("Enter your Position Title")
+    .required("Position Title is required"),
+  professionalExperience: yup
+    .string("Enter Professional Experience")
+    .required("Professional Experience is required"),
+  primarySkills: yup
+    .string("Enter Primary Skills")
+    .required("Primary Skills is required")
 });
 function AddCandidateForm(props) {
   const [state, setState] = React.useState({ isPreview: false });
@@ -75,12 +88,16 @@ function AddCandidateForm(props) {
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={(e) => {
-        togglePreviewMode();
-        props.dispatch(addCandidateSave(e));
+      onSubmit={e => {
+        if (!state.isPreview) {
+          togglePreviewMode();
+          props.dispatch(addCandidateSave(e));
+        } else {
+          alert("Handle Submit!");
+        }
       }}
     >
-      {(formikProps) => {
+      {formikProps => {
         return (
           <form>
             <Grid
@@ -88,7 +105,7 @@ function AddCandidateForm(props) {
               spacing={1}
               style={{
                 backgroundColor: "#FFF",
-                padding: "30px 90px 30px 40px",
+                padding: "30px 90px 30px 40px"
               }}
             >
               {state.isPreview ? (
@@ -105,19 +122,23 @@ function AddCandidateForm(props) {
                 </React.Fragment>
               )}
               <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
-                <Button
-                  variant="contained"
-                  style={{
-                    width: 174,
-                    height: 36,
-                    borderRadius: 4,
-                    fontSize: 14,
-                    color: "#FFF",
-                    backgroundColor: "#234071",
-                  }}
-                >
-                  Save Candidate
-                </Button>
+                (
+                {state.isPreview && (
+                  <Button
+                    variant="contained"
+                    style={{
+                      width: 174,
+                      height: 36,
+                      borderRadius: 4,
+                      fontSize: 14,
+                      color: "#FFF",
+                      backgroundColor: "#234071"
+                    }}
+                  >
+                    Save Candidate
+                  </Button>
+                )}
+                )
                 <Button
                   variant="contained"
                   disabled={!formikProps.isValid}
@@ -131,10 +152,10 @@ function AddCandidateForm(props) {
                     color: "#FFF",
                     backgroundColor: !formikProps.isValid
                       ? "#f4a0cb"
-                      : "#e32686",
+                      : "#e32686"
                   }}
                 >
-                  Submit Candidate
+                  {state.isPreview ? "Submit Candidate" : "Preview Candidate"}
                 </Button>
               </Grid>
             </Grid>
@@ -146,7 +167,7 @@ function AddCandidateForm(props) {
 }
 
 AddCandidateForm.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default AddCandidateForm;

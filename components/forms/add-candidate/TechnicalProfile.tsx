@@ -4,20 +4,8 @@ import { Grid, Chip } from "@material-ui/core";
 import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
 import PropTypes from "prop-types";
+import { yearOfCompletion,referanceRelations } from "../../../constants/dropdown";
 
-const yearOfCompletion = [
-  { title: "2000", value: "2000" },
-  { title: "2001", value: "2001" },
-  { title: "2002", value: "2002" },
-  { title: "2003", value: "2003" },
-  { title: "2004", value: "2004" }
-];
-const referanceRelations = [
-  { title: "Friend", value: "Friend" },
-  { title: "Brother", value: "Brother" },
-  { title: "Sister", value: "Sister" },
-  { title: "Uncle", value: "Uncle" }
-];
 const styles = {
   fieldWrapper: { paddingTop: 0 },
   chipsStyle: {
