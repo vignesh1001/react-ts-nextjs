@@ -138,7 +138,7 @@ function AddCandidateForm(props) {
                   disabled={!formikProps.isValid}
                   onClick={formikProps.handleSubmit}
                   style={{
-                    width: 185,
+                    width: 190,
                     height: 36,
                     borderRadius: 4,
                     fontSize: 14,

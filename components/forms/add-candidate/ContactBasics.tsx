@@ -5,17 +5,13 @@ import ComboSelectBox from "../../formfields/ComboSelectBox";
 import SimpleUploadLink from "../../formfields/SimpleUploadLink";
 import Heading from "./Heading";
 import PropTypes from "prop-types";
-
-const immiStatus = [
-  { title: "US Citizen", value: "US Citizen" },
-  { title: "Green Card", value: "Green Card" },
-  { title: "H1B", value: "H1B" },
-  { title: "H4 EAD", value: "H4 EAD" },
-  { title: "OPT EAD", value: "OPT EAD" },
-  { title: "L2 EAD", value: "L2 EAD" },
-  { title: "TN Visa", value: "TN Visa" },
-];
-const countryList = [{ title: "USA", value: "USA" }];
+import {
+  countries,
+  immiStatus,
+  USA_STATE,
+  INDIA_STATE,
+  getStateList
+} from "../../../constants/dropdown";
 
 const styles = {
   fieldWrapper: { paddingTop: 0, paddingRight: 12 },
@@ -23,9 +19,10 @@ const styles = {
     color: "black",
     marginTop: 5,
     marginRight: 12,
-    backgroundColor: "#00bfff",
-  },
+    backgroundColor: "#00bfff"
+  }
 };
+
 function ContactBasics(props) {
   const handleFileUpload = ({ target }) => {
     const { name, files } = target;
@@ -42,6 +39,7 @@ function ContactBasics(props) {
     );
     props.formikProps.setFieldValue(name, props.formikProps.values[listName]);
   };
+  const stateList = getStateList(props.formikProps.values.country);
   return (
     <React.Fragment>
       <Grid item xs={12} sm={12} style={{ paddingTop: 6, paddingLeft: 0 }}>
@@ -55,7 +53,7 @@ function ContactBasics(props) {
           id="candidate_resume"
           accept=".doc,.docx,.ppt,.pdf"
         />{" "}
-        {props.formikProps.values.candidate_resume.map((i) => (
+        {props.formikProps.values.candidate_resume.map(i => (
           <Chip
             key={"candidate_resume_chip" + i.name}
             size="medium"
@@ -95,20 +93,35 @@ function ContactBasics(props) {
       </Grid>
       <Heading title="Location" />
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
+        <ComboSelectBox
+          name="country"
+          id="country"
+          displayLabel="Country"
+          options={countries}
+          style={{
+            width: "100%",
+            height: 49,
+          }}
+        />
+      </Grid>
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
+        <ComboSelectBox
+          name="state"
+          id="state"
+          displayLabel="State"
+          options={stateList}
+          style={{
+            width: "100%",
+            height: 49,
+          }}
+        />
+      </Grid>
+      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
         <Textfield
           name="city"
           id="city"
           variant="outlined"
           displayLabel="City"
-          maxlength="12"
-        />
-      </Grid>
-      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
-        <Textfield
-          name="state"
-          id="state"
-          variant="outlined"
-          displayLabel="State"
           maxlength="12"
         />
       </Grid>
@@ -121,15 +134,6 @@ function ContactBasics(props) {
           maxlength="12"
         />
       </Grid>
-      <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
-        <ComboSelectBox
-          name="country"
-          id="country"
-          displayLabel="Country"
-          options={countryList}
-          style={{ width: "100%", height: 49, borderRadius: 4, border: '2px solid #195091' }}
-        />
-      </Grid>
       <Heading title="Profile Information" />
       <Grid item xs={12} sm={6} style={styles.fieldWrapper}>
         <ComboSelectBox
@@ -137,7 +141,7 @@ function ContactBasics(props) {
           id="immigrationStatus"
           displayLabel="Immigration Status"
           options={immiStatus}
-          style={{ width: "100%", height: 49, borderRadius: 4 }}
+          style={{ width: "100%", height: 49 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -178,11 +182,11 @@ function ContactBasics(props) {
 ContactBasics.propTypes = {
   formikProps: PropTypes.shape({
     values: PropTypes.shape({
-      candidate_resume: PropTypes.arrayOf(PropTypes.string.isRequired),
+      candidate_resume: PropTypes.arrayOf(PropTypes.string.isRequired)
     }).isRequired,
-    setFieldValue: PropTypes.func.isRequired,
+    setFieldValue: PropTypes.func.isRequired
   }),
-  labelText: PropTypes.string.isRequired,
+  labelText: PropTypes.string.isRequired
 };
 
 export default ContactBasics;

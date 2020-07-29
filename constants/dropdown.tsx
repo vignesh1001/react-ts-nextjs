@@ -1,4 +1,3 @@
-
 export const referanceRelations = [
   { title: "Friend", value: "Friend" },
   { title: "Brother", value: "Brother" },
@@ -34,7 +33,421 @@ export const openToRelocate = [
   { title: "Yes", value: "Yes" },
   { title: "No", value: "No" }
 ];
+
+export const immiStatus = [
+  { title: "US Citizen", value: "US Citizen" },
+  { title: "Green Card", value: "Green Card" },
+  { title: "H1B", value: "H1B" },
+  { title: "H4 EAD", value: "H4 EAD" },
+  { title: "OPT EAD", value: "OPT EAD" },
+  { title: "L2 EAD", value: "L2 EAD" },
+  { title: "TN Visa", value: "TN Visa" },
+];
 export const yearOfCompletion = [];
-for (var i = 1947; i < new Date().getFullYear(); i++) {
+for (var i = 1947; i <= new Date().getFullYear(); i++) {
   yearOfCompletion.push({ title: i, value: i });
+}
+
+export const countries = [
+  { title: "USA", value: "USA" },
+  { title: "India", value: "IND" }
+];
+
+export const USA_STATE = [
+  {
+    title: "Alabama",
+    value: "AL"
+  },
+  {
+    title: "Alaska",
+    value: "AK"
+  },
+  {
+    title: "American Samoa",
+    value: "AS"
+  },
+  {
+    title: "Arizona",
+    value: "AZ"
+  },
+  {
+    title: "Arkansas",
+    value: "AR"
+  },
+  {
+    title: "California",
+    value: "CA"
+  },
+  {
+    title: "Colorado",
+    value: "CO"
+  },
+  {
+    title: "Connecticut",
+    value: "CT"
+  },
+  {
+    title: "Delaware",
+    value: "DE"
+  },
+  {
+    title: "District Of Columbia",
+    value: "DC"
+  },
+  {
+    title: "Federated States Of Micronesia",
+    value: "FM"
+  },
+  {
+    title: "Florida",
+    value: "FL"
+  },
+  {
+    title: "Georgia",
+    value: "GA"
+  },
+  {
+    title: "Guam Gu",
+    value: "GU"
+  },
+  {
+    title: "Hawaii",
+    value: "HI"
+  },
+  {
+    title: "Idaho",
+    value: "ID"
+  },
+  {
+    title: "Illinois",
+    value: "IL"
+  },
+  {
+    title: "Indiana",
+    value: "IN"
+  },
+  {
+    title: "Iowa",
+    value: "IA"
+  },
+  {
+    title: "Kansas",
+    value: "KS"
+  },
+  {
+    title: "Kentucky",
+    value: "KY"
+  },
+  {
+    title: "Louisiana",
+    value: "LA"
+  },
+  {
+    title: "Maine",
+    value: "ME"
+  },
+  {
+    title: "Marshall Islands",
+    value: "MH"
+  },
+  {
+    title: "Maryland",
+    value: "MD"
+  },
+  {
+    title: "Massachusetts",
+    value: "MA"
+  },
+  {
+    title: "Michigan",
+    value: "MI"
+  },
+  {
+    title: "Minnesota",
+    value: "MN"
+  },
+  {
+    title: "Mississippi",
+    value: "MS"
+  },
+  {
+    title: "Missouri",
+    value: "MO"
+  },
+  {
+    title: "Montana",
+    value: "MT"
+  },
+  {
+    title: "Nebraska",
+    value: "NE"
+  },
+  {
+    title: "Nevada",
+    value: "NV"
+  },
+  {
+    title: "New Hampshire",
+    value: "NH"
+  },
+  {
+    title: "New Jersey",
+    value: "NJ"
+  },
+  {
+    title: "New Mexico",
+    value: "NM"
+  },
+  {
+    title: "New York",
+    value: "NY"
+  },
+  {
+    title: "North Carolina",
+    value: "NC"
+  },
+  {
+    title: "North Dakota",
+    value: "ND"
+  },
+  {
+    title: "Northern Mariana Islands",
+    value: "MP"
+  },
+  {
+    title: "Ohio",
+    value: "OH"
+  },
+  {
+    title: "Oklahoma",
+    value: "OK"
+  },
+  {
+    title: "Oregon",
+    value: "OR"
+  },
+  {
+    title: "Palau",
+    value: "PW"
+  },
+  {
+    title: "Pennsylvania",
+    value: "PA"
+  },
+  {
+    title: "Puerto Rico",
+    value: "PR"
+  },
+  {
+    title: "Rhode Island",
+    value: "RI"
+  },
+  {
+    title: "South Carolina",
+    value: "SC"
+  },
+  {
+    title: "South Dakota",
+    value: "SD"
+  },
+  {
+    title: "Tennessee",
+    value: "TN"
+  },
+  {
+    title: "Texas",
+    value: "TX"
+  },
+  {
+    title: "Utah",
+    value: "UT"
+  },
+  {
+    title: "Vermont",
+    value: "VT"
+  },
+  {
+    title: "Virgin Islands",
+    value: "VI"
+  },
+  {
+    title: "Virginia",
+    value: "VA"
+  },
+  {
+    title: "Washington",
+    value: "WA"
+  },
+  {
+    title: "West Virginia",
+    value: "WV"
+  },
+  {
+    title: "Wisconsin",
+    value: "WI"
+  },
+  {
+    title: "Wyoming",
+    value: "WY"
+  }
+];
+
+export const INDIA_STATE = [
+  {
+    value: "AN",
+    title: "Andaman and Nicobar Islands"
+  },
+  {
+    value: "AP",
+    title: "Andhra Pradesh"
+  },
+  {
+    value: "AR",
+    title: "Arunachal Pradesh"
+  },
+  {
+    value: "AS",
+    title: "Assam"
+  },
+  {
+    value: "BR",
+    title: "Bihar"
+  },
+  {
+    value: "CG",
+    title: "Chandigarh"
+  },
+  {
+    value: "CH",
+    title: "Chhattisgarh"
+  },
+  {
+    value: "DH",
+    title: "Dadra and Nagar Haveli"
+  },
+  {
+    value: "DD",
+    title: "Daman and Diu"
+  },
+  {
+    value: "DL",
+    title: "Delhi"
+  },
+  {
+    value: "GA",
+    title: "Goa"
+  },
+  {
+    value: "GJ",
+    title: "Gujarat"
+  },
+  {
+    value: "HR",
+    title: "Haryana"
+  },
+  {
+    value: "HP",
+    title: "Himachal Pradesh"
+  },
+  {
+    value: "JK",
+    title: "Jammu and Kashmir"
+  },
+  {
+    value: "JH",
+    title: "Jharkhand"
+  },
+  {
+    value: "KA",
+    title: "Karnataka"
+  },
+  {
+    value: "KL",
+    title: "Kerala"
+  },
+  {
+    value: "LD",
+    title: "Lakshadweep"
+  },
+  {
+    value: "MP",
+    title: "Madhya Pradesh"
+  },
+  {
+    value: "MH",
+    title: "Maharashtra"
+  },
+  {
+    value: "MN",
+    title: "Manipur"
+  },
+  {
+    value: "ML",
+    title: "Meghalaya"
+  },
+  {
+    value: "MZ",
+    title: "Mizoram"
+  },
+  {
+    value: "NL",
+    title: "Nagaland"
+  },
+  {
+    value: "OR",
+    title: "Odisha"
+  },
+  {
+    value: "PY",
+    title: "Puducherry"
+  },
+  {
+    value: "PB",
+    title: "Punjab"
+  },
+  {
+    value: "RJ",
+    title: "Rajasthan"
+  },
+  {
+    value: "SK",
+    title: "Sikkim"
+  },
+  {
+    value: "TN",
+    title: "Tamil Nadu"
+  },
+  {
+    value: "TS",
+    title: "Telangana"
+  },
+  {
+    value: "TR",
+    title: "Tripura"
+  },
+  {
+    value: "UK",
+    title: "Uttar Pradesh"
+  },
+  {
+    value: "UP",
+    title: "Uttarakhand"
+  },
+  {
+    value: "WB",
+    title: "West Bengal"
+  }
+];
+
+export const getStateList = (country) => {
+  switch(country){
+    case 'IND': {
+      return INDIA_STATE;
+    }
+    case 'USA': {
+      return USA_STATE;
+    }
+    default:
+      return [];
+  }
 }

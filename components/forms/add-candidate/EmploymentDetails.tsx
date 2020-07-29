@@ -29,7 +29,7 @@ function EmploymentDetails(props) {
           id="employmentType"
           displayLabel="Employment Type"
           options={employmentType}
-          style={{ width: "100%", height: 49, borderRadius: 4 }}
+          style={{ width: "100%", height: 49}}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -88,7 +88,7 @@ function EmploymentDetails(props) {
           id="availability"
           displayLabel="Availability"
           options={availabilityType}
-          style={{ width: "100%", height: 49, borderRadius: 4 }}
+          style={{ width: "100%", height: 49}}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -97,7 +97,7 @@ function EmploymentDetails(props) {
           id="securityClearance"
           displayLabel="Security Clearance"
           options={scType}
-          style={{ width: "100%", height: 49, borderRadius: 4 }}
+          style={{ width: "100%", height: 49}}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -107,7 +107,7 @@ function EmploymentDetails(props) {
           variant="outlined"
           displayLabel="Travel Preferences"
           options={tpType}
-          style={{ width: "100%", height: 49, borderRadius: 4 }}
+          style={{ width: "100%", height: 49 }}
         />
       </Grid>
       <Grid item xs={6} sm={3} style={styles.fieldWrapper}>
@@ -117,7 +117,7 @@ function EmploymentDetails(props) {
           displayLabel="Open to Relocate"
           variant="outlined"
           options={openToRelocate}
-          style={{ width: "100%", height: 49, borderRadius: 4 }}
+          style={{ width: "100%", height: 49 }}
         />
       </Grid>
     </React.Fragment>
@@ -126,8 +126,6 @@ function EmploymentDetails(props) {
 EmploymentDetails.propTypes = {
   formikProps: PropTypes.shape({
     values: PropTypes.shape({
-      certifications: PropTypes.arrayOf(PropTypes.string),
-      education: PropTypes.arrayOf(PropTypes.string),
       employmentType: PropTypes.string,
     }),
     setFieldValue: PropTypes.func.isRequired,

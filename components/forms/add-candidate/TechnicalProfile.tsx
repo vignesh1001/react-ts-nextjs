@@ -7,7 +7,7 @@ import ComboSelectBox from "../../formfields/ComboSelectBox";
 import PropTypes from "prop-types";
 import {
   yearOfCompletion,
-  referanceRelations,
+  referanceRelations
 } from "../../../constants/dropdown";
 
 const styles = {
@@ -16,8 +16,8 @@ const styles = {
     color: "black",
     marginTop: 5,
     marginRight: 12,
-    backgroundColor: "#00bfff",
-  },
+    backgroundColor: "#00bfff"
+  }
 };
 function TechnicalProfile(props) {
   const addNewItem = (listName, item) => () => {
@@ -34,12 +34,13 @@ function TechnicalProfile(props) {
       props.formikProps.values[listName]
     );
   };
-  const updateFieldElement = (listName, fieldName, idx) => (e) => {
+  const updateFieldElement = (listName, fieldName, idx) => e => {
     props.formikProps.values[listName][idx][fieldName] = e.target.value;
     props.formikProps.setFieldValue(
       listName,
       props.formikProps.values[listName]
     );
+    debugger;
   };
   return (
     <React.Fragment>
@@ -92,7 +93,7 @@ function TechnicalProfile(props) {
         <label
           style={{
             color: "#374c97",
-            paddingRight: 4,
+            paddingRight: 4
           }}
         >
           Education{" "}
@@ -101,11 +102,11 @@ function TechnicalProfile(props) {
           style={{
             color: "#f4308f",
             textDecoration: "underline",
-            cursor: "pointer",
+            cursor: "pointer"
           }}
           onClick={addNewItem("educations", {
             education: "",
-            yearOfCompletion: "",
+            yearOfCompletion: new Date().getFullYear()
           })}
         >
           Add
@@ -131,7 +132,7 @@ function TechnicalProfile(props) {
               value={item.yearOfCompletion}
               displayLabel="Year Of Completion"
               options={yearOfCompletion}
-              style={{ width: "100%", height: 49, borderRadius: 4 }}
+              style={{ width: "100%", height: 49 }}
               onChange={updateFieldElement(
                 "educations",
                 "yearOfCompletion",
@@ -152,7 +153,7 @@ function TechnicalProfile(props) {
         <label
           style={{
             color: "#374c97",
-            paddingRight: 4,
+            paddingRight: 4
           }}
         >
           Certification(s){" "}
@@ -161,11 +162,11 @@ function TechnicalProfile(props) {
           style={{
             color: "#f4308f",
             textDecoration: "underline",
-            cursor: "pointer",
+            cursor: "pointer"
           }}
           onClick={addNewItem("certifications", {
             certification: "",
-            yearOfCompletion: "",
+            yearOfCompletion: new Date().getFullYear()
           })}
         >
           Add
@@ -194,7 +195,7 @@ function TechnicalProfile(props) {
               value={item.yearOfCompletion}
               displayLabel="Year Of Completion"
               options={yearOfCompletion}
-              style={{ width: "100%", height: 49, borderRadius: 4 }}
+              style={{ width: "100%", height: 49 }}
               onChange={updateFieldElement(
                 "certifications",
                 "yearOfCompletion",
@@ -215,7 +216,7 @@ function TechnicalProfile(props) {
         <label
           style={{
             color: "#374c97",
-            paddingRight: 4,
+            paddingRight: 4
           }}
         >
           References{" "}
@@ -226,12 +227,12 @@ function TechnicalProfile(props) {
             position: "",
             relationship: "",
             phone: "",
-            email: "",
+            email: ""
           })}
           style={{
             color: "#f4308f",
             textDecoration: "underline",
-            cursor: "pointer",
+            cursor: "pointer"
           }}
         >
           Add
@@ -268,7 +269,7 @@ function TechnicalProfile(props) {
               id={"r_relationship_" + idx}
               displayLabel="Relationship"
               options={referanceRelations}
-              style={{ width: "100%", height: 49, borderRadius: 4 }}
+              style={{ width: "100%", height: 49 }}
             />
           </Grid>
           <Grid item xs={4} sm={4} style={styles.fieldWrapper}>
@@ -298,13 +299,13 @@ TechnicalProfile.propTypes = {
       certifications: PropTypes.arrayOf(
         PropTypes.shape({
           certification: PropTypes.string,
-          yearOfCompletion: PropTypes.string,
+          yearOfCompletion: PropTypes.string
         })
       ),
       educations: PropTypes.arrayOf(
         PropTypes.shape({
           education: PropTypes.string,
-          yearOfCompletion: PropTypes.string,
+          yearOfCompletion: PropTypes.string
         })
       ),
       references: PropTypes.arrayOf(
@@ -313,11 +314,11 @@ TechnicalProfile.propTypes = {
           position: PropTypes.string,
           relationship: PropTypes.string,
           phone: PropTypes.string,
-          email: PropTypes.string,
+          email: PropTypes.string
         })
-      ),
+      )
     }),
-    setFieldValue: PropTypes.func.isRequired,
-  }),
+    setFieldValue: PropTypes.func.isRequired
+  })
 };
 export default TechnicalProfile;

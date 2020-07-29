@@ -185,7 +185,7 @@ function PreviewCandidate(props) {
             name="submitToRequirement"
             id="submitToRequirement"
             displayLabel="Submit to Requirement"
-            style={{ width: "100%", height: 49, borderRadius: 4 }}
+            style={{ width: "100%", height: 49 }}
             options={[]}
           />
         </Grid>
