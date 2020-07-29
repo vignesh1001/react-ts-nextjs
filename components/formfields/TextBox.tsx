@@ -28,8 +28,8 @@ function TextBox(props) {
     <React.Fragment>
       <Box my={1}>
         <TextField
-          {...props}
           {...filed}
+          {...props}
           helperText={meta.touched ? meta.error : ""}
           error={meta.touched && Boolean(meta.error)}
           InputLabelProps={{

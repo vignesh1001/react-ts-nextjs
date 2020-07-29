@@ -2,6 +2,7 @@ import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
+import Textfield from "../../formfields/TextBox";
 
 const styles = {
   previewTitle: {
@@ -150,7 +151,7 @@ function PreviewCandidate(props) {
               </div>
               <div style={styles.section}>
                 <span style={styles.labelStyle}> Education: </span>
-                {formikProps.values.education.join(",")}
+                {formikProps.values.educations.map((i) => i.education).join()}
               </div>
               <div style={styles.section}>
                 <span style={styles.labelStyle}>Additional Notes:</span>
@@ -179,38 +180,29 @@ function PreviewCandidate(props) {
             </Button>
           </Grid>
         </Grid>
-
-        <Grid item xs={4} sm={3}>
-          <ComboSelectBox
-            name="notify"
-            id="notify"
-            displayLabel="Notify"
-            style={{ width: "100%", height: 32 }}
-            options={[]}
-            filed={formikProps.values.notify}
-            meta={formikProps.values.notify}
-          />
-        </Grid>
-        <Grid item xs={4} sm={3}>
-          <ComboSelectBox
-            name="recrutingManager"
-            id="recrutingManager"
-            displayLabel="Recruting Manager"
-            style={{ width: "100%", height: 32 }}
-            options={[]}
-            filed={formikProps.values.recrutingManager}
-            meta={formikProps.values.recrutingManager}
-          />
-        </Grid>
         <Grid item xs={4} sm={3}>
           <ComboSelectBox
             name="submitToRequirement"
             id="submitToRequirement"
             displayLabel="Submit to Requirement"
-            style={{ width: "100%", height: 32 }}
+            style={{ width: "100%", height: 49, borderRadius: 4 }}
             options={[]}
-            filed={formikProps.values.submitToRequirement}
-            meta={formikProps.values.submitToRequirement}
+          />
+        </Grid>
+        <Grid item xs={4} sm={3}>
+          <Textfield
+            name="salesLead"
+            id="salesLead"
+            variant="outlined"
+            displayLabel="Sales Lead"
+          />
+        </Grid>
+        <Grid item xs={4} sm={3}>
+          <Textfield
+            name="recruittingLead"
+            id="recruittingLead"
+            variant="outlined"
+            displayLabel="Recruitting Lead"
           />
         </Grid>
       </Grid>

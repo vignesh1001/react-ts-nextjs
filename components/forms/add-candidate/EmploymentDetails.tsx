@@ -5,43 +5,21 @@ import ComboSelectBox from "../../formfields/ComboSelectBox";
 import RadioGroupBox from "../../formfields/RadioGroupBox";
 import PropTypes from "prop-types";
 import Heading from "./Heading";
+import {
+  employmentType,
+  workType,
+  availabilityType,
+  scType,
+  tpType,
+  openToRelocate,
+} from "../../../constants/dropdown";
 
-const employmentType = [
-  { title: "W2 with Benefits", value: "W2 with Benefits" },
-  { title: "W2 Non-Benefits", value: "W2 Non-Benefits" },
-  { title: "Corp-to-Corp", value: "Corp-to-Corp" },
-];
-const workType = [
-  { title: "Hourly", value: "Hourly" },
-  { title: "Yearly", value: "Yearly" },
-];
-const availabilityType = [
-  { title: "Immediate", value: "Immediate" },
-  { title: "One-week notice", value: "One-week notice" },
-  { title: "Two weeks’ notice", value: "Two weeks’ notice" },
-  { title: "Three-weeks’ notice", value: "Three-weeks’ notice" },
-  { title: "One-month notice", value: "One-month notice" },
-];
-const scType = [
-  { title: "Yes", value: "Yes" },
-  { title: "No", value: "No" },
-];
-const tpType = [
-  { title: "Yes", value: "Yes" },
-  { title: "No", value: "No" },
-  { title: "Partial", value: "Partial" },
-];
-const openToRelocate = [
-  { title: "Yes", value: "Yes" },
-  { title: "No", value: "No" },
-];
 const styles = {
   fieldWrapper: { paddingTop: 0 },
 };
 function EmploymentDetails(props) {
   const { formikProps } = props;
-  const isW2Benefits =
-    formikProps.values.employeementType === "W2 with Benefits";
+  const isW2Benefits = formikProps.values.employmentType === "W2 with Benefits";
   return (
     <React.Fragment>
       <Heading title="Employment" />
@@ -69,7 +47,7 @@ function EmploymentDetails(props) {
           id="empWorkType"
           variant="outlined"
           options={workType}
-          color="#a40c58"
+          color="red"
           style={{ width: 110 }}
         />
       </Grid>
@@ -150,7 +128,7 @@ EmploymentDetails.propTypes = {
     values: PropTypes.shape({
       certifications: PropTypes.arrayOf(PropTypes.string),
       education: PropTypes.arrayOf(PropTypes.string),
-      employeementType: PropTypes.string,
+      employmentType: PropTypes.string,
     }),
     setFieldValue: PropTypes.func.isRequired,
   }),

@@ -35,13 +35,14 @@ function ComboSelectBox(props) {
     <React.Fragment>
       <Box my={1}>
         <Select
-          {...props}
           {...filed}
+          {...props}
           variant="outlined"
           onChange={(e) => {
             filed["value"] = e.target.value;
             filed.onChange(e);
             meta.value = e.target.value;
+            props.onChange && props.onChange(e)
           }}
           error={meta.touched && Boolean(meta.error)}
           helperText={meta.touched ? meta.error : ""}

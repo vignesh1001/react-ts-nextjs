@@ -7,15 +7,15 @@ const styles = {
   height: 24,
   labelOffset: 110,
   focused: true,
-
+  iconColor: "#ba0065",
   textFiledStyle: {
     color: "#1a5091",
     width: "100%",
     height: 24,
     lineHeight: 1.5,
     borderRadius: 6,
-    fontSize: 16,
-  },
+    fontSize: 16
+  }
 };
 function RadioGroupBox(props) {
   const [filed] = useField(props);
@@ -28,34 +28,16 @@ function RadioGroupBox(props) {
           ? { ...styles.textFiledStyle, ...props.style }
           : styles.textFiledStyle
       }
-      iconcolor="#a40c58"
-      iconStyle={{
-        style: {
-          color: "#953967",
-        },
-      }}
     >
       {props.options &&
         props.options.map((item, i) => (
           <FormControlLabel
             key={"FormControlLabel" + i}
-            iconStyle={{
-              style: {
-                color: "#953967",
-              },
-            }}
             value={item.value}
-            InputLabelProps={{
-              style: {
-                color: "#953967",
-              },
-            }}
             control={
               <Radio
-                iconStyle={{
-                  style: {
-                    color: "#953967",
-                  },
+                style={{
+                  color: styles.iconColor
                 }}
               />
             }
@@ -69,9 +51,9 @@ RadioGroupBox.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired
     })
   ),
-  style: PropTypes.shape({ color: PropTypes.string.isRequired }),
+  style: PropTypes.shape({ color: PropTypes.string.isRequired })
 };
 export default RadioGroupBox;
