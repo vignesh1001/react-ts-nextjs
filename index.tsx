@@ -4,12 +4,11 @@ import Hello from './Hello';
 import LeftFilter from './LeftFilter';
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
-import './style.css';
 import AddCandidate from './pages/AddCandidate';
-import PreviewCandidate from './pages/PreviewCandidate';
 import store from "./store";
-import { Provider } from 'react-redux'
+import { Provider } from 'react-redux';
 
+import './style.css';
 interface AppProps { }
 interface AppState {
   name: string;
@@ -27,7 +26,7 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          <AddCandidate />
+          <LeftFilter />
         </Provider>
       </div>
     );
