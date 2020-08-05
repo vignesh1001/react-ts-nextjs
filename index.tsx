@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 import Hello from './Hello';
-import LeftFilter from './LeftFilter';
+import LeftFilter from './pages/LeftFilter';
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
 import AddCandidate from './pages/AddCandidate';
@@ -26,7 +26,7 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          <LeftFilter />
+          <LeftFilter filterData={{}}/>
         </Provider>
       </div>
     );

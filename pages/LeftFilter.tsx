@@ -18,29 +18,29 @@ const buttonStyle = {
   marginRight: 12,
   backgroundColor: "#83cff6",
   fontSize: 14,
-  borderRadius: 5,
+  borderRadius: 5
 };
 const titleColor = {
   color: "#404a9b",
   fontSize: 16,
   fontWeight: 500,
   marginBottom: 30,
-  marginTop: 30,
+  marginTop: 30
 };
 const chipsStyle = {
-  ...buttonStyle,
+  ...buttonStyle
 };
 const fieldTitle = {
   color: "#195091",
   fontSize: 12,
-  paddingBottom: 8,
+  paddingBottom: 8
 };
 const searchButtonStyle = {
   backgroundColor: "#d0006b",
   fontSize: 14,
   marginTop: 16,
   width: 90,
-  height: 35,
+  height: 35
 };
 
 export default function LeftFilter(props) {
@@ -56,7 +56,7 @@ export default function LeftFilter(props) {
       : [],
     filterLocationList: props.filterData.filterLocation
       ? [props.filterData.filterLocation]
-      : [],
+      : []
     // filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
     // selectedFilterJobSites: []
   });
@@ -67,7 +67,7 @@ export default function LeftFilter(props) {
   const handleSearchIcon = () => {
     alert("You clicked the delete icon.");
   };
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { target } = e;
     const { name, value } = target;
     setState({ ...state, [name]: value });
@@ -85,7 +85,7 @@ export default function LeftFilter(props) {
       );
     }
   };
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     const { target, keyCode } = e;
     const { name, value } = target;
     if (keyCode === 13 && state[name + "List"].indexOf(value) === -1) {
@@ -115,7 +115,7 @@ export default function LeftFilter(props) {
       {() => {
         return (
           <form
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               console.log(e);
             }}
@@ -137,13 +137,13 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon onClick={handleSearchIcon} />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <FormHelperText id="helper-text-forJOb" style={fieldTitle}>
                 Filter the job by title
               </FormHelperText>
-              {state.filterTitleList.map((i) => (
+              {state.filterTitleList.map(i => (
                 <Chip
                   size="medium"
                   label={i}
@@ -171,14 +171,14 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <FormHelperText id="helper-text-filterSkills" style={fieldTitle}>
                 Filter by skill
               </FormHelperText>
             </div>
-            {state.filterSkillsList.map((i) => (
+            {state.filterSkillsList.map(i => (
               <Chip
                 size="medium"
                 label={i}
@@ -204,7 +204,7 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <FormHelperText
@@ -214,7 +214,7 @@ export default function LeftFilter(props) {
                 Filter by location
               </FormHelperText>
             </div>
-            {state.filterLocationList.map((i) => (
+            {state.filterLocationList.map(i => (
               <Chip
                 size="medium"
                 label={i}
@@ -266,7 +266,7 @@ export default function LeftFilter(props) {
   );
 }
 LeftFilter.defaultProps = {
-  handleClose: () => {},
+  handleClose: () => {}
 };
 LeftFilter.propTypes = {
   handleClose: PropTypes.func.isRequired,
@@ -274,6 +274,6 @@ LeftFilter.propTypes = {
   filterData: PropTypes.shape({
     filterTitle: PropTypes.string,
     filterSkills: PropTypes.string,
-    filterLocation: PropTypes.string,
-  }),
+    filterLocation: PropTypes.string
+  })
 };
