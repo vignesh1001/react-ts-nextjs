@@ -15,8 +15,8 @@ const styles = {
   searchTextField: {
     color: "#4a4a4a",
     width: "100%",
-    border: "none",
-  },
+    border: "none"
+  }
 };
 const initialValues = {};
 const validationSchema = yup.object({});
@@ -26,33 +26,35 @@ const buttonStyle = {
   marginRight: 12,
   backgroundColor: "#83cff6",
   fontSize: 14,
-  borderRadius: 5,
+  borderRadius: 5
 };
 const titleColor = {
   color: "#404a9b",
   fontSize: 16,
   fontWeight: 500,
   marginBottom: 30,
-  marginTop: 30,
+  marginTop: 30
 };
 const chipsStyle = {
-  ...buttonStyle,
+  ...buttonStyle
 };
 const fieldTitle = {
   color: "#195091",
   fontSize: 12,
-  paddingBottom: 8,
+  paddingBottom: 8
 };
 const searchButtonStyle = {
   backgroundColor: "#d0006b",
   fontSize: 14,
   marginTop: 16,
   width: 90,
-  height: 35,
+  height: 35
 };
 
 export default function LeftFilter(props) {
   const [state, setState] = useState({
+    isShowLoader: false,
+    isShowNoResults: false,
     filterTitle: "",
     filterSkills: "",
     filterLocation: "",
@@ -65,7 +67,7 @@ export default function LeftFilter(props) {
     filterLocationList: props.filterData.filterLocation
       ? [props.filterData.filterLocation]
       : [],
-    filterTitleEnteredValue: "",
+    filterTitleEnteredValue: ""
     // filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
     // selectedFilterJobSites: []
   });
@@ -76,7 +78,7 @@ export default function LeftFilter(props) {
   /*const handleSearchIcon = () => {
     alert("You clicked the delete icon.");
   };*/
-  const handleChange = (e) => {
+  const handleChange = e => {
     const { target } = e;
     const { name, value } = target;
     setState({ ...state, [name]: value });
@@ -98,12 +100,12 @@ export default function LeftFilter(props) {
         loadCandidates({
           filterSkills: state.filterSkillsList.join(","),
           filterTitle: { value: filterTitle },
-          filterLocation: state.filterLocationList.join(","),
+          filterLocation: state.filterLocationList.join(",")
         })
       );
     }
   };
-  const handleKeyUp = (e) => {
+  const handleKeyUp = e => {
     const { target, keyCode } = e;
     const { name, value } = target;
     if (value && keyCode === 13 && state[name + "List"].indexOf(value) === -1) {
@@ -133,29 +135,29 @@ export default function LeftFilter(props) {
       ? state.filterTitle
       : {
           title: state.filterTitleEnteredValue,
-          value: state.filterTitleEnteredValue,
+          value: state.filterTitleEnteredValue
         };
     return (
       <Autocomplete
         id="combo-box-demo"
         options={jobTitles.default}
-        getOptionLabel={(option) => option.title}
+        getOptionLabel={option => option.title}
         style={styles.searchTextField}
         onChange={(e, newValue) => {
           handleKeyUp({
             target: {
               name: "filterTitle",
-              value: newValue && newValue.value ? newValue.value : "",
+              value: newValue && newValue.value ? newValue.value : ""
             },
-            keyCode: 13,
+            keyCode: 13
           });
         }}
         freeSolo
         title={filterTitle.title}
-        onKeyUp={(e) => {
+        onKeyUp={e => {
           setState({ ...state, filterTitleEnteredValue: e.target.value });
         }}
-        renderInput={(params) => <TextField {...params} />}
+        renderInput={params => <TextField {...params} />}
       />
     );
   };
@@ -164,7 +166,7 @@ export default function LeftFilter(props) {
       {() => {
         return (
           <form
-            onSubmit={(e) => {
+            onSubmit={e => {
               e.preventDefault();
               console.log(e);
             }}
@@ -221,14 +223,14 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <FormHelperText id="helper-text-filterSkills" style={fieldTitle}>
                 Filter by skill
               </FormHelperText>
             </div>
-            {state.filterSkillsList.map((i) => (
+            {state.filterSkillsList.map(i => (
               <Chip
                 size="medium"
                 label={i}
@@ -254,7 +256,7 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  ),
+                  )
                 }}
               />
               <FormHelperText
@@ -264,7 +266,7 @@ export default function LeftFilter(props) {
                 Filter by location
               </FormHelperText>
             </div>
-            {state.filterLocationList.map((i) => (
+            {state.filterLocationList.map(i => (
               <Chip
                 size="medium"
                 label={i}
@@ -316,7 +318,7 @@ export default function LeftFilter(props) {
   );
 }
 LeftFilter.defaultProps = {
-  handleClose: () => {},
+  handleClose: () => {}
 };
 LeftFilter.propTypes = {
   handleClose: PropTypes.func.isRequired,
@@ -324,6 +326,6 @@ LeftFilter.propTypes = {
   filterData: PropTypes.shape({
     filterTitle: PropTypes.string,
     filterSkills: PropTypes.string,
-    filterLocation: PropTypes.string,
-  }),
+    filterLocation: PropTypes.string
+  })
 };
