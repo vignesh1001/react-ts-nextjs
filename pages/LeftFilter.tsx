@@ -9,7 +9,15 @@ import SearchIcon from "@material-ui/icons/Search";
 import { Chip } from "@material-ui/core";
 import React, { useState } from "react";
 import { loadCandidates } from "../actions";
-
+import Autocomplete from "@material-ui/lab/Autocomplete";
+import * as jobTitles from "../constants/jobTitles";
+const styles = {
+  searchTextField: {
+    color: "#4a4a4a",
+    width: "100%",
+    border: "none",
+  },
+};
 const initialValues = {};
 const validationSchema = yup.object({});
 
@@ -18,29 +26,29 @@ const buttonStyle = {
   marginRight: 12,
   backgroundColor: "#83cff6",
   fontSize: 14,
-  borderRadius: 5
+  borderRadius: 5,
 };
 const titleColor = {
   color: "#404a9b",
   fontSize: 16,
   fontWeight: 500,
   marginBottom: 30,
-  marginTop: 30
+  marginTop: 30,
 };
 const chipsStyle = {
-  ...buttonStyle
+  ...buttonStyle,
 };
 const fieldTitle = {
   color: "#195091",
   fontSize: 12,
-  paddingBottom: 8
+  paddingBottom: 8,
 };
 const searchButtonStyle = {
   backgroundColor: "#d0006b",
   fontSize: 14,
   marginTop: 16,
   width: 90,
-  height: 35
+  height: 35,
 };
 
 export default function LeftFilter(props) {
@@ -56,7 +64,8 @@ export default function LeftFilter(props) {
       : [],
     filterLocationList: props.filterData.filterLocation
       ? [props.filterData.filterLocation]
-      : []
+      : [],
+    filterTitleEnteredValue: "",
     // filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
     // selectedFilterJobSites: []
   });
@@ -64,14 +73,15 @@ export default function LeftFilter(props) {
     state[listName].splice(state[listName].indexOf(e), 1);
     setState({ ...state, [listName]: state[listName] });
   };
-  const handleSearchIcon = () => {
+  /*const handleSearchIcon = () => {
     alert("You clicked the delete icon.");
-  };
-  const handleChange = e => {
+  };*/
+  const handleChange = (e) => {
     const { target } = e;
     const { name, value } = target;
     setState({ ...state, [name]: value });
   };
+
   const handleOnClick = () => {
     const { dispatch, filterData } = props;
     setState({ ...state, isShowLoader: true, isShowNoResults: false });
@@ -79,16 +89,24 @@ export default function LeftFilter(props) {
       filterData.filterTitle.title === state.filterTitleList.join("")
         ? filterData.filterTitle.value
         : state.filterTitleList.join("");
-    if (filterTitle) {
+    if (
+      filterTitle ||
+      state.filterSkillsList.length ||
+      state.filterLocationList.length
+    ) {
       dispatch(
-        loadCandidates({ ...state, filterTitle: { value: filterTitle } })
+        loadCandidates({
+          filterSkills: state.filterSkillsList.join(","),
+          filterTitle: { value: filterTitle },
+          filterLocation: state.filterLocationList.join(","),
+        })
       );
     }
   };
-  const handleKeyUp = e => {
+  const handleKeyUp = (e) => {
     const { target, keyCode } = e;
     const { name, value } = target;
-    if (keyCode === 13 && state[name + "List"].indexOf(value) === -1) {
+    if (value && keyCode === 13 && state[name + "List"].indexOf(value) === -1) {
       if (name === "filterTitle" || name === "filterLocation") {
         // const { dispatch } = props;
         // store.dispatch(loadCandidates());
@@ -110,12 +128,43 @@ export default function LeftFilter(props) {
     }
     setState({...state});
   }*/
+  const renderAutoComplete = () => {
+    const filterTitle = state.filterTitle
+      ? state.filterTitle
+      : {
+          title: state.filterTitleEnteredValue,
+          value: state.filterTitleEnteredValue,
+        };
+    return (
+      <Autocomplete
+        id="combo-box-demo"
+        options={jobTitles.default}
+        getOptionLabel={(option) => option.title}
+        style={styles.searchTextField}
+        onChange={(e, newValue) => {
+          handleKeyUp({
+            target: {
+              name: "filterTitle",
+              value: newValue && newValue.value ? newValue.value : "",
+            },
+            keyCode: 13,
+          });
+        }}
+        freeSolo
+        title={filterTitle.title}
+        onKeyUp={(e) => {
+          setState({ ...state, filterTitleEnteredValue: e.target.value });
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    );
+  };
   return (
     <Formik validationSchema={validationSchema} initialValues={initialValues}>
       {() => {
         return (
           <form
-            onSubmit={e => {
+            onSubmit={(e) => {
               e.preventDefault();
               console.log(e);
             }}
@@ -124,7 +173,8 @@ export default function LeftFilter(props) {
               <InputLabel htmlFor="filterJOb" style={titleColor}>
                 Filter by Title
               </InputLabel>
-              <TextField
+              {renderAutoComplete()}
+              {/*<TextField
                 value={state.filterTitle}
                 name="filterTitle"
                 onKeyUp={handleKeyUp}
@@ -137,13 +187,13 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon onClick={handleSearchIcon} />
                     </InputAdornment>
-                  )
+                  ),
                 }}
-              />
+              />*/}
               <FormHelperText id="helper-text-forJOb" style={fieldTitle}>
                 Filter the job by title
               </FormHelperText>
-              {state.filterTitleList.map(i => (
+              {/*state.filterTitleList.map((i) => (
                 <Chip
                   size="medium"
                   label={i}
@@ -151,7 +201,7 @@ export default function LeftFilter(props) {
                   style={chipsStyle}
                   key={"filterTitleList" + i}
                 />
-              ))}
+              ))*/}
             </div>
 
             <InputLabel htmlFor="filterJOb" style={titleColor}>
@@ -171,14 +221,14 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
               <FormHelperText id="helper-text-filterSkills" style={fieldTitle}>
                 Filter by skill
               </FormHelperText>
             </div>
-            {state.filterSkillsList.map(i => (
+            {state.filterSkillsList.map((i) => (
               <Chip
                 size="medium"
                 label={i}
@@ -204,7 +254,7 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  )
+                  ),
                 }}
               />
               <FormHelperText
@@ -214,7 +264,7 @@ export default function LeftFilter(props) {
                 Filter by location
               </FormHelperText>
             </div>
-            {state.filterLocationList.map(i => (
+            {state.filterLocationList.map((i) => (
               <Chip
                 size="medium"
                 label={i}
@@ -266,7 +316,7 @@ export default function LeftFilter(props) {
   );
 }
 LeftFilter.defaultProps = {
-  handleClose: () => {}
+  handleClose: () => {},
 };
 LeftFilter.propTypes = {
   handleClose: PropTypes.func.isRequired,
@@ -274,6 +324,6 @@ LeftFilter.propTypes = {
   filterData: PropTypes.shape({
     filterTitle: PropTypes.string,
     filterSkills: PropTypes.string,
-    filterLocation: PropTypes.string
-  })
+    filterLocation: PropTypes.string,
+  }),
 };
