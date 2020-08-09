@@ -2,36 +2,36 @@ export const referanceRelations = [
   { title: "Friend", value: "Friend" },
   { title: "Brother", value: "Brother" },
   { title: "Sister", value: "Sister" },
-  { title: "Uncle", value: "Uncle" }
+  { title: "Uncle", value: "Uncle" },
 ];
 export const employmentType = [
   { title: "W2 with Benefits", value: "W2 with Benefits" },
   { title: "W2 Non-Benefits", value: "W2 Non-Benefits" },
-  { title: "Corp-to-Corp", value: "Corp-to-Corp" }
+  { title: "Corp-to-Corp", value: "Corp-to-Corp" },
 ];
 export const workType = [
   { title: "Hourly", value: "Hourly" },
-  { title: "Yearly", value: "Yearly" }
+  { title: "Yearly", value: "Yearly" },
 ];
 export const availabilityType = [
   { title: "Immediate", value: "Immediate" },
   { title: "One-week notice", value: "One-week notice" },
   { title: "Two weeks’ notice", value: "Two weeks’ notice" },
   { title: "Three-weeks’ notice", value: "Three-weeks’ notice" },
-  { title: "One-month notice", value: "One-month notice" }
+  { title: "One-month notice", value: "One-month notice" },
 ];
 export const scType = [
   { title: "Yes", value: "Yes" },
-  { title: "No", value: "No" }
+  { title: "No", value: "No" },
 ];
 export const tpType = [
   { title: "Yes", value: "Yes" },
   { title: "No", value: "No" },
-  { title: "Partial", value: "Partial" }
+  { title: "Partial", value: "Partial" },
 ];
 export const openToRelocate = [
   { title: "Yes", value: "Yes" },
-  { title: "No", value: "No" }
+  { title: "No", value: "No" },
 ];
 
 export const immiStatus = [
@@ -44,410 +44,410 @@ export const immiStatus = [
   { title: "TN Visa", value: "TN Visa" },
 ];
 export const yearOfCompletion = [];
-for (var i = 1947; i <= new Date().getFullYear(); i++) {
+for (var i = new Date().getFullYear(); i >= 1947; i--) {
   yearOfCompletion.push({ title: i, value: i });
 }
 
 export const countries = [
   { title: "USA", value: "USA" },
-  { title: "India", value: "IND" }
+  { title: "India", value: "IND" },
 ];
 
 export const USA_STATE = [
   {
     title: "Alabama",
-    value: "AL"
+    value: "AL",
   },
   {
     title: "Alaska",
-    value: "AK"
+    value: "AK",
   },
   {
     title: "American Samoa",
-    value: "AS"
+    value: "AS",
   },
   {
     title: "Arizona",
-    value: "AZ"
+    value: "AZ",
   },
   {
     title: "Arkansas",
-    value: "AR"
+    value: "AR",
   },
   {
     title: "California",
-    value: "CA"
+    value: "CA",
   },
   {
     title: "Colorado",
-    value: "CO"
+    value: "CO",
   },
   {
     title: "Connecticut",
-    value: "CT"
+    value: "CT",
   },
   {
     title: "Delaware",
-    value: "DE"
+    value: "DE",
   },
   {
     title: "District Of Columbia",
-    value: "DC"
+    value: "DC",
   },
   {
     title: "Federated States Of Micronesia",
-    value: "FM"
+    value: "FM",
   },
   {
     title: "Florida",
-    value: "FL"
+    value: "FL",
   },
   {
     title: "Georgia",
-    value: "GA"
+    value: "GA",
   },
   {
     title: "Guam Gu",
-    value: "GU"
+    value: "GU",
   },
   {
     title: "Hawaii",
-    value: "HI"
+    value: "HI",
   },
   {
     title: "Idaho",
-    value: "ID"
+    value: "ID",
   },
   {
     title: "Illinois",
-    value: "IL"
+    value: "IL",
   },
   {
     title: "Indiana",
-    value: "IN"
+    value: "IN",
   },
   {
     title: "Iowa",
-    value: "IA"
+    value: "IA",
   },
   {
     title: "Kansas",
-    value: "KS"
+    value: "KS",
   },
   {
     title: "Kentucky",
-    value: "KY"
+    value: "KY",
   },
   {
     title: "Louisiana",
-    value: "LA"
+    value: "LA",
   },
   {
     title: "Maine",
-    value: "ME"
+    value: "ME",
   },
   {
     title: "Marshall Islands",
-    value: "MH"
+    value: "MH",
   },
   {
     title: "Maryland",
-    value: "MD"
+    value: "MD",
   },
   {
     title: "Massachusetts",
-    value: "MA"
+    value: "MA",
   },
   {
     title: "Michigan",
-    value: "MI"
+    value: "MI",
   },
   {
     title: "Minnesota",
-    value: "MN"
+    value: "MN",
   },
   {
     title: "Mississippi",
-    value: "MS"
+    value: "MS",
   },
   {
     title: "Missouri",
-    value: "MO"
+    value: "MO",
   },
   {
     title: "Montana",
-    value: "MT"
+    value: "MT",
   },
   {
     title: "Nebraska",
-    value: "NE"
+    value: "NE",
   },
   {
     title: "Nevada",
-    value: "NV"
+    value: "NV",
   },
   {
     title: "New Hampshire",
-    value: "NH"
+    value: "NH",
   },
   {
     title: "New Jersey",
-    value: "NJ"
+    value: "NJ",
   },
   {
     title: "New Mexico",
-    value: "NM"
+    value: "NM",
   },
   {
     title: "New York",
-    value: "NY"
+    value: "NY",
   },
   {
     title: "North Carolina",
-    value: "NC"
+    value: "NC",
   },
   {
     title: "North Dakota",
-    value: "ND"
+    value: "ND",
   },
   {
     title: "Northern Mariana Islands",
-    value: "MP"
+    value: "MP",
   },
   {
     title: "Ohio",
-    value: "OH"
+    value: "OH",
   },
   {
     title: "Oklahoma",
-    value: "OK"
+    value: "OK",
   },
   {
     title: "Oregon",
-    value: "OR"
+    value: "OR",
   },
   {
     title: "Palau",
-    value: "PW"
+    value: "PW",
   },
   {
     title: "Pennsylvania",
-    value: "PA"
+    value: "PA",
   },
   {
     title: "Puerto Rico",
-    value: "PR"
+    value: "PR",
   },
   {
     title: "Rhode Island",
-    value: "RI"
+    value: "RI",
   },
   {
     title: "South Carolina",
-    value: "SC"
+    value: "SC",
   },
   {
     title: "South Dakota",
-    value: "SD"
+    value: "SD",
   },
   {
     title: "Tennessee",
-    value: "TN"
+    value: "TN",
   },
   {
     title: "Texas",
-    value: "TX"
+    value: "TX",
   },
   {
     title: "Utah",
-    value: "UT"
+    value: "UT",
   },
   {
     title: "Vermont",
-    value: "VT"
+    value: "VT",
   },
   {
     title: "Virgin Islands",
-    value: "VI"
+    value: "VI",
   },
   {
     title: "Virginia",
-    value: "VA"
+    value: "VA",
   },
   {
     title: "Washington",
-    value: "WA"
+    value: "WA",
   },
   {
     title: "West Virginia",
-    value: "WV"
+    value: "WV",
   },
   {
     title: "Wisconsin",
-    value: "WI"
+    value: "WI",
   },
   {
     title: "Wyoming",
-    value: "WY"
-  }
+    value: "WY",
+  },
 ];
 
 export const INDIA_STATE = [
   {
     value: "AN",
-    title: "Andaman and Nicobar Islands"
+    title: "Andaman and Nicobar Islands",
   },
   {
     value: "AP",
-    title: "Andhra Pradesh"
+    title: "Andhra Pradesh",
   },
   {
     value: "AR",
-    title: "Arunachal Pradesh"
+    title: "Arunachal Pradesh",
   },
   {
     value: "AS",
-    title: "Assam"
+    title: "Assam",
   },
   {
     value: "BR",
-    title: "Bihar"
+    title: "Bihar",
   },
   {
     value: "CG",
-    title: "Chandigarh"
+    title: "Chandigarh",
   },
   {
     value: "CH",
-    title: "Chhattisgarh"
+    title: "Chhattisgarh",
   },
   {
     value: "DH",
-    title: "Dadra and Nagar Haveli"
+    title: "Dadra and Nagar Haveli",
   },
   {
     value: "DD",
-    title: "Daman and Diu"
+    title: "Daman and Diu",
   },
   {
     value: "DL",
-    title: "Delhi"
+    title: "Delhi",
   },
   {
     value: "GA",
-    title: "Goa"
+    title: "Goa",
   },
   {
     value: "GJ",
-    title: "Gujarat"
+    title: "Gujarat",
   },
   {
     value: "HR",
-    title: "Haryana"
+    title: "Haryana",
   },
   {
     value: "HP",
-    title: "Himachal Pradesh"
+    title: "Himachal Pradesh",
   },
   {
     value: "JK",
-    title: "Jammu and Kashmir"
+    title: "Jammu and Kashmir",
   },
   {
     value: "JH",
-    title: "Jharkhand"
+    title: "Jharkhand",
   },
   {
     value: "KA",
-    title: "Karnataka"
+    title: "Karnataka",
   },
   {
     value: "KL",
-    title: "Kerala"
+    title: "Kerala",
   },
   {
     value: "LD",
-    title: "Lakshadweep"
+    title: "Lakshadweep",
   },
   {
     value: "MP",
-    title: "Madhya Pradesh"
+    title: "Madhya Pradesh",
   },
   {
     value: "MH",
-    title: "Maharashtra"
+    title: "Maharashtra",
   },
   {
     value: "MN",
-    title: "Manipur"
+    title: "Manipur",
   },
   {
     value: "ML",
-    title: "Meghalaya"
+    title: "Meghalaya",
   },
   {
     value: "MZ",
-    title: "Mizoram"
+    title: "Mizoram",
   },
   {
     value: "NL",
-    title: "Nagaland"
+    title: "Nagaland",
   },
   {
     value: "OR",
-    title: "Odisha"
+    title: "Odisha",
   },
   {
     value: "PY",
-    title: "Puducherry"
+    title: "Puducherry",
   },
   {
     value: "PB",
-    title: "Punjab"
+    title: "Punjab",
   },
   {
     value: "RJ",
-    title: "Rajasthan"
+    title: "Rajasthan",
   },
   {
     value: "SK",
-    title: "Sikkim"
+    title: "Sikkim",
   },
   {
     value: "TN",
-    title: "Tamil Nadu"
+    title: "Tamil Nadu",
   },
   {
     value: "TS",
-    title: "Telangana"
+    title: "Telangana",
   },
   {
     value: "TR",
-    title: "Tripura"
+    title: "Tripura",
   },
   {
     value: "UK",
-    title: "Uttar Pradesh"
+    title: "Uttar Pradesh",
   },
   {
     value: "UP",
-    title: "Uttarakhand"
+    title: "Uttarakhand",
   },
   {
     value: "WB",
-    title: "West Bengal"
-  }
+    title: "West Bengal",
+  },
 ];
 
 export const getStateList = (country) => {
-  switch(country){
-    case 'IND': {
+  switch (country) {
+    case "IND": {
       return INDIA_STATE;
     }
-    case 'USA': {
+    case "USA": {
       return USA_STATE;
     }
     default:
       return [];
   }
-}
+};

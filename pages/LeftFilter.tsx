@@ -1,7 +1,7 @@
 import { Formik } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
-import { InputLabel, FormHelperText } from "@material-ui/core";
+import { InputLabel, FormHelperText, Slider, Switch } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
@@ -35,6 +35,12 @@ const titleColor = {
   marginBottom: 30,
   marginTop: 30
 };
+const advancedFilterTitleColor = {
+  color: "#404a9b",
+  fontSize: 16,
+  fontWeight: 500,
+  marginBottom: 10
+};
 const chipsStyle = {
   ...buttonStyle
 };
@@ -50,9 +56,19 @@ const searchButtonStyle = {
   width: 90,
   height: 35
 };
-
+const marks = [
+  {
+    value: 0,
+    label: "0°C"
+  },
+  {
+    value: 20,
+    label: "20°C"
+  }
+];
 export default function LeftFilter(props) {
   const [state, setState] = useState({
+    isOnlyActivelyCandidate: true,
     isShowLoader: false,
     isShowNoResults: false,
     filterTitle: "",
@@ -81,7 +97,14 @@ export default function LeftFilter(props) {
   const handleChange = e => {
     const { target } = e;
     const { name, value } = target;
-    setState({ ...state, [name]: value });
+    if (name === "isOnlyActivelyCandidate") {
+      setState({
+        ...state,
+        isOnlyActivelyCandidate: !state.isOnlyActivelyCandidate
+      });
+    } else {
+      setState({ ...state, [name]: value });
+    }
   };
 
   const handleOnClick = () => {
@@ -302,15 +325,87 @@ export default function LeftFilter(props) {
                 </FormGroup>
               </FormControl>
             </div> */}
-            <Button
-              style={searchButtonStyle}
-              variant="contained"
-              color="secondary"
-              size="large"
-              onClick={handleOnClick}
-            >
-              SEARCH
-            </Button>
+
+            <div>
+              <InputLabel htmlFor="filterJOb" style={titleColor}>
+                <div style={{ width: "80%", float: "left" }}>
+                  Only Actively Looking Candidates
+                </div>
+                <div style={{ width: "20%", float: "left", marginTop: -12 }}>
+                  <Switch
+                    checked={state.isOnlyActivelyCandidate}
+                    onChange={handleChange}
+                    name="isOnlyActivelyCandidate"
+                    color="secondary"
+                    style={{ float: "right" }}
+                  />
+                </div>
+              </InputLabel>
+            </div>
+            <div style={{ width: "90%", marginLeft: 10 }}>
+              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
+                Professional Experiance
+              </InputLabel>
+              <Slider
+                defaultValue={3}
+                valueLabelFormat={value => {
+                  return `${value} Yr`;
+                }}
+                getAriaValueText={value => {
+                  return `${value} Year`;
+                }}
+                aria-labelledby="discrete-slider-restrict"
+                step={null}
+                max={20}
+                valueLabelDisplay="auto"
+                marks={[
+                  { value: 0, label: "no" },
+                  { value: 1, label: "1 yr" },
+                  { value: 3, label: "3 yr" },
+                  { value: 5, label: "5 yr" },
+                  { value: 10, label: "10 yr" },
+                  { value: 20, label: "20 yr" }
+                ]}
+              />
+            </div>
+            <div style={{ width: "90%", marginLeft: 10 }}>
+              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
+                Availability
+              </InputLabel>
+              <Slider
+                defaultValue={3}
+                valueLabelFormat={value => {
+                  return `${value} Yr`;
+                }}
+                getAriaValueText={value => {
+                  return `${value} Year`;
+                }}
+                aria-labelledby="discrete-slider-restrict"
+                step={null}
+                max={24}
+                scale={(x)=>x}
+                valueLabelDisplay="auto"
+                marks={[
+                  { value: 0, label: "now" },
+                  { value: 1, label: "1 week" },
+                  { value: 4, label: "1 mo" },
+                  { value: 8, label: "2 mo" },
+                  { value: 12, label: "3 mo" },
+                  { value: 24, label: "6 mo" }
+                ]}
+              />
+            </div>
+            <div>
+              <Button
+                style={searchButtonStyle}
+                variant="contained"
+                color="secondary"
+                size="large"
+                onClick={handleOnClick}
+              >
+                SEARCH
+              </Button>
+            </div>
           </form>
         );
       }}
