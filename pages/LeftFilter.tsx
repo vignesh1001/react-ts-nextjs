@@ -11,6 +11,8 @@ import React, { useState } from "react";
 import { loadCandidates } from "../actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import * as jobTitles from "../constants/jobTitles";
+import {professionalExp} from '../constants/dropdown';
+
 const styles = {
   searchTextField: {
     color: "#4a4a4a",
@@ -56,16 +58,7 @@ const searchButtonStyle = {
   width: 90,
   height: 35
 };
-const marks = [
-  {
-    value: 0,
-    label: "0°C"
-  },
-  {
-    value: 20,
-    label: "20°C"
-  }
-];
+
 export default function LeftFilter(props) {
   const [state, setState] = useState({
     isOnlyActivelyCandidate: true,
@@ -358,14 +351,7 @@ export default function LeftFilter(props) {
                 step={null}
                 max={20}
                 valueLabelDisplay="auto"
-                marks={[
-                  { value: 0, label: "no" },
-                  { value: 1, label: "1 yr" },
-                  { value: 3, label: "3 yr" },
-                  { value: 5, label: "5 yr" },
-                  { value: 10, label: "10 yr" },
-                  { value: 20, label: "20 yr" }
-                ]}
+                marks={professionalExp}
               />
             </div>
             <div style={{ width: "90%", marginLeft: 10 }}>

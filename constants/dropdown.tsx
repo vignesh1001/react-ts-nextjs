@@ -4,6 +4,14 @@ export const referanceRelations = [
   { title: "Sister", value: "Sister" },
   { title: "Uncle", value: "Uncle" },
 ];
+export professionalExp = [
+  { value: 0,oValue: 0, label: "no" },
+  { value: 16,oValue: 1, label: "1 yr" },
+  { value: 33,oValue: 3, label: "3 yr" },
+  { value: 49,oValue: 5, label: "5 yr" },
+  { value: 83,oValue: 10, label: "10 yr" },
+  { value: 100,oValue: 20, label: "20 yr" }
+];
 export const employmentType = [
   { title: "W2 with Benefits", value: "W2 with Benefits" },
   { title: "W2 Non-Benefits", value: "W2 Non-Benefits" },
