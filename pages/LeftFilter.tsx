@@ -11,7 +11,7 @@ import React, { useState } from "react";
 import { loadCandidates } from "../actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import * as jobTitles from "../constants/jobTitles";
-import {professionalExp} from '../constants/dropdown';
+import {professionalExpSlider,availabilitySlider} from '../constants/dropdown';
 
 const styles = {
   searchTextField: {
@@ -351,7 +351,7 @@ export default function LeftFilter(props) {
                 step={null}
                 max={20}
                 valueLabelDisplay="auto"
-                marks={professionalExp}
+                marks={professionalExpSlider}
               />
             </div>
             <div style={{ width: "90%", marginLeft: 10 }}>
@@ -371,14 +371,7 @@ export default function LeftFilter(props) {
                 max={24}
                 scale={(x)=>x}
                 valueLabelDisplay="auto"
-                marks={[
-                  { value: 0, label: "now" },
-                  { value: 1, label: "1 week" },
-                  { value: 4, label: "1 mo" },
-                  { value: 8, label: "2 mo" },
-                  { value: 12, label: "3 mo" },
-                  { value: 24, label: "6 mo" }
-                ]}
+                marks={availabilitySlider}
               />
             </div>
             <div>
