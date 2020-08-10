@@ -11,7 +11,11 @@ import React, { useState } from "react";
 import { loadCandidates } from "../actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import * as jobTitles from "../constants/jobTitles";
-import {professionalExpSlider,availabilitySlider} from '../constants/dropdown';
+import {
+  professionalExpSlider,
+  availabilitySlider,
+  backSearchSlider
+} from "../constants/dropdown";
 
 const styles = {
   searchTextField: {
@@ -76,7 +80,8 @@ export default function LeftFilter(props) {
     filterLocationList: props.filterData.filterLocation
       ? [props.filterData.filterLocation]
       : [],
-    filterTitleEnteredValue: ""
+    filterTitleEnteredValue: "",
+    backSearchRange: [33, 49]
     // filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
     // selectedFilterJobSites: []
   });
@@ -99,7 +104,12 @@ export default function LeftFilter(props) {
       setState({ ...state, [name]: value });
     }
   };
-
+  const handleSliderChange = (event, newValue) => {
+    const { id } = event;
+    setState({ ...state, [id]: newValue });
+    console.log("->", event, newValue);
+    // setValue(newValue);
+  };
   const handleOnClick = () => {
     const { dispatch, filterData } = props;
     setState({ ...state, isShowLoader: true, isShowNoResults: false });
@@ -153,6 +163,7 @@ export default function LeftFilter(props) {
           title: state.filterTitleEnteredValue,
           value: state.filterTitleEnteredValue
         };
+
     return (
       <Autocomplete
         id="combo-box-demo"
@@ -318,13 +329,44 @@ export default function LeftFilter(props) {
                 </FormGroup>
               </FormControl>
             </div> */}
-
-            <div>
+            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
+              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
+                Back Search
+              </InputLabel>
+              <Slider
+                defaultValue={33}
+                valueLabelFormat={value => {
+                  return `${
+                    backSearchSlider.find(i => i.value == value).oValue
+                  } Yr`;
+                }}
+                getAriaValueText={value => {
+                  return `${value} Year`;
+                }}
+                value={state.backSearchRange}
+                aria-labelledby="discrete-slider-restrict"
+                step={null}
+                scale={x => x}
+                valueLabelDisplay="auto"
+                marks={backSearchSlider}
+                name="backSearchRange"
+                id="backSearchRange"
+                onChange={handleSliderChange}
+              />
+            </div>
+            <div style={{ paddingBottom: 10, minHeight: 30 }}>
               <InputLabel htmlFor="filterJOb" style={titleColor}>
                 <div style={{ width: "80%", float: "left" }}>
                   Only Actively Looking Candidates
                 </div>
-                <div style={{ width: "20%", float: "left", marginTop: -12 }}>
+                <div
+                  style={{
+                    width: "20%",
+                    float: "left",
+                    marginTop: -12,
+                    textAlign: "right"
+                  }}
+                >
                   <Switch
                     checked={state.isOnlyActivelyCandidate}
                     onChange={handleChange}
@@ -335,41 +377,48 @@ export default function LeftFilter(props) {
                 </div>
               </InputLabel>
             </div>
-            <div style={{ width: "90%", marginLeft: 10 }}>
+            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
+              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
+                Legal Status
+              </InputLabel>
+            </div>
+            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
               <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
                 Professional Experiance
               </InputLabel>
               <Slider
-                defaultValue={3}
+                defaultValue={33}
                 valueLabelFormat={value => {
-                  return `${value} Yr`;
+                  return `${
+                    professionalExpSlider.find(i => i.value == value).oValue
+                  } Yr`;
                 }}
                 getAriaValueText={value => {
                   return `${value} Year`;
                 }}
                 aria-labelledby="discrete-slider-restrict"
                 step={null}
-                max={20}
                 valueLabelDisplay="auto"
                 marks={professionalExpSlider}
               />
             </div>
-            <div style={{ width: "90%", marginLeft: 10 }}>
+            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
               <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
                 Availability
               </InputLabel>
               <Slider
-                defaultValue={3}
+                defaultValue={33}
                 valueLabelFormat={value => {
-                  return `${value} Yr`;
+                  return `${
+                    availabilitySlider.find(i => i.value == value).oValue
+                  } Yr`;
                 }}
                 getAriaValueText={value => {
                   return `${value} Year`;
                 }}
                 aria-labelledby="discrete-slider-restrict"
                 step={null}
-                max={24}
-                scale={(x)=>x}
+                scale={x => x}
                 valueLabelDisplay="auto"
                 marks={availabilitySlider}
               />
