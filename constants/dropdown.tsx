@@ -1,3 +1,5 @@
+import * as skills from "./skills";
+
 export const referanceRelations = [
   { title: "Friend", value: "Friend" },
   { title: "Brother", value: "Brother" },
@@ -34,6 +36,23 @@ export const employmentType = [
   { title: "Corp-to-Corp", value: "Corp-to-Corp" }
 ];
 
+export const getSkillData = title => {
+  var list = [],
+    fList = [];
+  if (title) {
+    list = skills.default[title];
+  } else {
+    for (const item in skills.default) {
+      list = list.concat(skills.default[item]);
+    }
+  }
+  list.forEach(item => {
+    if (item && fList.indexOf(item) === -1) {
+      fList.push(item);
+    }
+  });
+  return fList;
+};
 export const workType = [
   { title: "Hourly", value: "Hourly" },
   { title: "Yearly", value: "Yearly" }

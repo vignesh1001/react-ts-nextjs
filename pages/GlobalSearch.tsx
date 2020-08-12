@@ -115,31 +115,32 @@ function GlobalSearch(props) {
       });
     }
   }, [props.candidates]);
-  const renderAutoComplete = () => {
-    const filterTitle = state.filterTitle
-      ? state.filterTitle
+
+  const renderAutoComplete = (list, listName) => {
+    const filterTitle = state[listName]
+      ? state[listName]
       : {
-          title: state.filterTitleEnteredValue,
-          value: state.filterTitleEnteredValue
+          title: state[listName + "EnteredValue"],
+          value: state[listName + "EnteredValue"]
         };
     return (
       <Autocomplete
         id="combo-box-demo"
-        options={jobTitles.default}
+        options={list}
         getOptionLabel={option => option.title}
         style={styles.searchTextField}
         onChange={(e, newValue) => {
           handleOnChange({
             target: {
               value: newValue && newValue.value ? newValue : "",
-              name: "filterTitle"
+              name: listName
             }
           });
         }}
         freeSolo
         title={filterTitle.title}
         onKeyUp={e => {
-          setState({ ...state, filterTitleEnteredValue: e.target.value });
+          setState({ ...state, [listName + "EnteredValue"]: e.target.value });
         }}
         renderInput={params => <TextField {...params} variant="outlined" />}
       />
@@ -166,7 +167,7 @@ function GlobalSearch(props) {
                 ),
               }}
             /> */}
-            {renderAutoComplete()}
+            {renderAutoComplete(jobTitles.default, "filterTitle")}
             <FormHelperText
               id="helper-text-filterTitle"
               style={styles.helperText}
@@ -175,7 +176,7 @@ function GlobalSearch(props) {
             </FormHelperText>
           </Grid>
           <Grid item lg={3}>
-            <TextField
+            {/*<TextField
               style={styles.searchTextField}
               value={state.filterSkills}
               onChange={handleOnChange}
@@ -189,7 +190,8 @@ function GlobalSearch(props) {
                   </InputAdornment>
                 )
               }}
-            />
+            />*/}
+            {renderAutoComplete(jobTitles.default, "filterSkills")}
             <FormHelperText
               id="helper-text-filterSkills"
               style={styles.helperText}
