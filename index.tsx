@@ -1,15 +1,16 @@
-import React, { Component } from 'react';
-import { render } from 'react-dom';
-import Hello from './Hello';
-import LeftFilter from './pages/LeftFilter';
+import React, { Component } from "react";
+import { render } from "react-dom";
+import Hello from "./Hello";
+import LeftFilter from "./pages/LeftFilter";
+import GlobalSearch from "./pages/GlobalSearch";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
-import AddCandidate from './pages/AddCandidate';
+import AddCandidate from "./pages/AddCandidate";
 import store from "./store";
-import { Provider } from 'react-redux';
+import { Provider } from "react-redux";
 
-import './style.css';
-interface AppProps { }
+import "./style.css";
+interface AppProps {}
 interface AppState {
   name: string;
 }
@@ -18,7 +19,7 @@ class App extends Component<AppProps, AppState> {
   constructor(props) {
     super(props);
     this.state = {
-      name: 'React'
+      name: "React"
     };
   }
 
@@ -26,11 +27,12 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          <LeftFilter filterData={{}}/>
+          {/*<LeftFilter filterData={{}} />*/}
+          <GlobalSearch />
         </Provider>
       </div>
     );
   }
 }
 
-render(<App />, document.getElementById('root'));
+render(<App />, document.getElementById("root"));
