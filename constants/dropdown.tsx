@@ -40,7 +40,7 @@ export const getSkillData = title => {
   var list = [],
     fList = [];
   if (title) {
-    list = skills.default[title];
+    list = skills.default[title.value];
   } else {
     for (const item in skills.default) {
       list = list.concat(skills.default[item]);
@@ -51,7 +51,8 @@ export const getSkillData = title => {
       fList.push(item);
     }
   });
-  return fList;
+  console.log(fList.map(item => ({ title: item, value: item })));
+  return fList.map(item => ({ title: item, value: item }));
 };
 export const workType = [
   { title: "Hourly", value: "Hourly" },

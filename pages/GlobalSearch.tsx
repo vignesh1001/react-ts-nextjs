@@ -11,8 +11,9 @@ import { connect } from "react-redux";
 import { addFilterCriteria } from "../actions";
 import Router from "next/router";
 import PropTypes from "prop-types";
-import CircularLoader from "../components/CircularLoader";
+// import CircularLoader from "../components/CircularLoader";
 import Header from "../components/Header";
+
 import * as jobTitles from "../constants/jobTitles";
 import { getSkillData } from "../constants/dropdown";
 const THEME = createMuiTheme({
@@ -65,6 +66,7 @@ function GlobalSearch(props) {
     filterTitle: "",
     filterTitleEnteredValue: "",
     filterSkills: "",
+    filterSkillsEnteredValue: "",
     filterLocation: "",
     isShowLoader: false,
     isShowNoResults: false,
@@ -74,7 +76,12 @@ function GlobalSearch(props) {
   const handleOnChange = event => {
     const { target } = event;
     const { name, value } = target;
-    setState({ ...state, [name]: value });
+    debugger;
+    if (name === "filterTitle") {
+      setState({ ...state, [name]: value, filterSkills: "" });
+    } else {
+      setState({ ...state, [name]: value });
+    }
   };
   const handleOnClick = () => {
     const { dispatch } = props;
@@ -237,7 +244,7 @@ function GlobalSearch(props) {
             </Button>
           </Grid>
         </Grid>
-        {state.isShowLoader && (
+        {/*state.isShowLoader && (
           <CircularLoader
             style={{
               width: 50,
@@ -246,7 +253,7 @@ function GlobalSearch(props) {
               marginTop: -160
             }}
           />
-        )}
+        )*/}
         {state.isShowNoResults && (
           <span style={{ color: "#666666", fontSize: 16 }}>
             No results found, please expand your search
