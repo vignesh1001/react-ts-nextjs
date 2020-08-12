@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import CircularLoader from "../components/CircularLoader";
 import Header from "../components/Header";
 import * as jobTitles from "../constants/jobTitles";
-
+import { getSkillData } from "../constants/dropdown";
 const THEME = createMuiTheme({
   typography: {
     fontFamily: "Roboto",
@@ -191,7 +191,10 @@ function GlobalSearch(props) {
                 )
               }}
             />*/}
-            {renderAutoComplete(jobTitles.default, "filterSkills")}
+            {renderAutoComplete(
+              getSkillData(state.filterTitle),
+              "filterSkills"
+            )}
             <FormHelperText
               id="helper-text-filterSkills"
               style={styles.helperText}
