@@ -33,9 +33,19 @@ export const employmentType = [
   { title: "W2 Non-Benefits", value: "W2 Non-Benefits" },
   { title: "Corp-to-Corp", value: "Corp-to-Corp" }
 ];
+
 export const workType = [
   { title: "Hourly", value: "Hourly" },
   { title: "Yearly", value: "Yearly" }
+];
+export const workingType = [
+  { title: "on site", value: "on-site" },
+  { title: "remote", value: "remote" }
+];
+export const employmentWorkingType = [
+  { title: "Fulltime", value: "Fulltime" },
+  { title: "Contract", value: "Contract" },
+  { title: "Contract to Hire", value: "ContractToHire" }
 ];
 export const availabilityType = [
   { title: "Immediate", value: "Immediate" },
