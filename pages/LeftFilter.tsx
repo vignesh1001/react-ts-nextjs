@@ -157,34 +157,37 @@ export default function LeftFilter(props) {
     setState({...state});
   }*/
   const renderAutoComplete = () => {
-    const filterTitle = state.filterTitle
-      ? state.filterTitle
+    const jobTitlesList =jobTitles.default;
+    const filterTitle = state.filterTitleList.length
+      ? jobTitlesList.find(item=>item.title===state.filterTitleList[0])
       : {
           title: state.filterTitleEnteredValue,
-          value: state.filterTitleEnteredValue
+          value: state.filterTitleEnteredValue,
         };
-
+    
+    filterTitle = jobTitlesList.find(item=>item.title==='JUNIOR DATA SCIENTIST');
     return (
       <Autocomplete
+        value={filterTitle}
         id="combo-box-demo"
-        options={jobTitles.default}
-        getOptionLabel={option => option.title}
+        options={jobTitlesList}
+        getOptionLabel={(option) => option.title}
         style={styles.searchTextField}
         onChange={(e, newValue) => {
           handleKeyUp({
             target: {
               name: "filterTitle",
-              value: newValue && newValue.value ? newValue.value : ""
+              value: newValue && newValue.value ? newValue.value : "",
             },
-            keyCode: 13
+            keyCode: 13,
           });
         }}
         freeSolo
-        title={filterTitle.title}
-        onKeyUp={e => {
+        searchText={filterTitle.title}
+        onKeyUp={(e) => {
           setState({ ...state, filterTitleEnteredValue: e.target.value });
         }}
-        renderInput={params => <TextField {...params} />}
+        renderInput={(params) => <TextField {...params}/>}
       />
     );
   };
