@@ -92,7 +92,13 @@ function GlobalSearch(props) {
           title: state.filterTitleEnteredValue,
           value: state.filterTitleEnteredValue
         };
-    dispatch(addFilterCriteria({ ...state, filterTitle }));
+    const filterSkills = state.filterSkills
+      ? state.filterSkills
+      : {
+          title: state.filterSkillsEnteredValue,
+          value: state.filterSkillsEnteredValue
+        };
+    dispatch(addFilterCriteria({ ...state, filterTitle, filterSkills }));
   };
 
   useEffect(() => {

@@ -5,7 +5,7 @@ import {
   actionTypes,
   loadCandidatesSuccess,
   loadResumeDataSuccess,
-  failure,
+  failure
 } from "./actions";
 
 es6promise.polyfill();
@@ -14,11 +14,8 @@ function* loadCandidatesSaga(filterData) {
   const { data } = filterData;
   const title = data.filterTitle ? data.filterTitle.value : "";
   try {
-    // const res = yield fetch("http://localhost:3030/candidates");
-    const res = yield fetch(
-      "https://k642djkdmf.execute-api.us-east-2.amazonaws.com/V2/candidate/search?title=" +
-        title
-    );
+    const res = yield fetch("http://localhost:3030/candidates");
+
     const data = yield res.json();
     yield put(loadCandidatesSuccess(data));
   } catch (err) {
@@ -34,27 +31,27 @@ function* loadResumesSaga() {
         labels: [
           {
             name: "Front End Developer",
-            score: 0.34,
+            score: 0.34
           },
           {
             name: "Java Developer",
-            score: 0.89,
-          },
-        ],
+            score: 0.89
+          }
+        ]
       },
       {
         fileName: "Placeholder Resume 2",
         labels: [
           {
             name: "IOS Developer",
-            score: 0.65,
+            score: 0.65
           },
           {
             name: "Android Developer",
-            score: 0.75,
-          },
-        ],
-      },
+            score: 0.75
+          }
+        ]
+      }
     ];
     yield put(loadResumeDataSuccess(resumes));
   } catch (err) {
@@ -67,7 +64,7 @@ function* rootSaga() {
   yield all([
     takeLatest(actionTypes.LOAD_CANDIDATES, loadCandidatesSaga),
     takeLatest(actionTypes.LOAD_RESUMES, loadResumesSaga),
-    takeLatest(actionTypes.ADD_FILTER_CRITERIA, loadCandidatesSaga),
+    takeLatest(actionTypes.ADD_FILTER_CRITERIA, loadCandidatesSaga)
   ]);
 }
 
