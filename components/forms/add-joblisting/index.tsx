@@ -9,7 +9,22 @@ import PositionDetails from "./PositionDetails";
 import InternalDetails from "./InternalDetails";
 import PreviewJobListing from "./PreviewJobListing";
 import { addCandidateSave } from "../../../actions";
-
+/*
+request : {
+  "requisitionNumber": "15",
+  "numberOfPositions": "1",
+  "priority": "high",
+  "clientInfo": {"clinetName": "Peterson Technology partners", "clientContact" : "999-999-9999"},
+  "location" : {"workType" : "onsite/remote", "city" : "chicago", "state" : "illinois", "zip" : "60169", "country" : "USA"},
+  "employmentType" : "Fulltime/ContractContract to Hire",
+  "duration" : "",
+  "compensationDetails" : {"wages" : "Annualy", "clientBillRate" : "", "payRate" : ""},
+  "positionDetails" : {"positionTitle" : "", "skills" : "", "requirementDescription" : "", "workAuthorizationStatus"  : "", "securityClearanceLevel" : ""},
+  "internalDetails" : {"internalContact" : "", "coOrdinator" : "", "recruitingLead" : "", "salesLead": ""},
+  "recruiters" : ["nick","jay"],
+  "action" : "ADD"
+}
+*/
 const initialValues = {
   requisitionNo: "253245342343",
   noOfPosition: "",

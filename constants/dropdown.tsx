@@ -1,4 +1,4 @@
-import * as skills from "./skills";
+import { data as skills } from "./skills";
 
 export const referanceRelations = [
   { title: "Friend", value: "Friend" },
@@ -45,10 +45,10 @@ export const getSkillData = title => {
   var list = [],
     fList = [];
   if (title) {
-    list = skills.default[title.value];
+    list = skills[title.value];
   } else {
-    for (const item in skills.default) {
-      list = list.concat(skills.default[item]);
+    for (const item in skills) {
+      list = list.concat(skills[item]);
     }
   }
   list.forEach(item => {

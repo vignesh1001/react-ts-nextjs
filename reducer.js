@@ -7,10 +7,12 @@ export const exampleInitialState = {
   isLoading: false,
   resumes: null,
   candidateModalOpen: false,
+  saveCandidateStatus: "",
   filterData: {
     filterTitle: "",
-    filterSkill: "",
+    filterSkill: ""
   },
+  addCandidate: {}
 };
 
 function reducer(state = exampleInitialState, action) {
@@ -19,47 +21,64 @@ function reducer(state = exampleInitialState, action) {
       return {
         ...state,
         error: null,
-        isLoading: true,
+        isLoading: true
       };
+
     case actionTypes.LOAD_CANDIDATES_SUCCESS:
       return {
         ...state,
         isLoading: false,
         error: null,
-        ...{ candidates: action.data },
+        candidates: action.data
       };
 
     case actionTypes.UPDATE_RESUME_DATA:
       return {
         ...state,
-        ...{ resumes: [...state.resumes, action.data] },
+        ...{ resumes: [...state.resumes, action.data] }
       };
 
     case actionTypes.LOAD_RESUME_DATA_SUCCESS:
       return {
         ...state,
-        ...{ resumes: action.data },
+        ...{ resumes: action.data }
       };
 
     case actionTypes.UI_TOGGLE_CANDIDATE_MODAL:
       return {
         ...state,
-        ...{ candidateModalOpen: !state.candidateModalOpen },
+        ...{ candidateModalOpen: !state.candidateModalOpen }
       };
 
     case actionTypes.FAILURE:
       return {
         ...state,
         isLoading: false,
-        candidates: null,
-        ...{ error: action.error },
+        candidates: { error: action.error }
       };
     case actionTypes.ADD_FILTER_CRITERIA:
       return {
         ...state,
-        ...{ filterData: action.data },
+        ...{ filterData: action.data }
       };
-
+    case actionTypes.ADD_CANDIDATE_SAVE:
+      return {
+        ...state,
+        saveCandidateStatus: "",
+        addCandidate: action.data
+      };
+    case actionTypes.SAVE_CANDIDATE_SUCCESS:
+      return {
+        ...state,
+        saveCandidateStatus: "SAVED",
+        saveCandidateResponse: action.data
+      };
+    case actionTypes.SAVE_CANDIDATE_FAILURE:
+      return {
+        ...state,
+        saveCandidateStatus: "FAILED",
+        saveCandidateResponse: action.data
+      };
     default:
       return state;
   }

@@ -29,7 +29,8 @@ class App extends Component<AppProps, AppState> {
       <div>
         <Provider store={s}>
           {/*<LeftFilter filterData={{}} />*/}
-          {/*<GlobalSearch />*/}
+          <GlobalSearch />
+          {/*<AddCandidate />*/}
           <AddJobListing />
         </Provider>
       </div>
