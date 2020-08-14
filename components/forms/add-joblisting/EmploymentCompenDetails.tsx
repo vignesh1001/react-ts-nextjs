@@ -46,7 +46,7 @@ function EmploymentCompenDetails(props) {
   return (
     <React.Fragment>
       <Heading title="Employment Type" />
-      <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
+      <Grid item xs={12} sm={6} style={styles.fieldWrapper}>
         <RadioGroupBox
           name="employeementType"
           id="employeementType"

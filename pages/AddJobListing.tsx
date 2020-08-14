@@ -1,5 +1,5 @@
 import React from "react";
-import AddCandidateForm from "../components/forms/add-candidate/AddCandidateForm";
+import AddJobListingForm from "../components/forms/add-joblisting/";
 import { Box, Grid } from "@material-ui/core";
 import Header from "../components/Header";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ function AddCandidate(props) {
               </Grid>
             </Grid>
         </Box>*/}
-      <AddCandidateForm {...props} />
+      <AddJobListingForm {...props} />
     </React.Fragment>
   );
 }

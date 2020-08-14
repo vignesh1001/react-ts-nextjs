@@ -106,7 +106,8 @@ function AddJobListingForm(props) {
                       borderRadius: 4,
                       fontSize: 14,
                       color: "#FFF",
-                      backgroundColor: "#234071"
+                      backgroundColor: "#234071",
+                      marginRight: 12
                     }}
                   >
                     Save Draft

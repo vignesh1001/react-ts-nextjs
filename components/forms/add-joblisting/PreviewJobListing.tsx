@@ -120,22 +120,6 @@ function PreviewJobListing(props) {
               </div>
             </div>
           </Grid>
-          <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
-            <Button
-              variant="contained"
-              style={{
-                width: 50,
-                height: 34,
-                borderRadius: 4,
-                fontSize: 14,
-                color: "#FFF",
-                backgroundColor: "#234071"
-              }}
-              onClick={props.onEdit}
-            >
-              EDIT
-            </Button>
-          </Grid>
           <Grid item xs={6} sm={6}>
             <h4 style={styles.headingStyle}>EMPLOYMENT TYPE</h4>
             <div>
@@ -200,8 +184,10 @@ function PreviewJobListing(props) {
             borderRadius: 8
           }}
         >
-          <h4 style={styles.headingStyle}>INTERNAL DETAILS</h4>
-          <div>
+          <Grid item xs={12} sm={12}>
+            <h4 style={styles.headingStyle}>INTERNAL DETAILS</h4>
+          </Grid>
+          <Grid item xs={12} sm={12}>
             <div style={styles.section}>
               <span style={styles.labelStyle}>Internal Contact: </span>
               {formikProps.values.internalContact}
@@ -222,7 +208,23 @@ function PreviewJobListing(props) {
               <span style={styles.labelStyle}>Assign To recruiers: </span>
               {formikProps.values.recruiters.toString()}
             </div>
-          </div>
+          </Grid>
+          <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
+            <Button
+              variant="contained"
+              style={{
+                width: 50,
+                height: 34,
+                borderRadius: 4,
+                fontSize: 14,
+                color: "#FFF",
+                backgroundColor: "#234071"
+              }}
+              onClick={props.onEdit}
+            >
+              EDIT
+            </Button>
+          </Grid>
         </Grid>
 
         <Grid item xs={12} sm={12}>
@@ -237,7 +239,7 @@ function PreviewJobListing(props) {
             variant="outlined"
             options={employmentWorkingType}
             color="red"
-            style={{ "flex-flow": "wrap" }}
+            style={{ "flex-flow": "wrap",minHeight: 50 }}
           />
         </Grid>
       </Grid>

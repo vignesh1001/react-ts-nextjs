@@ -47,7 +47,7 @@ function BasicDetails(props) {
     <React.Fragment>
       <Grid item xs={12} sm={12} style={{ paddingTop: 6, paddingLeft: 0 }}>
         <label style={{ color: "#195091", fontSize: 16, paddingLeft: 2 }}>
-          Requsition #352336435434534{" "}
+          Requsition #{props.formikProps.values.requisitionNo}
         </label>
       </Grid>
       <Heading title="Candidate Basics" />

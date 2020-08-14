@@ -4,14 +4,14 @@ import { useField } from "formik";
 import PropTypes from "prop-types";
 
 const styles = {
-  height: 24,
+  minHeight: 50,
   labelOffset: 110,
   focused: true,
   iconColor: "#ba0065",
   textFiledStyle: {
     color: "#1a5091",
     width: "100%",
-    height: 24,
+    minHeight: 24,
     lineHeight: 1.5,
     borderRadius: 6,
     fontSize: 16
