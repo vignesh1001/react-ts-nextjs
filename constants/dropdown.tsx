@@ -6,6 +6,11 @@ export const referanceRelations = [
   { title: "Sister", value: "Sister" },
   { title: "Uncle", value: "Uncle" }
 ];
+export const priority = [
+  { title: "High", value: "High" },
+  { title: "Normal", value: "Normal" },
+  { title: "Low", value: "Low" }
+];
 export const professionalExpSlider = [
   { value: 0, oValue: 0, label: "no" },
   { value: 16, oValue: 1, label: "1 yr" },
@@ -51,14 +56,13 @@ export const getSkillData = title => {
       fList.push(item);
     }
   });
-  console.log(fList.map(item => ({ title: item, value: item })));
   return fList.map(item => ({ title: item, value: item }));
 };
 export const workType = [
   { title: "Hourly", value: "Hourly" },
   { title: "Yearly", value: "Yearly" }
 ];
-export const workingType = [
+export const workLocation = [
   { title: "on site", value: "on-site" },
   { title: "remote", value: "remote" }
 ];

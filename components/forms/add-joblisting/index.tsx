@@ -11,71 +11,45 @@ import PreviewJobListing from "./PreviewJobListing";
 import { addCandidateSave } from "../../../actions";
 
 const initialValues = {
-  fullName: "",
-  emailAddress: "",
-  phone: "",
-  city: "",
-  state: "",
-  zip: "",
+  requisitionNo: "253245342343",
+  noOfPosition: "",
+  priority: "High",
+  clientName: "",
+  clientContact: "",
+  location: "on-site",
   country: "",
-  immigrationStatus: "",
-  SSN: "",
-  dob: "",
-  employmentType: "Corp-to-Corp",
-  annualBaseSalary: "",
-  annualBonusPct: "",
-  empBenefits: "",
-  empWorkType: "Hourly",
-  rate: "",
-  availability: "",
-  securityClearance: "",
-  travelPreferences: "",
-  openToRelocate: "",
+  state: "",
+  city: "",
+  zip: "",
+  employeementType: "Fulltime",
+  duration: "",
+  rateBy: "Hourly",
+  clientBillRate: "",
+  payRate: "",
   positionTitle: "",
-  professionalExperience: "",
-  primarySkills: "",
-  otherSkills: "",
-  additionalNotes: "",
-  yearOfCompletion: "",
-  educations: [],
-  certifications: [],
-  references: [],
-  candidate_resume: [],
+  skills: "",
+  requirementDescription: "",
+  workAuthorizationStatus: "",
+  securityClearanceLevel: "",
+  internalContact: "",
+  coordinator: "",
+  recruitingLead: "",
   salesLead: "",
-  recruittingLead: "",
-  submitToRequirement: ""
+  recruiters: []
 };
 
 const validationSchema = yup.object({
-  fullName: yup.string("Enter a full name").required("Name is required"),
-  emailAddress: yup
-    .string("Enter your email")
-    .email("Enter a valid email")
-    .required("Email is required"),
-  phone: yup
-    .string("")
-    .min(10, "Phone must contain at least 10 characters")
-    .required("Enter your Phone"),
+  noOfPosition: yup
+    .string("Enter a No.Of.Position")
+    .required("No.Of.Position is required"),
   city: yup.string("Enter your City").required("City is required"),
   state: yup.string("Enter your State").required("State is required"),
   zip: yup.string("Enter your zip").required("Zip is required"),
   country: yup.string("Enter your country").required("Country is required"),
-  immigrationStatus: yup
-    .string("Enter your Immigration Status")
-    .required("Immigration Status is required"),
-  rate: yup.string("Enter rate").required("Rate is required"),
-  availability: yup
-    .string("Enter Availability")
-    .required("Availability is required"),
   positionTitle: yup
     .string("Enter your Position Title")
     .required("Position Title is required"),
-  professionalExperience: yup
-    .string("Enter Professional Experience")
-    .required("Professional Experience is required"),
-  primarySkills: yup
-    .string("Enter Primary Skills")
-    .required("Primary Skills is required")
+  skills: yup.string("Enter Skills").required("Skills is required")
 });
 function AddJobListingForm(props) {
   const [state, setState] = React.useState({ isPreview: false });
@@ -140,7 +114,6 @@ function AddJobListingForm(props) {
                 )}
                 <Button
                   variant="contained"
-                  disabled={!formikProps.isValid}
                   onClick={formikProps.handleSubmit}
                   style={{
                     width: 190,

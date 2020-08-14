@@ -1,15 +1,28 @@
 import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
-import ComboSelectBox from "../../formfields/ComboSelectBox";
-import Textfield from "../../formfields/TextBox";
-
+import RadioGroupBox from "../../formfields/RadioGroupBox";
+import { employmentWorkingType } from "../../../constants/dropdown";
 const styles = {
   previewTitle: {
     margin: "10px 0",
     padding: 0,
     fontSize: 16,
     color: "#220037",
+    fontWeight: "normal"
+  },
+  jobDetailsTitle: {
+    margin: "10px 0",
+    padding: 0,
+    fontSize: 16,
+    color: "#000",
+    fontWeight: "normal"
+  },
+  publishToHeadingStyle: {
+    margin: "10px 0",
+    padding: 0,
+    fontSize: 20,
+    color: "#000",
     fontWeight: "normal"
   },
   labelStyle: {
@@ -53,24 +66,42 @@ function PreviewJobListing(props) {
             borderRadius: 8
           }}
         >
+          <Grid item xs={12} sm={12} style={{ paddingLeft: 0 }}>
+            <h4 style={styles.jobDetailsTitle}>Job Details</h4>
+          </Grid>
           <Grid item xs={6} sm={6}>
-            <h4 style={styles.headingStyle}>CANDIDATE BASICS </h4>
+            <h4 style={styles.headingStyle}>REQUISITION DETAILS</h4>
             <div>
               <div style={styles.section}>
-                <span style={styles.labelStyle}>Full Name: </span>
-                {formikProps.values.fullName}
+                <span style={styles.labelStyle}>Requisition #: </span>
+                {formikProps.values.requisitionNo}
               </div>
               <div style={styles.section}>
-                <span style={styles.labelStyle}>Email Address: </span>
-                {formikProps.values.emailAddress}
+                <span style={styles.labelStyle}>Number Of Position: </span>
+                {formikProps.values.noOfPosition}
               </div>
               <div style={styles.section}>
-                <span style={styles.labelStyle}>Phone: </span>
-                {formikProps.values.phone}
+                <span style={styles.labelStyle}>Priority: </span>
+                {formikProps.values.priority}
+              </div>
+            </div>
+            <h4 style={styles.headingStyle}>CLIENT DETAILS</h4>
+            <div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Client Name: </span>
+                {formikProps.values.clientName}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Client Contact: </span>
+                {formikProps.values.clientContact}
               </div>
             </div>
             <h4 style={styles.headingStyle}>LOCATION</h4>
             <div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Location: </span>
+                {formikProps.values.location}
+              </div>
               <div style={styles.section}>
                 <span style={styles.labelStyle}>City: </span>
                 {formikProps.values.city}
@@ -86,80 +117,6 @@ function PreviewJobListing(props) {
               <div style={styles.section}>
                 <span style={styles.labelStyle}>Country: </span>
                 {formikProps.values.country}
-              </div>
-              <div style={styles.section}>
-                <h4 style={styles.headingStyle}>PROFILE INFORMATION</h4>
-                <span style={styles.labelStyle}>Immigration Status:</span>
-                {formikProps.values.immigrationStatus}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>SSN: </span>
-                {formikProps.values.SSN}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Date Of birth: </span>
-                {formikProps.values.dob}
-              </div>
-            </div>
-          </Grid>
-
-          <Grid item xs={6} sm={6}>
-            <h4 style={styles.headingStyle}>EMPLOYMENT</h4>
-            <div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Employeement Type:</span>
-                {formikProps.values.employeementType}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}> Rate: </span>
-                {formikProps.values.rate}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}> Availability: </span>
-                {formikProps.values.availability}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Security Clearance:</span>
-                {formikProps.values.securityClearance}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Travel Preferences:</span>
-                {formikProps.values.travelPreferences}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Open To Relocate: </span>
-                {formikProps.values.openToRelocate}
-              </div>
-            </div>
-            <h4 style={styles.headingStyle}>TECHNICAL PROFILE</h4>
-            <div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}> Position Title: </span>
-                {formikProps.values.positionTitle}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Professional Experience:</span>
-                {formikProps.values.professionalExperience}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Primary Skils: </span>
-                {formikProps.values.primarySkills}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Other Skills: </span>
-                {formikProps.values.otherSkills}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}> Education: </span>
-                {formikProps.values.educations.map(i => i.education).join()}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Additional Notes:</span>
-                {formikProps.values.additionalNotes}
-              </div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Year Of Completion:</span>
-                {formikProps.values.yearOfCompletion}
               </div>
             </div>
           </Grid>
@@ -179,30 +136,108 @@ function PreviewJobListing(props) {
               EDIT
             </Button>
           </Grid>
+          <Grid item xs={6} sm={6}>
+            <h4 style={styles.headingStyle}>EMPLOYMENT TYPE</h4>
+            <div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Employeement Type:</span>
+                {formikProps.values.employeementType}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Duration: </span>
+                {formikProps.values.duration}
+              </div>
+            </div>
+            <h4 style={styles.headingStyle}>COMPENSATION DETAILS</h4>
+            <div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Rate By: </span>
+                {formikProps.values.rateBy}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Client Bill Rate:</span>
+                {formikProps.values.clientBillRate}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Pay Rate:</span>
+                {formikProps.values.payRate}
+              </div>
+            </div>
+            <h4 style={styles.headingStyle}>POSITION DETAILS</h4>
+            <div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Position Title: </span>
+                {formikProps.values.positionTitle}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Skills:</span>
+                {formikProps.values.skills}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>Requirement Description: </span>
+                {formikProps.values.requirementDescription}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>
+                  Work Authorization Status:{" "}
+                </span>
+                {formikProps.values.workAuthorizationStatus}
+              </div>
+              <div style={styles.section}>
+                <span style={styles.labelStyle}>
+                  Security Clearance Level:{" "}
+                </span>
+                {formikProps.values.securityClearanceLevel}
+              </div>
+            </div>
+          </Grid>
         </Grid>
-        <Grid item xs={4} sm={3}>
-          <ComboSelectBox
-            name="submitToRequirement"
-            id="submitToRequirement"
-            displayLabel="Submit to Requirement"
-            style={{ width: "100%", height: 49 }}
-            options={[]}
-          />
+        <Grid
+          container
+          style={{
+            backgroundColor: "#f2fbff",
+            padding: 16,
+            borderRadius: 8
+          }}
+        >
+          <h4 style={styles.headingStyle}>INTERNAL DETAILS</h4>
+          <div>
+            <div style={styles.section}>
+              <span style={styles.labelStyle}>Internal Contact: </span>
+              {formikProps.values.internalContact}
+            </div>
+            <div style={styles.section}>
+              <span style={styles.labelStyle}>Co-ordinator: </span>
+              {formikProps.values.coordinator}
+            </div>
+            <div style={styles.section}>
+              <span style={styles.labelStyle}>Recruitting Lead: </span>
+              {formikProps.values.recruitingLead}
+            </div>
+            <div style={styles.section}>
+              <span style={styles.labelStyle}>Sales Lead: </span>
+              {formikProps.values.salesLead}
+            </div>
+            <div style={styles.section}>
+              <span style={styles.labelStyle}>Assign To recruiers: </span>
+              {formikProps.values.recruiters.toString()}
+            </div>
+          </div>
         </Grid>
-        <Grid item xs={4} sm={3}>
-          <Textfield
-            name="salesLead"
-            id="salesLead"
+
+        <Grid item xs={12} sm={12}>
+          <h4 style={styles.publishToHeadingStyle}>
+            Publish to external Job Listing Boards
+          </h4>
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          <RadioGroupBox
+            name="jobListingBoard"
+            id="jobListingBoard"
             variant="outlined"
-            displayLabel="Sales Lead"
-          />
-        </Grid>
-        <Grid item xs={4} sm={3}>
-          <Textfield
-            name="recruittingLead"
-            id="recruittingLead"
-            variant="outlined"
-            displayLabel="Recruitting Lead"
+            options={employmentWorkingType}
+            color="red"
+            style={{ "flex-flow": "wrap" }}
           />
         </Grid>
       </Grid>
@@ -210,7 +245,7 @@ function PreviewJobListing(props) {
   );
 }
 
-PreviewCandidate.propTypes = {
+PreviewJobListing.propTypes = {
   onEdit: PropTypes.func.isRequired,
   formikProps: {
     values: PropTypes.shape({
