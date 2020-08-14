@@ -48,12 +48,12 @@ function EmploymentCompenDetails(props) {
       <Heading title="Employment Type" />
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
         <RadioGroupBox
-          name="employmentWorkingType"
-          id="employmentWorkingType"
+          name="employeementType"
+          id="employeementType"
           variant="outlined"
           options={employmentWorkingType}
           color="red"
-          style={{ width: 110 }}
+          style={{ "flex-flow": "wrap" }}
         />
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
@@ -71,8 +71,8 @@ function EmploymentCompenDetails(props) {
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
         <RadioGroupBox
-          name="compensationWorkType"
-          id="compensationWorkType"
+          name="rateBy"
+          id="rateBy"
           variant="outlined"
           options={workType}
           color="red"
@@ -80,33 +80,21 @@ function EmploymentCompenDetails(props) {
         />
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
-        <ComboSelectBox
-          name="state"
-          id="state"
-          displayLabel="State"
-          options={stateList}
-          style={{
-            width: "100%",
-            height: 49
-          }}
+        <Textfield
+          name="clientBillRate"
+          id="clientBillRate"
+          displayLabel="Client Bill Rate"
+          variant="outlined"
+          maxlength="3"
         />
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
         <Textfield
-          name="city"
-          id="city"
+          name="payRate"
+          id="payRate"
           variant="outlined"
-          displayLabel="City"
-          maxlength="12"
-        />
-      </Grid>
-      <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
-        <Textfield
-          name="zip"
-          id="zip"
-          variant="outlined"
-          displayLabel="Zip"
-          maxlength="12"
+          displayLabel="Pay Rate"
+          maxlength="6"
         />
       </Grid>
     </React.Fragment>

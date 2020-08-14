@@ -12,7 +12,8 @@ import {
   USA_STATE,
   INDIA_STATE,
   getStateList,
-  workingType
+  workLocation,
+  priority
 } from "../../../constants/dropdown";
 
 const styles = {
@@ -52,6 +53,7 @@ function BasicDetails(props) {
       <Heading title="Candidate Basics" />
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
         <Textfield
+          type="number"
           name="noOfPosition"
           id="noOfPosition"
           variant="outlined"
@@ -65,7 +67,7 @@ function BasicDetails(props) {
           name="priority"
           id="priority"
           displayLabel="Priority"
-          options={countries}
+          options={priority}
           style={{
             width: "100%",
             height: 49
@@ -102,10 +104,10 @@ function BasicDetails(props) {
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
         <RadioGroupBox
-          name="empWorkType"
-          id="empWorkType"
+          name="location"
+          id="location"
           variant="outlined"
-          options={workingType}
+          options={workLocation}
           color="red"
           style={{ width: 110 }}
         />
@@ -149,7 +151,7 @@ function BasicDetails(props) {
           id="zip"
           variant="outlined"
           displayLabel="Zip"
-          maxlength="12"
+          maxlength="6"
         />
       </Grid>
     </React.Fragment>
