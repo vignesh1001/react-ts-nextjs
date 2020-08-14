@@ -3,6 +3,7 @@ import { render } from "react-dom";
 import Hello from "./Hello";
 import LeftFilter from "./pages/LeftFilter";
 import GlobalSearch from "./pages/GlobalSearch";
+import AddJobListing from "./pages/AddJobListing";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
 import AddCandidate from "./pages/AddCandidate";
@@ -28,7 +29,8 @@ class App extends Component<AppProps, AppState> {
       <div>
         <Provider store={s}>
           {/*<LeftFilter filterData={{}} />*/}
-          <GlobalSearch />
+          {/*<GlobalSearch />*/}
+          <AddJobListing />
         </Provider>
       </div>
     );
