@@ -8,6 +8,7 @@ export const exampleInitialState = {
   resumes: null,
   candidateModalOpen: false,
   saveCandidateStatus: "",
+  saveJobListingStatus: "",
   filterData: {
     filterTitle: "",
     filterSkill: ""
@@ -76,8 +77,18 @@ function reducer(state = exampleInitialState, action) {
     case actionTypes.SAVE_CANDIDATE_FAILURE:
       return {
         ...state,
-        saveCandidateStatus: "FAILED",
+        saveCandidateStatus: "FAILED"
+      };
+    case actionTypes.SAVE_JOBLISTING_SUCCESS:
+      return {
+        ...state,
+        saveJobListingStatus: "SAVED",
         saveCandidateResponse: action.data
+      };
+    case actionTypes.SAVE_JOBLISTING_FAILURE:
+      return {
+        ...state,
+        saveJobListingStatus: "FAILED"
       };
     default:
       return state;

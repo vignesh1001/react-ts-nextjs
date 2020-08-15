@@ -3,6 +3,9 @@ export const actionTypes = {
   SAVE_CANDIDATE: "SAVE_CANDIDATE",
   SAVE_CANDIDATE_SUCCESS: "SAVE_CANDIDATE_SUCCESS",
   SAVE_CANDIDATE_FAILURE: "SAVE_CANDIDATE_FAILURE",
+  SAVE_JOBLISTING: "SAVE_JOBLISTING",
+  SAVE_JOBLISTING_SUCCESS: "SAVE_JOBLISTING_SUCCESS",
+  SAVE_JOBLISTING_FAILURE: "SAVE_JOBLISTING_FAILURE",
   LOAD_CANDIDATES: "LOAD_CANDIDATES",
   LOAD_CANDIDATES_SUCCESS: "LOAD_CANDIDATES_SUCCESS",
   LOAD_RESUMES: "LOAD_RESUMES",
@@ -12,6 +15,21 @@ export const actionTypes = {
   ADD_FILTER_CRITERIA: "ADD_FILTER_CRITERIA",
   FAILURE: "FAILURE"
 };
+
+
+export function saveJobListingSuccess(data) {
+  return {
+    type: actionTypes.SAVE_JOBLISTING_SUCCESS,
+    data
+  };
+}
+
+export function saveJobListingError(data) {
+  return {
+    type: actionTypes.SAVE_JOBLISTING_FAILURE,
+    data
+  };
+}
 
 export function saveCandidatesSuccess(data) {
   return {
