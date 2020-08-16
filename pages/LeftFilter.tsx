@@ -1,7 +1,10 @@
 import { Formik } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
-import { InputLabel, FormHelperText, Slider, Switch } from "@material-ui/core";
+import {
+  InputLabel,
+  FormHelperText /*Slider, Switch*/
+} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Button from "@material-ui/core/Button";
@@ -11,11 +14,12 @@ import React, { useState } from "react";
 import { loadCandidates } from "../actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import * as jobTitles from "../constants/jobTitles";
-import {
+import { getSkillData } from "../constants/dropdown";
+/*import {
   professionalExpSlider,
   availabilitySlider,
   backSearchSlider
-} from "../constants/dropdown";
+} from "../constants/dropdown";*/
 
 const styles = {
   searchTextField: {
@@ -41,12 +45,12 @@ const titleColor = {
   marginBottom: 30,
   marginTop: 30
 };
-const advancedFilterTitleColor = {
+/*const advancedFilterTitleColor = {
   color: "#404a9b",
   fontSize: 16,
   fontWeight: 500,
   marginBottom: 10
-};
+};*/
 const chipsStyle = {
   ...buttonStyle
 };
@@ -68,14 +72,13 @@ export default function LeftFilter(props) {
     isOnlyActivelyCandidate: true,
     isShowLoader: false,
     isShowNoResults: false,
-    filterTitle: "",
-    filterSkills: "",
+    filterTitle: props.filterData.filterTitle
+      ? props.filterData.filterTitle.value
+      : "",
+    filterSkills: props.filterData.filterSkills || [],
     filterLocation: "",
     filterTitleList: props.filterData.filterTitle
       ? [props.filterData.filterTitle.title]
-      : [],
-    filterSkillsList: props.filterData.filterSkills
-      ? [props.filterData.filterSkills]
       : [],
     filterLocationList: props.filterData.filterLocation
       ? [props.filterData.filterLocation]
@@ -89,9 +92,6 @@ export default function LeftFilter(props) {
     state[listName].splice(state[listName].indexOf(e), 1);
     setState({ ...state, [listName]: state[listName] });
   };
-  /*const handleSearchIcon = () => {
-    alert("You clicked the delete icon.");
-  };*/
   const handleChange = e => {
     const { target } = e;
     const { name, value } = target;
@@ -104,12 +104,12 @@ export default function LeftFilter(props) {
       setState({ ...state, [name]: value });
     }
   };
-  const handleSliderChange = (event, newValue) => {
+  /*const handleSliderChange = (event, newValue) => {
     const { id } = event;
     setState({ ...state, [id]: newValue });
     console.log("->", event, newValue);
     // setValue(newValue);
-  };
+  };*/
   const handleOnClick = () => {
     const { dispatch, filterData } = props;
     setState({ ...state, isShowLoader: true, isShowNoResults: false });
@@ -119,12 +119,12 @@ export default function LeftFilter(props) {
         : state.filterTitleList.join("");
     if (
       filterTitle ||
-      state.filterSkillsList.length ||
+      state.filterSkills.length ||
       state.filterLocationList.length
     ) {
       dispatch(
         loadCandidates({
-          filterSkills: state.filterSkillsList.join(","),
+          filterSkills: state.filterSkills,
           filterTitle: { value: filterTitle },
           filterLocation: state.filterLocationList.join(",")
         })
@@ -156,40 +156,49 @@ export default function LeftFilter(props) {
     }
     setState({...state});
   }*/
-  const renderAutoComplete = () => {
-    const jobTitlesList = jobTitles.default;
-    let filterTitle = state.filterTitleList.length
-      ? jobTitlesList.find(item => item.title === state.filterTitleList[0])
-      : {
-          title: state.filterTitleEnteredValue,
-          value: state.filterTitleEnteredValue
-        };
 
-    filterTitle = jobTitlesList.find(
-      item => item.title === "JUNIOR DATA SCIENTIST"
-    );
+  const renderAutoComplete = (list, listName, isMultiple) => {
+    let value = "";
+    if (isMultiple) {
+      value = [];
+      if (state[listName] && state[listName].length) {
+        state[listName].forEach(i => {
+          const item = list.find(item => i.title === item.title);
+          if (item) {
+            value.push(item);
+          }
+        });
+      }
+    } else {
+      value =
+        state[listName + "List"] && state[listName + "List"].length
+          ? list.find(item => item.title === state[listName + "List"][0])
+          : {
+              title: state[listName + "EnteredValue"],
+              value: state[listName + "EnteredValue"]
+            };
+    }
     return (
       <Autocomplete
-        value={filterTitle}
         id="combo-box-demo"
-        options={jobTitlesList}
+        options={list}
+        value={value}
         getOptionLabel={option => option.title}
+        multiple={isMultiple}
         style={styles.searchTextField}
         onChange={(e, newValue) => {
-          handleKeyUp({
+          handleChange({
             target: {
-              name: "filterTitle",
-              value: newValue && newValue.value ? newValue.value : ""
-            },
-            keyCode: 13
+              value: newValue,
+              name: listName
+            }
           });
         }}
         freeSolo
-        searchText={filterTitle.title}
         onKeyUp={e => {
-          setState({ ...state, filterTitleEnteredValue: e.target.value });
+          setState({ ...state, [listName + "EnteredValue"]: e.target.value });
         }}
-        renderInput={params => <TextField {...params} />}
+        renderInput={params => <TextField {...params} variant="outlined" />}
       />
     );
   };
@@ -207,7 +216,7 @@ export default function LeftFilter(props) {
               <InputLabel htmlFor="filterJOb" style={titleColor}>
                 Filter by Title
               </InputLabel>
-              {renderAutoComplete()}
+              {renderAutoComplete(jobTitles.default, "filterTitle")}
               {/*<TextField
                 value={state.filterTitle}
                 name="filterTitle"
@@ -242,7 +251,7 @@ export default function LeftFilter(props) {
               Filter by Skills
             </InputLabel>
             <div style={{ marginTop: 40 }}>
-              <TextField
+              {/*<TextField
                 value={state.filterSkills}
                 onKeyUp={handleKeyUp}
                 onChange={handleChange}
@@ -255,22 +264,27 @@ export default function LeftFilter(props) {
                     <InputAdornment position="start">
                       <SearchIcon />
                     </InputAdornment>
-                  )
+                  ),
                 }}
-              />
+              />*/}
+              {renderAutoComplete(
+                getSkillData(state.filterTitle),
+                "filterSkills",
+                true
+              )}
               <FormHelperText id="helper-text-filterSkills" style={fieldTitle}>
                 Filter by skill
               </FormHelperText>
             </div>
-            {state.filterSkillsList.map(i => (
+            {/*state.filterSkillsList.map((i) => (
               <Chip
                 size="medium"
-                label={i}
+                label={i.title}
                 onDelete={() => handleDelete("filterSkillsList", i)}
                 style={chipsStyle}
                 key={"filterSkillsList" + i}
               />
-            ))}
+            ))*/}
             <InputLabel htmlFor="filterJOb" style={titleColor}>
               Filter by Location
             </InputLabel>
@@ -333,7 +347,7 @@ export default function LeftFilter(props) {
                   ))}
                 </FormGroup>
               </FormControl>
-            </div> */}
+            </div> 
             <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
               <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
                 Back Search
@@ -428,6 +442,7 @@ export default function LeftFilter(props) {
                 marks={availabilitySlider}
               />
             </div>
+            */}
             <div>
               <Button
                 style={searchButtonStyle}

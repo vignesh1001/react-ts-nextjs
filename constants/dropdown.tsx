@@ -44,8 +44,9 @@ export const employmentType = [
 export const getSkillData = title => {
   var list = [],
     fList = [];
+
   if (title) {
-    list = skills[title.value];
+    list = skills[title.value || title];
   } else {
     for (const item in skills) {
       list = list.concat(skills[item]);

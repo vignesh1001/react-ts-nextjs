@@ -34,11 +34,6 @@ function* loadCandidatesSaga(filterData) {
       url.push("location=" + filterLocation);
     }
     if (url.length) {
-      const res = yield fetch(
-        "https://k642djkdmf.execute-api.us-east-2.amazonaws.com/V2/candidate/search?".concat(
-          url.join("")
-        )
-      );
       // const res = yield fetch("http://localhost:3030/candidates");
       const data = yield res.json();
       yield put(loadCandidatesSuccess(data));
@@ -87,10 +82,10 @@ function* loadResumesSaga() {
 function* saveCandidate(rData) {
   const formData = prepareSaveData(rData);
   try {
-    const res = yield fetch(
-      "https://k642djkdmf.execute-api.us-east-2.amazonaws.com/V2/candidate",
-      { method: "POST", body: formData }
-    );
+    const res = yield fetch("localhost/candidate", {
+      method: "POST",
+      body: formData
+    });
     const data = yield res.json();
     if (data.message === "SUCCESS") {
       yield put(saveCandidatesSuccess(data));

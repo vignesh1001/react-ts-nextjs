@@ -28,10 +28,10 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          {/*<LeftFilter filterData={{}} />*/}
-          <GlobalSearch />
-          {/*<AddCandidate />*/}
-          <AddJobListing />
+          <LeftFilter filterData={{}} />
+          {/*<GlobalSearch />
+          <AddCandidate />*
+           <AddJobListing />*/}
         </Provider>
       </div>
     );
