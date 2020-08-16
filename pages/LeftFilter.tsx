@@ -3,7 +3,15 @@ import * as yup from "yup";
 import PropTypes from "prop-types";
 import {
   InputLabel,
-  FormHelperText /*Slider, Switch*/
+  FormHelperText,
+  Slider,
+  Switch,
+  FormLabel,
+  Avatar,
+  FormControl,
+  FormGroup,
+  FormControlLabel,
+  Checkbox
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -15,11 +23,11 @@ import { loadCandidates } from "../actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import * as jobTitles from "../constants/jobTitles";
 import { getSkillData } from "../constants/dropdown";
-/*import {
+import {
   professionalExpSlider,
   availabilitySlider,
   backSearchSlider
-} from "../constants/dropdown";*/
+} from "../constants/dropdown";
 
 const styles = {
   searchTextField: {
@@ -45,12 +53,12 @@ const titleColor = {
   marginBottom: 30,
   marginTop: 30
 };
-/*const advancedFilterTitleColor = {
+const advancedFilterTitleColor = {
   color: "#404a9b",
   fontSize: 16,
   fontWeight: 500,
   marginBottom: 10
-};*/
+};
 const chipsStyle = {
   ...buttonStyle
 };
@@ -84,9 +92,9 @@ export default function LeftFilter(props) {
       ? [props.filterData.filterLocation]
       : [],
     filterTitleEnteredValue: "",
-    backSearchRange: [33, 49]
-    // filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
-    // selectedFilterJobSites: []
+    backSearchRange: [33, 49],
+    filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
+    selectedFilterJobSites: []
   });
   const handleDelete = (listName, e) => {
     state[listName].splice(state[listName].indexOf(e), 1);
@@ -104,12 +112,12 @@ export default function LeftFilter(props) {
       setState({ ...state, [name]: value });
     }
   };
-  /*const handleSliderChange = (event, newValue) => {
+  const handleSliderChange = (event, newValue) => {
     const { id } = event;
     setState({ ...state, [id]: newValue });
     console.log("->", event, newValue);
     // setValue(newValue);
-  };*/
+  };
   const handleOnClick = () => {
     const { dispatch, filterData } = props;
     setState({ ...state, isShowLoader: true, isShowNoResults: false });
@@ -145,17 +153,17 @@ export default function LeftFilter(props) {
       setState({ ...state, [name]: "", [name + "List"]: state[name + "List"] });
     }
   };
-  /*const handleCheckBox = e => {
+  const handleCheckBox = e => {
     const { target } = e;
     const { name, value } = target;
     const index = state.selectedFilterJobSites.indexOf(value);
-    if(index===-1){
+    if (index === -1) {
       state.selectedFilterJobSites.push(value);
     } else {
-      state.selectedFilterJobSites.splice(index,1);
+      state.selectedFilterJobSites.splice(index, 1);
     }
-    setState({...state});
-  }*/
+    setState({ ...state });
+  };
 
   const renderAutoComplete = (list, listName, isMultiple) => {
     let value = "";
@@ -217,56 +225,15 @@ export default function LeftFilter(props) {
                 Filter by Title
               </InputLabel>
               {renderAutoComplete(jobTitles.default, "filterTitle")}
-              {/*<TextField
-                value={state.filterTitle}
-                name="filterTitle"
-                onKeyUp={handleKeyUp}
-                onChange={handleChange}
-                id="filterJOb"
-                aria-describedby="helper-text-forJOb"
-                fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon onClick={handleSearchIcon} />
-                    </InputAdornment>
-                  ),
-                }}
-              />*/}
               <FormHelperText id="helper-text-forJOb" style={fieldTitle}>
                 Filter the job by title
               </FormHelperText>
-              {/*state.filterTitleList.map((i) => (
-                <Chip
-                  size="medium"
-                  label={i}
-                  onDelete={() => handleDelete("filterTitleList", i)}
-                  style={chipsStyle}
-                  key={"filterTitleList" + i}
-                />
-              ))*/}
             </div>
 
             <InputLabel htmlFor="filterJOb" style={titleColor}>
               Filter by Skills
             </InputLabel>
             <div style={{ marginTop: 40 }}>
-              {/*<TextField
-                value={state.filterSkills}
-                onKeyUp={handleKeyUp}
-                onChange={handleChange}
-                name="filterSkills"
-                id="filterSkills"
-                aria-describedby="my-helper-filterSkills"
-                fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  ),
-                }}
-              />*/}
               {renderAutoComplete(
                 getSkillData(state.filterTitle),
                 "filterSkills",
@@ -276,15 +243,6 @@ export default function LeftFilter(props) {
                 Filter by skill
               </FormHelperText>
             </div>
-            {/*state.filterSkillsList.map((i) => (
-              <Chip
-                size="medium"
-                label={i.title}
-                onDelete={() => handleDelete("filterSkillsList", i)}
-                style={chipsStyle}
-                key={"filterSkillsList" + i}
-              />
-            ))*/}
             <InputLabel htmlFor="filterJOb" style={titleColor}>
               Filter by Location
             </InputLabel>
@@ -321,34 +279,7 @@ export default function LeftFilter(props) {
                 key={"filterLocationList" + i}
               />
             ))}
-            {/* <div style={{ paddingTop: 40 }}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend" style={{ color: "#00bfff" }}>
-                  Filter by other job sites
-                </FormLabel>
-                <Avatar
-                  style={{
-                    backgroundColor: "orange",
-                    marginLeft: 180,
-                    marginTop: -25
-                  }}
-                >
-                  {state.selectedFilterJobSites.length}
-                </Avatar>
-                <FormGroup aria-label="position" style={{ color: "#00bfff" }}>
-                  {state.filterJobSites.map(item => (
-                    <FormControlLabel
-                      value={item}
-                      control={<Checkbox color="primary" />}
-                      label={item}
-                      labelPlacement="end"
-                      onChange={handleCheckBox}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </div> 
-            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
+            <div style={{ width: "90%", marginLeft: 10, marginTop: 20 }}>
               <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
                 Back Search
               </InputLabel>
@@ -442,7 +373,33 @@ export default function LeftFilter(props) {
                 marks={availabilitySlider}
               />
             </div>
-            */}
+            <div style={{ paddingTop: 40 }}>
+              <FormControl component="fieldset">
+                <FormLabel component="legend" style={{ color: "#00bfff" }}>
+                  Filter by other job sites
+                </FormLabel>
+                <Avatar
+                  style={{
+                    backgroundColor: "orange",
+                    marginLeft: 180,
+                    marginTop: -25
+                  }}
+                >
+                  {state.selectedFilterJobSites.length}
+                </Avatar>
+                <FormGroup aria-label="position" style={{ color: "#00bfff" }}>
+                  {state.filterJobSites.map(item => (
+                    <FormControlLabel
+                      value={item}
+                      control={<Checkbox color="primary" />}
+                      label={item}
+                      labelPlacement="end"
+                      onChange={handleCheckBox}
+                    />
+                  ))}
+                </FormGroup>
+              </FormControl>
+            </div>
             <div>
               <Button
                 style={searchButtonStyle}
