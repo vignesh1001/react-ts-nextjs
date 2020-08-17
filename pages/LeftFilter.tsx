@@ -11,7 +11,8 @@ import {
   FormControl,
   FormGroup,
   FormControlLabel,
-  Checkbox
+  Checkbox,
+  Card
 } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -22,7 +23,7 @@ import React, { useState } from "react";
 import { loadCandidates } from "../actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import * as jobTitles from "../constants/jobTitles";
-import { getSkillData } from "../constants/dropdown";
+import { getSkillData, immiStatus } from "../constants/dropdown";
 import {
   professionalExpSlider,
   availabilitySlider,
@@ -62,6 +63,11 @@ const advancedFilterTitleColor = {
 const chipsStyle = {
   ...buttonStyle
 };
+const chipsStyleDisable = {
+  ...buttonStyle,
+  backgroundColor: "lightgray",
+  marginBottom: 10
+};
 const fieldTitle = {
   color: "#195091",
   fontSize: 12,
@@ -93,8 +99,10 @@ export default function LeftFilter(props) {
       : [],
     filterTitleEnteredValue: "",
     backSearchRange: [33, 49],
-    filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
-    selectedFilterJobSites: []
+    FilterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
+    selectedFilterJobSites: [],
+    FilterLegalStatus: immiStatus,
+    selectedFilterLegalStatus: []
   });
   const handleDelete = (listName, e) => {
     state[listName].splice(state[listName].indexOf(e), 1);
@@ -156,11 +164,12 @@ export default function LeftFilter(props) {
   const handleCheckBox = e => {
     const { target } = e;
     const { name, value } = target;
-    const index = state.selectedFilterJobSites.indexOf(value);
+    debugger;
+    const index = state["selected" + name].indexOf(value);
     if (index === -1) {
-      state.selectedFilterJobSites.push(value);
+      state["selected" + name].push(value);
     } else {
-      state.selectedFilterJobSites.splice(index, 1);
+      state["selected" + name].splice(index, 1);
     }
     setState({ ...state });
   };
@@ -224,7 +233,7 @@ export default function LeftFilter(props) {
               <InputLabel htmlFor="filterJOb" style={titleColor}>
                 Filter by Title
               </InputLabel>
-              {renderAutoComplete(jobTitles.default, "filterTitle")}
+              {renderAutoComplete(jobTitles.default, "filterTitle", false)}
               <FormHelperText id="helper-text-forJOb" style={fieldTitle}>
                 Filter the job by title
               </FormHelperText>
@@ -331,6 +340,22 @@ export default function LeftFilter(props) {
               <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
                 Legal Status
               </InputLabel>
+              <div>
+                {state.FilterLegalStatus.map(i => (
+                  <Chip
+                    name="FilterLegalStatus"
+                    size="medium"
+                    label={i.title}
+                    onClick={() =>
+                      handleCheckBox({
+                        target: { name: "FilterLegalStatus", value: i }
+                      })
+                    }
+                    style={chipsStyleDisable}
+                    key={"filterLocationList" + i}
+                  />
+                ))}
+              </div>
             </div>
             <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
               <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
@@ -388,9 +413,11 @@ export default function LeftFilter(props) {
                   {state.selectedFilterJobSites.length}
                 </Avatar>
                 <FormGroup aria-label="position" style={{ color: "#00bfff" }}>
-                  {state.filterJobSites.map(item => (
+                  {state.FilterJobSites.map(item => (
                     <FormControlLabel
+                      key={"FilterJobSites_" + item}
                       value={item}
+                      name="FilterJobSites"
                       control={<Checkbox color="primary" />}
                       label={item}
                       labelPlacement="end"
