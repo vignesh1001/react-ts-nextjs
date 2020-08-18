@@ -72,7 +72,9 @@ const chipsStyleDisable = {
   marginBottom: 10
 };
 const advancedSearchLink = {
-  textDecoration: "underline"
+  textDecoration: "underline",
+  width: "100%",
+  textAlign: "left"
 };
 const fieldTitle = {
   color: "#195091",
@@ -177,7 +179,6 @@ export default function LeftFilter(props) {
   const handleCheckBox = e => {
     const { target } = e;
     const { name, value } = target;
-    debugger;
     const index = state["selected" + name].indexOf(value);
     if (index === -1) {
       state["selected" + name].push(value);
@@ -349,7 +350,12 @@ export default function LeftFilter(props) {
                 Advanced Search
                 <ExpandOrLess
                   color="action"
-                  style={{ color: "red", fontSize: 20 }}
+                  style={{
+                    color: "red",
+                    fontSize: 25,
+                    position: "absolute",
+                    right: 16
+                  }}
                 />
               </Link>
             </div>
@@ -404,7 +410,7 @@ export default function LeftFilter(props) {
                             ? chipsStyle
                             : chipsStyleDisable
                         }
-                        key={"filterLocationList" + i}
+                        key={"FilterLegalStatus" + i.value}
                       />
                     ))}
                   </div>
