@@ -136,10 +136,12 @@ export default function LeftFilter(props) {
     }
   };
   const handleSliderChange = (event, newValue) => {
-    const { id } = event;
-    setState({ ...state, [id]: newValue });
-    console.log("->", event, newValue);
-    // setValue(newValue);
+    if (event.type === "mousemove" || event.type === "mouseenter") {
+      return;
+    }
+    const { id, currentTarget } = event;
+    const fieldId = id || currentTarget.id;
+    setState({ ...state, [fieldId]: newValue });
   };
   const handleOnClick = () => {
     const { dispatch, filterData } = props;
