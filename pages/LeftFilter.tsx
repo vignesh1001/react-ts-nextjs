@@ -242,6 +242,7 @@ export default function LeftFilter(props) {
       }}
     >
       {() => {
+        const ExpandOrLess = state.isShowAdvSearch ? ExpandLess : ExpandMore;
         return (
           <form
             onSubmit={e => {
@@ -338,12 +339,15 @@ export default function LeftFilter(props) {
                 component="button"
                 variant="body2"
                 onClick={() => {
-                  console.info("I'm a button.");
+                  setState(prevState => ({
+                    ...prevState,
+                    isShowAdvSearch: !prevState.isShowAdvSearch
+                  }));
                 }}
                 style={advancedSearchLink}
               >
                 Advanced Search
-                <ExpandMore
+                <ExpandOrLess
                   color="action"
                   style={{ color: "red", fontSize: 20 }}
                 />
