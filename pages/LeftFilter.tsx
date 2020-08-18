@@ -74,7 +74,9 @@ const chipsStyleDisable = {
 const advancedSearchLink = {
   textDecoration: "underline",
   width: "100%",
-  textAlign: "left"
+  textAlign: "left",
+  marginBottom: 16,
+  marginTop: 16
 };
 const fieldTitle = {
   color: "#195091",
