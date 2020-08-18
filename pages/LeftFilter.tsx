@@ -136,12 +136,8 @@ export default function LeftFilter(props) {
     }
   };
   const handleSliderChange = (event, newValue) => {
-    if (event.type === "mousemove" || event.type === "mouseenter") {
-      return;
-    }
-    const { id, currentTarget } = event;
-    const fieldId = id || currentTarget.id;
-    setState({ ...state, [fieldId]: newValue });
+    const { id } = event;
+    setState({ ...state, [id]: newValue });
   };
   const handleOnClick = () => {
     const { dispatch, filterData } = props;
@@ -334,7 +330,9 @@ export default function LeftFilter(props) {
                 marks={backSearchSlider}
                 name="backSearchRange"
                 id="backSearchRange"
-                onChange={handleSliderChange}
+                onChange={(event, newVal) =>
+                  handleSliderChange({ id: "backSearchRange" }, newVal)
+                }
               />
             </div>
             <div>
