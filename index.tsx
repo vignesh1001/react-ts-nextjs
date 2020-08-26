@@ -9,7 +9,7 @@ import withReduxSaga from "next-redux-saga";
 import AddCandidate from "./pages/AddCandidate";
 import store from "./store";
 import { Provider } from "react-redux";
-
+import ListJobListing from "./ListJobListing";
 import "./style.css";
 interface AppProps {}
 interface AppState {
@@ -28,10 +28,12 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
+          <ListJobListing />
+          {/*
           <LeftFilter filterData={{}} />
-          {/*<GlobalSearch />
-          <AddCandidate />*
-           <AddJobListing />*/}
+          <GlobalSearch />
+          <AddCandidate />
+          <AddJobListing />*/}
         </Provider>
       </div>
     );

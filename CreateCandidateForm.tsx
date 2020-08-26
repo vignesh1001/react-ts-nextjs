@@ -10,7 +10,7 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
-  confirmPassword: "",
+  confirmPassword: ""
 };
 
 const validationSchema = yup.object({
@@ -26,24 +26,25 @@ const validationSchema = yup.object({
   confirmPassword: yup
     .string("Enter your password")
     .required("Confirm your password")
-    .oneOf([yup.ref("password")], "Password does not match"),
+    .oneOf([yup.ref("password")], "Password does not match")
 });
 
 CreateCandidateForm.defaultProps = {
-  handleClose: () => {},
+  handleClose: () => {}
 };
 
 export default function CreateCandidateForm(props) {
   return (
-    <Formik validationSchema={validationSchema} initialValues={initialValues}>
-      {(formikProps) => {
+    <Formik
+      validationSchema={validationSchema}
+      initialValues={initialValues}
+      onSubmit={e => {
+        console.log(e);
+      }}
+    >
+      {formikProps => {
         return (
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              console.log(e);
-            }}
-          >
+          <form>
             <Textfield
               autoFocus={true}
               id="name"
@@ -97,5 +98,5 @@ export default function CreateCandidateForm(props) {
 }
 
 CreateCandidateForm.propTypes = {
-  handleClose: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired
 };
