@@ -1,6 +1,5 @@
 import { all, put, takeLatest, takeEvery } from "redux-saga/effects";
 import es6promise from "es6-promise";
-
 import {
   actionTypes,
   loadCandidatesSuccess,
@@ -9,9 +8,11 @@ import {
   saveCandidatesSuccess,
   saveJobListingSuccess,
   saveCandidatesError,
-  saveJobListingError
+  saveJobListingError,
+  loadJobListingSuccess
 } from "./actions";
 import { prepareSaveData, prepareSaveJOBListingData } from "./sagaUtil";
+import { dataList } from "./data";
 
 es6promise.polyfill();
 
@@ -38,6 +39,17 @@ function* loadCandidatesSaga(filterData) {
       const data = yield res.json();
       yield put(loadCandidatesSuccess(data));
     }
+  } catch (err) {
+    yield put(failure(err));
+  }
+}
+
+function* loadJobListingSaga(filterData) {
+  try {
+    //const res = yield fetch("http://localhost:3030/candidates");
+    //const data = yield res.json();
+    //yield put(loadCandidatesSuccess(data));
+    yield put(loadJobListingSuccess(dataList));
   } catch (err) {
     yield put(failure(err));
   }
@@ -118,6 +130,7 @@ function* saveJobListing(request) {
 function* rootSaga() {
   yield all([
     takeLatest(actionTypes.LOAD_CANDIDATES, loadCandidatesSaga),
+    takeLatest(actionTypes.LOAD_JOBLISTING, loadJobListingSaga),
     takeLatest(actionTypes.LOAD_RESUMES, loadResumesSaga),
     takeLatest(actionTypes.ADD_FILTER_CRITERIA, loadCandidatesSaga),
     takeEvery(actionTypes.SAVE_CANDIDATE, saveCandidate),

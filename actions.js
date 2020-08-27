@@ -13,10 +13,23 @@ export const actionTypes = {
   UPDATE_RESUME_DATA: "UPDATE_RESUME_DATA",
   UI_TOGGLE_CANDIDATE_MODAL: "UI_TOGGLE_CANDIDATE_MODAL",
   ADD_FILTER_CRITERIA: "ADD_FILTER_CRITERIA",
-  FAILURE: "FAILURE"
+  FAILURE: "FAILURE",
+  LOAD_JOBLISTING: "LOAD_JOBLISTING",
+  LOAD_JOBLISTING_SUCCESS: "LOAD_JOBLISTING_SUCCESS"
 };
 
-
+export function loadJobListing(data) {
+  return {
+    type: actionTypes.LOAD_JOBLISTING,
+    data
+  };
+}
+export function loadJobListingSuccess(data) {
+  return {
+    type: actionTypes.LOAD_JOBLISTING_SUCCESS,
+    data
+  };
+}
 export function saveJobListingSuccess(data) {
   return {
     type: actionTypes.SAVE_JOBLISTING_SUCCESS,

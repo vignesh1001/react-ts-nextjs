@@ -10,6 +10,8 @@ import AddCandidate from "./pages/AddCandidate";
 import store from "./store";
 import { Provider } from "react-redux";
 import ListJobListing from "./ListJobListing";
+import ViewJobListingTable from "./pages/ViewJobListingTable";
+
 import "./style.css";
 interface AppProps {}
 interface AppState {
@@ -28,8 +30,9 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          <ListJobListing />
+          <ViewJobListingTable />
           {/*
+          <ListJobListing />
           <LeftFilter filterData={{}} />
           <GlobalSearch />
           <AddCandidate />

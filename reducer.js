@@ -13,7 +13,8 @@ export const exampleInitialState = {
     filterTitle: "",
     filterSkill: ""
   },
-  addCandidate: {}
+  addCandidate: {},
+  jobList: []
 };
 
 function reducer(state = exampleInitialState, action) {
@@ -89,6 +90,11 @@ function reducer(state = exampleInitialState, action) {
       return {
         ...state,
         saveJobListingStatus: "FAILED"
+      };
+    case actionTypes.LOAD_JOBLISTING_SUCCESS:
+      return {
+        ...state,
+        jobList: action.data.jobPosting
       };
     default:
       return state;
