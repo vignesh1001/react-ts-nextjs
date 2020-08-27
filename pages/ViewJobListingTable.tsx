@@ -64,14 +64,16 @@ function ViewJobListingTable(props) {
           {
             icon: "email",
             tooltip: "Email",
-            onClick: (event, rowData) => alert("Email " + rowData.positionTitle)
+            onClick: (event, rowData) =>
+              alert("Email " + rowData.positionDetails.positionTitle)
           },
           {
             icon: "close",
             tooltip: "Close Requisition",
             onClick: (event, rowData) =>
               confirm(
-                "You want to close the Requisition of " + rowData.positionTitle
+                "You want to close the Requisition of " +
+                  rowData.positionDetails.positionTitle
               )
           }
         ]}
