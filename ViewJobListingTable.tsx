@@ -1,115 +1,172 @@
-import React, { Component } from "react";
+import React from "react";
 import MaterialTable from "material-table";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
+//import { loadJobListing } from "../../../actions";
+import Router from "next/router";
+import { Checkbox } from "@material-ui/core";
 
-function ViewJobListingTable(props) {
+const ViewJobListingTable = props => {
   const [state, setState] = React.useState({
-    jobList: props.jobList
+    jobList: [], //props.jobList,
+    isIncludeReq: false,
+    filters: { action: "GET" }
   });
 
-  React.useEffect(()=>{
-    props.dispatch(loadJobListing());
-  },[]);
+  React.useEffect(() => {
+    //props.dispatch(loadJobListing(state.filters));
+  }, []);
 
   React.useEffect(() => {
-    if (props.jobList && props.jobList.length) {
-      setState({ ...state, jobList: props.jobList });
+    const { jobList } = props;
+    if (jobList && jobList.length) {
+      const tempJobList = [];
+      for (var i = 0; i < jobList.length; i++) {
+        var item = jobList[i];
+        // item.recruitersString = JSON.parse(item.recruitersString);
+        tempJobList.push(item);
+      }
+      setState({ ...state, jobList: tempJobList });
     }
   }, [props.jobList]);
+  const goToJobListing = row => {
+    // props.dispatch(setSelectedJobListing());
+    localStorage.setItem("setSelectedJobListing", JSON.stringify(row));
+    Router.push("/AddJobListing");
+  };
   return (
     <div style={{ maxWidth: "100%" }}>
-             {" "}
-      <MaterialTable
-        columns={[
-          {
-            title: "Position Title",
-            field: "positionTitle",
-            render: rowData => (
-              <a
-                onClick={() => alert(rowData.positionTitle)}
-                style={{
-                  fontSize: 16,
-                  color: "#27377e",
-                  textDecoration: "underline",
-                  cursor: "pointer"
-                }}
-              >
-                {rowData.positionTitle}
-              </a>
-            )
-          },
-          { title: "Client", field: "client" },
-          { title: "Location", field: "location" },
-          { title: "Req #", field: "req" },
-          { title: "Date | Time", field: "dateTime" },
-          { title: "Recruiters", field: "recruiters" },
-          { title: "Int Sub", field: "intSub" }
-        ]}
-        data={[
-          {
-            positionTitle: "Mobile Application Test",
-            client: "Grainger",
-            location: "Chicago, IL",
-            req: "#102617",
-            dateTime: "Jun 26, 2020 | 07:14 PM",
-            recruiters: "Reena Shah, Surai Kumar",
-            intSub: "9 submitions"
-          },
-          {
-            positionTitle: "Mobile Application Architect",
-            client: "Grainger",
-            location: "Chicago, IL",
-            req: "#102617",
-            dateTime: "Jun 26, 2020 | 07:14 PM",
-            recruiters: "Reena Shah, Surai Kumar",
-            intSub: "9 submitions"
-          }
-        ]}
-        actions={[
-          {
-            icon: "email",
-            tooltip: "Email",
-            onClick: (event, rowData) => alert("Email " + rowData.positionTitle)
-          },
-          {
-            icon: "close",
-            tooltip: "Close Requisition",
-            onClick: (event, rowData) =>
-              confirm(
-                "You want to close the Requisition of " + rowData.positionTitle
+      <div>
+        Include Closed Requisition
+        <Checkbox
+          name="inCludeClosed"
+          id="inCludeClosed"
+          variant="outlined"
+          value={state.isIncludeReq}
+          displayLabel={""}
+          style={{ "flex-flow": "wrap", minHeight: 50 }}
+          onChange={e => {
+            /*if (e.target.checked) {
+              props.dispatch(
+                loadJobListing({
+                  ...state.filters,
+                  property: "IncludeClosedJobPosting"
+                })
+              );
+            } else {
+              props.dispatch(loadJobListing(state.filters));
+            }*/
+            state.isIncludeReq = !state.isIncludeReq;
+            setState(state);
+          }}
+        />
+      </div>
+      <div className="test">
+        <MaterialTable
+          columns={[
+            {
+              title: "Position Title",
+              field: "positionDetails.positionTitle",
+              render: rowData => (
+                <a
+                  onClick={() => goToJobListing(rowData)}
+                  style={{
+                    fontSize: 16,
+                    color: "#27377e",
+                    textDecoration: "underline",
+                    cursor: "pointer"
+                  }}
+                >
+                  {rowData.positionDetails.positionTitle}
+                </a>
               )
-          }
-        ]}
-        options={{
-          showTitle: false,
-          sorting: true,
-          search: false,
-          filtering: true,
-          headerStyle: {
-            //backgroundColor: '#01579b',
-            //color: '#FFF'
-          },
-          rowStyle: {
-            backgroundColor: "#FFF",
-            //boxShadow: '0 1px 5px 0',
-            marginBottom: "12px"
-          },
-          actionsColumnIndex: -1,
-          toolbar: false
-        }}
-        icons={{ Filter: () => <div /> }}
-        localization={{ header: { actions: "" } }}
-      />
-           {" "}
+            },
+            { title: "Client", field: "clientInfo.clientName" },
+            {
+              title: "Location",
+              field: "location.city",
+              render: rowData => (
+                <span>
+                  {rowData.location.city + ", " + rowData.location.state}
+                </span>
+              )
+            },
+            { title: "Req #", field: "requisitionNumber" },
+            { title: "Date | Time", field: "lastUpdatedTS" },
+            {
+              title: "Recruiters",
+              field: "recruiters",
+              render: rowData => (
+                <span>
+                  {rowData.recruiters ? rowData.recruiters.join(", ") : ""}
+                </span>
+              )
+            },
+            {
+              title: "Int Sub",
+              field: "submission",
+              render: rowData => <span>{rowData.submission} submissions</span>
+            }
+          ]}
+          data={state.jobList}
+          actions={[
+            {
+              icon: "email",
+              tooltip: "Email",
+              onClick: (event, rowData) =>
+                alert("Email " + rowData.positionDetails.positionTitle)
+            },
+            {
+              icon: "close",
+              tooltip: "Close Requisition",
+              onClick: (event, rowData) =>
+                confirm(
+                  "You want to close the Requisition of " +
+                    rowData.positionDetails.positionTitle
+                )
+            }
+          ]}
+          options={{
+            showTitle: false,
+            sorting: true,
+            search: false,
+            filtering: true,
+            headerStyle: {
+              //backgroundColor: '#01579b',
+              //color: '#FFF'
+            },
+            cellStyle: {
+              padding: 0
+            },
+            rowStyle: rowData => {
+              if (rowData.jobStatus === "closed") {
+                return { backgroundColor: "yellow" };
+              }
+              return {
+                backgroundColor: "#FFF",
+                //boxShadow: '9px 20px 15px 15px',
+                boxShadow: "1px 2px 1px 0px",
+                marginBottom: "12px",
+                //borderTop: '13px solid #FFF',
+                borderTop: "13px solid #ffffff00"
+              };
+            },
+            actionsColumnIndex: -1,
+            toolbar: false
+          }}
+          //icons={{ Filter: () => <div /> }}
+          localization={{
+            header: { actions: "" }
+          }}
+        />
+      </div>
     </div>
   );
-}
+};
 
 ViewJobListingTable.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  candidates: PropTypes.object
+  candidates: PropTypes.object,
+  jobList: PropTypes.arrayOf(PropTypes.object)
 };
-const mapStateToProps = state => state;
 
-export default connect(mapStateToProps)(ViewJobListingTable);
+export default ViewJobListingTable;
