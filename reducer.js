@@ -14,7 +14,8 @@ export const exampleInitialState = {
     filterSkill: ""
   },
   addCandidate: {},
-  jobList: []
+  saveJobListingResponse: null,
+  selectedCandidate: null
 };
 
 function reducer(state = exampleInitialState, action) {
@@ -67,35 +68,68 @@ function reducer(state = exampleInitialState, action) {
       return {
         ...state,
         saveCandidateStatus: "",
-        addCandidate: action.data
+        addCandidate: action.data,
+        saveCandidateResponse: null
+      };
+    case actionTypes.SAVE_CANDIDATE:
+      return {
+        ...state,
+        saveCandidateStatus: null
       };
     case actionTypes.SAVE_CANDIDATE_SUCCESS:
       return {
         ...state,
-        saveCandidateStatus: "SAVED",
+        saveCandidateStatus: "CANDIDATE_SAVED",
         saveCandidateResponse: action.data
       };
     case actionTypes.SAVE_CANDIDATE_FAILURE:
       return {
         ...state,
-        saveCandidateStatus: "FAILED"
+        saveCandidateStatus: "CANDIDATE_FAILED",
+        saveCandidateResponse: { error: action.data }
+      };
+    case actionTypes.SAVE_JOBLISTING:
+      return {
+        ...state,
+        saveJobListingStatus: null
       };
     case actionTypes.SAVE_JOBLISTING_SUCCESS:
       return {
         ...state,
         saveJobListingStatus: "SAVED",
-        saveCandidateResponse: action.data
+        saveJobListingResponse: action.data
       };
     case actionTypes.SAVE_JOBLISTING_FAILURE:
       return {
         ...state,
-        saveJobListingStatus: "FAILED"
+        saveJobListingStatus: "FAILED",
+        saveJobListingResponse: null
+      };
+    case actionTypes.CLEARALL:
+      return {
+        ...state,
+        saveJobListingResponse: null,
+        saveCandidateResponse: null,
+        saveJobListingStatus: "",
+        saveCandidateStatus: "",
+        selectedCandidate: null
+      };
+    case actionTypes.SELECTED_CANDIDATE:
+      return {
+        ...state,
+        selectedCandidate: JSON.parse(JSON.stringify(action.data))
       };
     case actionTypes.LOAD_JOBLISTING_SUCCESS:
       return {
         ...state,
         jobList: action.data.jobPosting
       };
+    case actionTypes.TOGGLE_LOADER: {
+      return {
+        ...state,
+        isLoading: !state.isLoading
+      };
+    }
     default:
       return state;
   }

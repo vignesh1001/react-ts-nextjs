@@ -1,8 +1,10 @@
 export const actionTypes = {
+  CLEARALL: "CLEARALL",
   ADD_CANDIDATE_SAVE: "ADD_CANDIDATE_SAVE",
   SAVE_CANDIDATE: "SAVE_CANDIDATE",
   SAVE_CANDIDATE_SUCCESS: "SAVE_CANDIDATE_SUCCESS",
   SAVE_CANDIDATE_FAILURE: "SAVE_CANDIDATE_FAILURE",
+  SELECTED_CANDIDATE: "SELECTED_CANDIDATE",
   SAVE_JOBLISTING: "SAVE_JOBLISTING",
   SAVE_JOBLISTING_SUCCESS: "SAVE_JOBLISTING_SUCCESS",
   SAVE_JOBLISTING_FAILURE: "SAVE_JOBLISTING_FAILURE",
@@ -15,7 +17,8 @@ export const actionTypes = {
   ADD_FILTER_CRITERIA: "ADD_FILTER_CRITERIA",
   FAILURE: "FAILURE",
   LOAD_JOBLISTING: "LOAD_JOBLISTING",
-  LOAD_JOBLISTING_SUCCESS: "LOAD_JOBLISTING_SUCCESS"
+  LOAD_JOBLISTING_SUCCESS: "LOAD_JOBLISTING_SUCCESS",
+  TOGGLE_LOADER: "TOGGLE_LOADER"
 };
 
 export function loadJobListing(data) {
@@ -30,6 +33,18 @@ export function loadJobListingSuccess(data) {
     data
   };
 }
+export function toggleLoader(data) {
+  return {
+    type: actionTypes.TOGGLE_LOADER,
+    data
+  };
+}
+export function clearAll() {
+  return {
+    type: actionTypes.CLEARALL
+  };
+}
+
 export function saveJobListingSuccess(data) {
   return {
     type: actionTypes.SAVE_JOBLISTING_SUCCESS,
@@ -40,6 +55,13 @@ export function saveJobListingSuccess(data) {
 export function saveJobListingError(data) {
   return {
     type: actionTypes.SAVE_JOBLISTING_FAILURE,
+    data
+  };
+}
+
+export function saveJobListing(data) {
+  return {
+    type: actionTypes.SAVE_JOBLISTING,
     data
   };
 }
@@ -64,7 +86,12 @@ export function saveCandidatesError(data) {
     data
   };
 }
-
+export function setSelectedCandidate(data) {
+  return {
+    type: actionTypes.SELECTED_CANDIDATE,
+    data
+  };
+}
 export function addCandidateSave(data) {
   return { type: actionTypes.ADD_CANDIDATE_SAVE, data };
 }

@@ -13,6 +13,9 @@ import ListJobListing from "./ListJobListing";
 import ViewJobListingTable from "./pages/ViewJobListingTable";
 
 import "./style.css";
+
+import "./components/forms/add-joblisting/style.css";
+
 interface AppProps {}
 interface AppState {
   name: string;
@@ -30,13 +33,14 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          <ViewJobListingTable />
+          <AddJobListing />
           {/*
+          <ViewJobListingTable />
           <ListJobListing />
           <LeftFilter filterData={{}} />
           <GlobalSearch />
           <AddCandidate />
-          <AddJobListing />*/}
+          */}
         </Provider>
       </div>
     );

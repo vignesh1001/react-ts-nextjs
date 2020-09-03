@@ -1,14 +1,29 @@
 import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import PropTypes from "prop-types";
-import RadioGroupBox from "../../formfields/RadioGroupBox";
-import { employmentWorkingType } from "../../../constants/dropdown";
+import { jobListingBoardList } from "../../../constants/dropdown";
+import CheckBoxComponent from "../../formfields/CheckBox";
+
 const styles = {
   previewTitle: {
     margin: "10px 0",
     padding: 0,
     fontSize: 16,
     color: "#220037",
+    fontWeight: "normal"
+  },
+  savedMessage: {
+    margin: "10px 0",
+    padding: 0,
+    fontSize: 16,
+    color: "#e32586",
+    fontWeight: "normal"
+  },
+  savedFailedMessage: {
+    margin: "10px 0",
+    padding: 0,
+    fontSize: 16,
+    color: "red",
     fontWeight: "normal"
   },
   jobDetailsTitle: {
@@ -46,6 +61,17 @@ const styles = {
 
 function PreviewJobListing(props) {
   const { formikProps } = props;
+
+  React.useEffect(() => {
+    if (props.saveJobListingResponse) {
+      props.formikProps.setFieldValue(
+        "requisitionNumber",
+        props.saveJobListingResponse.jobPosting[0].requisitionNumber
+      );
+      props.toggleLoader();
+    }
+  }, [props.saveJobListingResponse]);
+
   return (
     <React.Fragment>
       <Grid
@@ -55,8 +81,30 @@ function PreviewJobListing(props) {
           backgroundColor: "#FFF"
         }}
       >
-        <Grid item xs={12} sm={12} style={{ paddingLeft: 0 }}>
+        <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
           <h4 style={styles.previewTitle}>Preview</h4>
+        </Grid>
+        <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
+          {formikProps.values.action === "ADD" &&
+            props.saveJobListingStatus === "SAVED" && (
+              <h2 style={styles.savedMessage}>JobListing Saved Successfully</h2>
+            )}
+          {formikProps.values.action === "ADD" &&
+            props.saveJobListingStatus === "FAILED" && (
+              <h2 style={styles.savedFailedMessage}>JobListing Save Failed</h2>
+            )}
+          {formikProps.values.action === "PUBLISH" &&
+            props.saveJobListingStatus === "SAVED" && (
+              <h2 style={styles.savedMessage}>
+                JobListing Published Successfully
+              </h2>
+            )}
+          {formikProps.values.action === "PUBLISH" &&
+            props.saveJobListingStatus === "FAILED" && (
+              <h2 style={styles.savedFailedMessage}>
+                JobListing Published Failed
+              </h2>
+            )}
         </Grid>
         <Grid
           container
@@ -72,10 +120,12 @@ function PreviewJobListing(props) {
           <Grid item xs={6} sm={6}>
             <h4 style={styles.headingStyle}>REQUISITION DETAILS</h4>
             <div>
-              <div style={styles.section}>
-                <span style={styles.labelStyle}>Requisition #: </span>
-                {formikProps.values.requisitionNo}
-              </div>
+              {formikProps.values.requisitionNumber && (
+                <div style={styles.section}>
+                  <span style={styles.labelStyle}>Requisition #: </span>
+                  {formikProps.values.requisitionNumber}
+                </div>
+              )}
               <div style={styles.section}>
                 <span style={styles.labelStyle}>Number Of Position: </span>
                 {formikProps.values.noOfPosition}
@@ -159,7 +209,11 @@ function PreviewJobListing(props) {
               </div>
               <div style={styles.section}>
                 <span style={styles.labelStyle}>Requirement Description: </span>
-                {formikProps.values.requirementDescription}
+                <span
+                  dangerouslySetInnerHTML={{
+                    __html: formikProps.values.requirementDescription || ""
+                  }}
+                />
               </div>
               <div style={styles.section}>
                 <span style={styles.labelStyle}>
@@ -181,6 +235,8 @@ function PreviewJobListing(props) {
           style={{
             backgroundColor: "#f2fbff",
             padding: 16,
+            marginTop: 16,
+            paddingTop: 0,
             borderRadius: 8
           }}
         >
@@ -204,10 +260,10 @@ function PreviewJobListing(props) {
               <span style={styles.labelStyle}>Sales Lead: </span>
               {formikProps.values.salesLead}
             </div>
-            <div style={styles.section}>
+            {/* <div style={styles.section}>
               <span style={styles.labelStyle}>Assign To recruiers: </span>
               {formikProps.values.recruiters.toString()}
-            </div>
+            </div> */}
           </Grid>
           <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
             <Button
@@ -232,15 +288,18 @@ function PreviewJobListing(props) {
             Publish to external Job Listing Boards
           </h4>
         </Grid>
-        <Grid item xs={12} sm={12}>
-          <RadioGroupBox
-            name="jobListingBoard"
-            id="jobListingBoard"
-            variant="outlined"
-            options={employmentWorkingType}
-            color="red"
-            style={{ "flex-flow": "wrap",minHeight: 50 }}
-          />
+        <Grid item xs={12} sm={12} style={{ display: "flex" }}>
+          {jobListingBoardList.map(i => (
+            <CheckBoxComponent
+              key={"jobListingBoard_" + i.value}
+              name="jobListingBoard"
+              id="jobListingBoard"
+              variant="outlined"
+              value={i.value}
+              displayLabel={i.title}
+              style={{ "flex-flow": "wrap", minHeight: 50 }}
+            />
+          ))}
         </Grid>
       </Grid>
     </React.Fragment>
@@ -249,6 +308,7 @@ function PreviewJobListing(props) {
 
 PreviewJobListing.propTypes = {
   onEdit: PropTypes.func.isRequired,
+  toggleLoader: PropTypes.func.isRequired,
   formikProps: {
     values: PropTypes.shape({
       fullName: PropTypes.string,
@@ -277,7 +337,9 @@ PreviewJobListing.propTypes = {
       education: PropTypes.arrayOf(PropTypes.string)
     }),
     setFieldValue: PropTypes.func.isRequired
-  }
+  },
+  saveJobListingStatus: PropTypes.string,
+  saveJobListingResponse: PropTypes.object
 };
 
 export default PreviewJobListing;

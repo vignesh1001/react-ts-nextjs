@@ -72,6 +72,13 @@ export const employmentWorkingType = [
   { title: "Contract", value: "Contract" },
   { title: "Contract to Hire", value: "ContractToHire" }
 ];
+//dice and carrer builder, indeed, glass door
+export const jobListingBoardList = [
+  { title: "dice", value: "dice" },
+  { title: "carrer builder", value: "carrer builder" },
+  { title: "indeed", value: "indeed" },
+  { title: "glass door", value: "glass door" }
+];
 export const availabilityType = [
   { title: "Immediate", value: "Immediate" },
   { title: "One-week notice", value: "One-week notice" },

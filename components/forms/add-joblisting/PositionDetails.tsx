@@ -1,20 +1,12 @@
 import React from "react";
-import { Grid, Chip } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
-import RadioGroupBox from "../../formfields/RadioGroupBox";
-import SimpleUploadLink from "../../formfields/SimpleUploadLink";
 import Heading from "./Heading";
 import PropTypes from "prop-types";
-import {
-  countries,
-  immiStatus,
-  USA_STATE,
-  INDIA_STATE,
-  getStateList,
-  workType,
-  employmentWorkingType
-} from "../../../constants/dropdown";
+import { scType, immiStatus } from "../../../constants/dropdown";
+
+import ControlledEditor from "../../formfields/ControlledEditor";
 
 const styles = {
   fieldWrapper: { paddingTop: 0, paddingRight: 12 },
@@ -27,22 +19,6 @@ const styles = {
 };
 
 function PositionDetails(props) {
-  const handleFileUpload = ({ target }) => {
-    const { name, files } = target;
-    var fileList = props.formikProps.values[name];
-    for (var i = 0; i < files.length; i++) {
-      fileList.push(files[i]);
-    }
-    props.formikProps.setFieldValue(name, fileList);
-  };
-  const handleDelete = (listName, e) => {
-    props.formikProps.values[listName].splice(
-      props.formikProps.values[listName].indexOf(e),
-      1
-    );
-    props.formikProps.setFieldValue(name, props.formikProps.values[listName]);
-  };
-  const stateList = getStateList(props.formikProps.values.country);
   return (
     <React.Fragment>
       <Heading title="Position Details" />
@@ -67,14 +43,22 @@ function PositionDetails(props) {
         />
       </Grid>
       <Grid item xs={12} sm={12} style={styles.fieldWrapper}>
-        <Textfield
+        {/* <Textfield
           name="requirementDescription"
           id="requirementDescription"
           variant="outlined"
-          displayLabel="Requirement Description"
+          
           fullWidth
           multiple
           required
+        /> */}
+        <ControlledEditor
+          {...props}
+          displayLabel="Requirement Description"
+          name="requirementDescription"
+          id="requirementDescription"
+          variant="outlined"
+          value={props.formikProps.values.requirementDescription}
         />
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
@@ -82,7 +66,7 @@ function PositionDetails(props) {
           name="workAuthorizationStatus"
           id="workAuthorizationStatus"
           displayLabel="Work Authorization Status"
-          options={countries}
+          options={immiStatus}
           style={{
             width: "100%",
             height: 49
@@ -94,7 +78,7 @@ function PositionDetails(props) {
           name="securityClearanceLevel"
           id="securityClearanceLevel"
           displayLabel="Security Clearance Level"
-          options={countries}
+          options={scType}
           style={{
             width: "100%",
             height: 49
