@@ -12,6 +12,7 @@ import {
 //import { Editor } from "react-draft-wysiwyg";
 import PropTypes from "prop-types";
 import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 import dynamic from "next/dynamic";
 
@@ -45,30 +46,44 @@ const styles = {
     paddingLeft: 8
   }
 };
-const CustomConvertFromHTML = html => {
-  // Correctly seperates paragraphs into their own blocks
-  const blockRenderMap = DefaultDraftBlockRenderMap.set("span", {
-    element: "span"
-  });
+// const CustomConvertFromHTML = html => {
+//   // Correctly seperates paragraphs into their own blocks
+//   const blockRenderMap = DefaultDraftBlockRenderMap.set("span", {
+//     element: "span"
+//   });
+//   const blocksFromHTML = convertFromHTML(
+//     html,
+//     getSafeBodyFromHTML,
+//     blockRenderMap
+//   );
+//   blocksFromHTML.contentBlocks = blocksFromHTML.contentBlocks.map(block =>
+//     block.get("type") === "span" ? block.set("type", "myType") : block
+//   );
+//   return blocksFromHTML;
+// };
+function ControlledEditor(props) {
+  // assert hard-coded HTML string, convert it, bring it in as state
+
+  const blockRenderMap = DefaultDraftBlockRenderMap.set("p", { element: "p" });
   const blocksFromHTML = convertFromHTML(
-    html,
+    props.value,
     getSafeBodyFromHTML,
     blockRenderMap
   );
-  blocksFromHTML.contentBlocks = blocksFromHTML.contentBlocks.map(block =>
-    block.get("type") === "span" ? block.set("type", "myType") : block
+  const blocksFromHtml = htmlToDraft(props.value);
+  //const blocksFromHTML = convertFromHTML(props.value);
+  const { contentBlocks, entityMap } = blocksFromHtml;
+  const contentState = ContentState.createFromBlockArray(
+    contentBlocks,
+    entityMap
   );
-  return blocksFromHTML;
-};
-function ControlledEditor(props) {
-  const htmlTranscript = CustomConvertFromHTML(props.value);
+
+  const content = ContentState.createFromBlockArray(
+    blocksFromHTML.contentBlocks,
+    blocksFromHTML.entityMap
+  );
   const [editorState, setEditorState] = React.useState(
-    EditorState.createWithContent(
-      ContentState.createFromBlockArray(
-        htmlTranscript.contentBlocks,
-        htmlTranscript.entityMap
-      )
-    )
+    EditorState.createWithContent(contentState)
   );
 
   const onEditorStateChange = editorState => {
