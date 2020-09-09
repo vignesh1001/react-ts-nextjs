@@ -1,21 +1,9 @@
 import React from "react";
 import { Grid, Chip } from "@material-ui/core";
-import Textfield from "../../formfields/TextBox";
 import ComboSelectBox from "../../formfields/ComboSelectBox";
-import RadioGroupBox from "../../formfields/RadioGroupBox";
-import SimpleUploadLink from "../../formfields/SimpleUploadLink";
 import Heading from "./Heading";
 import PropTypes from "prop-types";
-import {
-  countries,
-  immiStatus,
-  USA_STATE,
-  INDIA_STATE,
-  getStateList,
-  workType,
-  employmentWorkingType
-} from "../../../constants/dropdown";
-
+import { internalContacts } from "../../../constants/internalContacts";
 const styles = {
   fieldWrapper: { paddingTop: 0, paddingRight: 12 },
   chipsStyle: {
@@ -25,15 +13,38 @@ const styles = {
     backgroundColor: "#00bfff"
   }
 };
+const internalContactList = internalContacts.map(i => ({
+  title: i.Name,
+  value: i.Name
+}));
+const coordinatorList = internalContacts.map(i => ({
+  title: i.Name,
+  value: i.Name
+}));
+
+const recruitingLeadList = internalContacts.map(i => ({
+  title: i.Name,
+  value: i.Name,
+  email: i.Email
+}));
+const salesLeadList = internalContacts.map(i => ({
+  title: i.Name,
+  value: i.Name,
+  email: i.Email
+}));
+const recruitersList = internalContacts.map(i => ({
+  title: i.Name,
+  value: i.Name,
+  email: i.Email
+}));
 
 function InternalDetails(props) {
-  const handleFileUpload = ({ target }) => {
-    const { name, files } = target;
-    var fileList = props.formikProps.values[name];
-    for (var i = 0; i < files.length; i++) {
-      fileList.push(files[i]);
-    }
-    props.formikProps.setFieldValue(name, fileList);
+  const addNewItem = (listName, item) => () => {
+    props.formikProps.values[listName].push(item);
+    props.formikProps.setFieldValue(
+      listName,
+      props.formikProps.values[listName]
+    );
   };
   const handleDelete = (listName, e) => {
     props.formikProps.values[listName].splice(
@@ -42,14 +53,6 @@ function InternalDetails(props) {
     );
     props.formikProps.setFieldValue(name, props.formikProps.values[listName]);
   };
-  const addNewItem = (listName, item) => () => {
-    props.formikProps.values[listName].push(item);
-    props.formikProps.setFieldValue(
-      listName,
-      props.formikProps.values[listName]
-    );
-  };
-  const stateList = getStateList(props.formikProps.values.country);
   return (
     <React.Fragment>
       <Heading title="Internal Details" />
@@ -58,7 +61,7 @@ function InternalDetails(props) {
           name="internalContact"
           id="internalContact"
           displayLabel="Internal Contact"
-          options={countries}
+          options={internalContactList}
           style={{
             width: "100%",
             height: 49
@@ -70,7 +73,7 @@ function InternalDetails(props) {
           name="coordinator"
           id="coordinator"
           displayLabel="co-ordinator"
-          options={countries}
+          options={coordinatorList}
           style={{
             width: "100%",
             height: 49
@@ -82,10 +85,20 @@ function InternalDetails(props) {
           name="recruitingLead"
           id="recruitingLead"
           displayLabel="Recruiting Lead"
-          options={countries}
+          options={recruitingLeadList}
           style={{
             width: "100%",
             height: 49
+          }}
+          onChange={e => {
+            const { target } = e;
+            const { value } = target;
+            if (value) {
+              props.formikProps.setFieldValue(
+                "recruitingLeadsEmail",
+                recruitingLeadList.find(i => i.value === value).email
+              );
+            }
           }}
         />
       </Grid>
@@ -94,18 +107,29 @@ function InternalDetails(props) {
           name="salesLead"
           id="salesLead"
           displayLabel="Sales Lead"
-          options={countries}
+          options={salesLeadList}
           style={{
             width: "100%",
             height: 49
           }}
+          onChange={e => {
+            const { target } = e;
+            const { value } = target;
+            if (value) {
+              props.formikProps.setFieldValue(
+                "salesLeadsEmail",
+                salesLeadList.find(i => i.value === value).email
+              );
+            }
+          }}
         />
       </Grid>
-      <Grid item xs={12} sm={12} style={{ paddingTop: 10, paddingBottom: 10 }}>
-        <label
+      <Heading title="Recruiters" />
+      <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
+        {/* <label
           style={{
             color: "#374c97",
-            paddingRight: 4
+            paddingRight: 4,
           }}
         >
           Recruiters{" "}
@@ -116,16 +140,47 @@ function InternalDetails(props) {
             position: "",
             relationship: "",
             phone: "",
-            email: ""
+            email: "",
           })}
           style={{
             color: "#f4308f",
             textDecoration: "underline",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           Assign
-        </label>
+        </label> */}
+        <ComboSelectBox
+          name="recruiter"
+          id="recruiter"
+          options={recruitersList}
+          style={{
+            width: "100%",
+            height: 49
+          }}
+          onChange={e => {
+            const { target } = e;
+            const { value } = target;
+            if (value) {
+              const recruiters = props.formikProps.values.recruiters;
+              const recruiter = recruitersList.find(i => i.value === value);
+              recruiters.push({
+                name: recruiter.value,
+                email: recruiter.email
+              });
+              props.formikProps.setFieldValue("recruiters", recruiters);
+            }
+          }}
+        />
+        {props.formikProps.values.recruiters.map(i => (
+          <Chip
+            key={"recruiters" + i.name}
+            size="medium"
+            label={i.name}
+            onDelete={() => handleDelete("recruiters", i)}
+            style={styles.chipsStyle}
+          />
+        ))}
       </Grid>
     </React.Fragment>
   );

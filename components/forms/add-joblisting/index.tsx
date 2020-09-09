@@ -14,61 +14,95 @@ import Loader from "../../Loader";
 const initialValues = {
   requisitionNumber: null,
   noOfPosition: "",
-  priority: "High",
+  priority: "",
   clientName: "",
   clientContact: "",
-  location: "on-site",
+  location: "onsite",
   country: "",
   state: "",
   city: "",
   zip: "",
-  employeementType: "Fulltime",
+  employeementType: "fulltime",
   duration: "",
-  rateBy: "Hourly",
+  rateBy: "hourly",
   clientBillRate: "",
   payRate: "",
   positionTitle: "",
   skills: "",
-  requirementDescription:
-    '<p>dsgss  <strong>dsgdgdsgd  </strong>dgsdgsdgs dsgdsg <span style="font-size: 36px;">test..</span><',
+  requirementDescription: "",
   workAuthorizationStatus: "",
   securityClearanceLevel: "",
   internalContact: "",
   coordinator: "",
   recruitingLead: "",
   salesLead: "",
+  recruiter: "",
   recruiters: [],
+  jobListingBoard: [],
   recruitingLeadsEmail: "",
   salesLeadsEmail: "",
-  action: "ADD"
+  action: "ADD",
 };
 
 const validationSchema = yup.object({
   noOfPosition: yup
     .string("Enter a No.Of.Position")
     .required("No.Of.Position is required"),
+  priority: yup.string("").required("Priority is required"),
+  clientName: yup.string("").required("Client Name is required"),
+  clientContact: yup.string("").required("Client Contact is required"),
   city: yup.string("Enter your City").required("City is required"),
   state: yup.string("Enter your State").required("State is required"),
   zip: yup.string("Enter your zip").required("Zip is required"),
   country: yup.string("Enter your country").required("Country is required"),
+  duration: yup.string("").required("Duration is required"),
+  clientBillRate: yup.string("").required("Client Bill Rate is required"),
+  payRate: yup.string("").required("Pay Rate is required"),
+  securityClearanceLevel: yup
+    .string("")
+    .required("Security Clearance Level is required"),
+  internalContact: yup.string("").required("Internal Contact is required"),
+  workAuthorizationStatus: yup
+    .string("")
+    .required("Work Authorization Status is required"),
+  coordinator: yup.string("").required("co-ordinator is required"),
+  recruitingLead: yup.string("").required("Recruiting Lead is required"),
+  requirementDescription: yup
+    .string("")
+    .required("Requirement Description is required"),
   positionTitle: yup
     .string("Enter your Position Title")
     .required("Position Title is required"),
-  skills: yup.string("Enter Skills").required("Skills is required")
+  skills: yup.string("Enter Skills").required("Skills is required"),
 });
 let tempFormikProps;
 function AddJobListingForm(props) {
   const [state, setState] = React.useState({
     isPreview: false,
-    isShowLoader: false
+    isShowLoader: false,
   });
   const togglePreviewMode = () =>
-    setState({ ...state, isPreview: !state.isPreview });
+    setState({
+      ...state,
+      isPreview: !state.isPreview,
+      isShowJobListingError: false,
+    });
   const toggleLoader = () =>
-    setState(prevState => ({
+    setState((prevState) => ({
       ...prevState,
-      isShowLoader: !prevState.isShowLoader
+      isShowLoader: !prevState.isShowLoader,
     }));
+  const handleSave = () => {
+    const errorList = Object.values(tempFormikProps.errors);
+    if (errorList && errorList.length) {
+      alert(
+        errorList.join("\n") +
+          "\n        Please Click Edit to fill the above mandatory fields"
+      );
+    } else {
+      tempFormikProps.handleSubmit();
+    }
+  };
   React.useEffect(() => {
     const selectedJobListing = localStorage.getItem("setSelectedJobListing");
     localStorage.removeItem("setSelectedJobListing");
@@ -97,7 +131,10 @@ function AddJobListingForm(props) {
         tempFormikProps.setFieldValue("city", item.location.city);
         tempFormikProps.setFieldValue("zip", item.location.zip);
 
-        tempFormikProps.setFieldValue("employeementType", item.employmentType);
+        tempFormikProps.setFieldValue(
+          "employeementType",
+          item.employmentType || "Fulltime"
+        );
         tempFormikProps.setFieldValue("duration", item.duration);
         tempFormikProps.setFieldValue("rateBy", item.compensationDetails.wages);
         tempFormikProps.setFieldValue(
@@ -134,7 +171,7 @@ function AddJobListingForm(props) {
           item.internalDetails.coOrdinator
         );
         tempFormikProps.setFieldValue(
-          "recruitingLead:",
+          "recruitingLead",
           item.internalDetails.recruitingLead
         );
         tempFormikProps.setFieldValue(
@@ -158,17 +195,22 @@ function AddJobListingForm(props) {
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={e => {
+      onSubmit={(e) => {
         if (!state.isPreview) {
           props.dispatch(clearAll());
           togglePreviewMode();
         } else {
           toggleLoader();
-          props.dispatch(saveJobListing(e));
+          if (tempFormikProps.values.requisitionNumber) {
+            tempFormikProps.setFieldValue("action", "UPDATE");
+            props.dispatch(saveJobListing({ ...e, action: "UPDATE" }));
+          } else {
+            props.dispatch(saveJobListing(e));
+          }
         }
       }}
     >
-      {formikProps => {
+      {(formikProps) => {
         tempFormikProps = formikProps;
         return (
           <form>
@@ -178,16 +220,31 @@ function AddJobListingForm(props) {
               spacing={1}
               style={{
                 backgroundColor: "#FFF",
-                padding: "30px 90px 30px 40px"
+                padding: "30px 90px 30px 40px",
               }}
             >
               {state.isPreview ? (
-                <PreviewJobListing
-                  {...props}
-                  toggleLoader={toggleLoader}
-                  formikProps={formikProps}
-                  onEdit={togglePreviewMode}
-                />
+                <React.Fragment>
+                  <PreviewJobListing
+                    {...props}
+                    toggleLoader={toggleLoader}
+                    formikProps={formikProps}
+                    onEdit={togglePreviewMode}
+                  />
+                  {state.isShowJobListingError &&
+                    !formikProps.values.jobListingBoard.length && (
+                      <div
+                        style={{
+                          marginTop: -10,
+                          marginLeft: 14,
+                          marginBottom: 15,
+                          color: "red",
+                        }}
+                      >
+                        Please select the Job Listing Board, Before Publishing
+                      </div>
+                    )}
+                </React.Fragment>
               ) : (
                 <React.Fragment>
                   <BasicDetails {...props} formikProps={formikProps} />
@@ -210,11 +267,11 @@ function AddJobListingForm(props) {
                       fontSize: 14,
                       color: "#FFF",
                       backgroundColor: "#234071",
-                      marginRight: 12
+                      marginRight: 12,
                     }}
-                    onClick={formikProps.handleSubmit}
+                    onClick={handleSave}
                   >
-                    Save Draft
+                    Save
                   </Button>
                 )}
                 <Button
@@ -222,16 +279,26 @@ function AddJobListingForm(props) {
                   onClick={
                     state.isPreview
                       ? () => {
-                          toggleLoader();
-                          formikProps.setFieldValue("action", "PUBLISH");
-                          props.dispatch(
-                            saveJobListing({
-                              ...formikProps.values,
-                              action: "PUBLISH"
-                            })
-                          );
+                          // PREVIEW - PUBLISH CLIENT EVENT
+                          if (formikProps.values.jobListingBoard.length) {
+                            setState({
+                              ...state,
+                              isShowJobListingError: false,
+                            });
+                            toggleLoader();
+                            formikProps.setFieldValue("action", "PUBLISH");
+                            props.dispatch(
+                              saveJobListing({
+                                ...formikProps.values,
+                                action: "PUBLISH",
+                              })
+                            );
+                          } else {
+                            setState({ ...state, isShowJobListingError: true });
+                          }
                         }
-                      : formikProps.handleSubmit
+                      : //
+                        formikProps.handleSubmit
                   }
                   style={{
                     width: 190,
@@ -239,7 +306,7 @@ function AddJobListingForm(props) {
                     borderRadius: 4,
                     fontSize: 14,
                     color: "#FFF",
-                    backgroundColor: "#e32686"
+                    backgroundColor: "#e32686",
                     //!formikProps.isValid
                     //? "#f4a0cb"
                     //: "#e32686",
@@ -257,7 +324,7 @@ function AddJobListingForm(props) {
 }
 
 AddJobListingForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
 };
 
 export default AddJobListingForm;
