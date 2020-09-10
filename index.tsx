@@ -15,6 +15,7 @@ import ViewJobListingTable from "./pages/ViewJobListingTable";
 import "./style.css";
 
 import "./components/forms/add-joblisting/style.css";
+import Header from "./components/Header";
 
 interface AppProps {}
 interface AppState {
@@ -33,6 +34,7 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
+          <Header />
           <AddJobListing />
           {/*
           <ViewJobListingTable />
