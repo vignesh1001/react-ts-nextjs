@@ -20,7 +20,15 @@ const styles = {
     display: "inline-flex",
     padding: "0 8px",
     marginTop: 2,
-    cursor: "pointer"
+    cursor: "pointer",
+    opacity: 0.4
+  },
+  headerIconContainer_active: {
+    display: "inline-flex",
+    padding: "0 8px",
+    marginTop: 2,
+    cursor: "pointer",
+    opacity: 0.4
   }
 };
 
@@ -31,7 +39,7 @@ function Header() {
         <Grid container>
           <Grid item sm={8} lg={8} md={8} xl={8}>
             Logo
-            <span style={styles.headerIconContainer}>
+            <span style={styles.headerIconContainer_active}>
               <SearchIcon style={styles.headerIcon} /> Resume Search
             </span>
             <span style={styles.headerIconContainer}>
