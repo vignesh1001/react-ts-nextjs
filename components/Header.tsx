@@ -27,8 +27,7 @@ const styles = {
     display: "inline-flex",
     padding: "0 8px",
     marginTop: 2,
-    cursor: "pointer",
-    opacity: 0.4
+    cursor: "pointer"
   }
 };
 
