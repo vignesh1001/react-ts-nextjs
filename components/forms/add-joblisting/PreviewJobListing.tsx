@@ -105,6 +105,18 @@ function PreviewJobListing(props) {
                 JobListing Published Failed
               </h2>
             )}
+          {formikProps.values.action === "UPDATE" &&
+            props.saveJobListingStatus === "SAVED" && (
+              <h2 style={styles.savedMessage}>
+                JobListing Updated Successfully
+              </h2>
+            )}
+          {formikProps.values.action === "UPDATE" &&
+            props.saveJobListingStatus === "FAILED" && (
+              <h2 style={styles.savedFailedMessage}>
+                JobListing Update Failed
+              </h2>
+            )}
         </Grid>
         <Grid
           container
