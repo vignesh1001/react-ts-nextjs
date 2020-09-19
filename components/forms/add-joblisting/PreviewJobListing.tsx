@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Button,Modal  } from "@material-ui/core";
+import { Grid, Button, Modal } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { jobListingBoardList } from "../../../constants/dropdown";
 import CheckBoxComponent from "../../formfields/CheckBox";
@@ -65,12 +65,12 @@ function PreviewJobListing(props) {
   const { formikProps } = props;
   const [state, setState] = React.useState({
     isShowModal: false,
-    modalTitle: "erere",
-    modalDescription: "rererer",
+    modalTitle: "",
+    modalDescription: "",
     callBack1: () => {},
     callBack2: () => {},
-    button1Text: "CLOSE",
-    button2Text: "SEARCH"
+    button1Text: "",
+    button2Text: ""
   });
   const goToHomePage = () => {
     props.dispatch(loadCandidatesSuccess(null));
