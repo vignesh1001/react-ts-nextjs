@@ -1,8 +1,10 @@
 import React from "react";
-import { Grid, Button } from "@material-ui/core";
+import { Grid, Button,Modal  } from "@material-ui/core";
 import PropTypes from "prop-types";
 import { jobListingBoardList } from "../../../constants/dropdown";
 import CheckBoxComponent from "../../formfields/CheckBox";
+import Router from "next/router";
+import { loadCandidatesSuccess, clearAll } from "../../../actions";
 
 const styles = {
   previewTitle: {
@@ -61,14 +63,108 @@ const styles = {
 
 function PreviewJobListing(props) {
   const { formikProps } = props;
-
+  const [state, setState] = React.useState({
+    isShowModal: false,
+    modalTitle: "erere",
+    modalDescription: "rererer",
+    callBack1: () => {},
+    callBack2: () => {},
+    button1Text: "CLOSE",
+    button2Text: "SEARCH"
+  });
+  const goToHomePage = () => {
+    props.dispatch(loadCandidatesSuccess(null));
+    props.dispatch(clearAll());
+    Router.push("/");
+  };
+  const goToOpenReqs = () => {
+    Router.push("/ViewJobListing");
+    props.dispatch(clearAll());
+  };
+  const closeSaveModel = () => {
+    setState({ ...state, isShowModal: false });
+  };
   React.useEffect(() => {
-    if (props.saveJobListingResponse) {
-      props.formikProps.setFieldValue(
-        "requisitionNumber",
-        props.saveJobListingResponse.jobPosting[0].requisitionNumber
-      );
+    if (
+      props.saveJobListingResponse &&
+      props.saveJobListingStatus &&
+      !state.isShowModal
+    ) {
+      const { jobPosting, error } = props.saveCandidateResponse;
+      if (!error && jobPosting.length) {
+        props.formikProps.setFieldValue(
+          "requisitionNumber",
+          jobPosting[0].requisitionNumber
+        );
+      }
       props.toggleLoader();
+      if (props.saveJobListingStatus === "SAVED") {
+        const modalTitle =
+          formikProps.values.action === "ADD"
+            ? "Req was saved!"
+            : "Req was published!";
+
+        const modalDescription =
+          formikProps.values.action === "ADD"
+            ? formikProps.values.requisitionNumber +
+              " - " +
+              formikProps.values.positionTitle +
+              " was successfully saved to PTP database. It is ready to publish."
+            : formikProps.values.requisitionNumber +
+              " - " +
+              formikProps.values.positionTitle +
+              " was successfully published on " +
+              formikProps.values.jobListingBoard.join(",");
+        ".";
+
+        const callBack1 =
+          formikProps.values.action === "ADD" ? closeSaveModel : goToOpenReqs;
+        const callBack2 =
+          formikProps.values.action === "ADD" ? goToHomePage : goToOpenReqs;
+        const button1Text =
+          formikProps.values.action === "ADD" ? "CLOSE" : "SEARCH";
+        const button2Text =
+          formikProps.values.action === "ADD" ? "SEARCH" : "VIEW REQ";
+        setState({
+          ...state,
+          button1Text,
+          button2Text,
+          isShowModal: true,
+          modalTitle,
+          modalDescription,
+          callBack1,
+          callBack2
+        });
+      } else if (props.saveJobListingStatus === "FAILED") {
+        const modalTitle =
+          formikProps.values.action === "ADD"
+            ? "Req was save failed!"
+            : "Req was publish failed!";
+        const modalDescription =
+          formikProps.values.action === "ADD"
+            ? formikProps.values.requisitionNumber +
+              " - " +
+              formikProps.values.positionTitle +
+              " was not saved to PTP database."
+            : formikProps.values.requisitionNumber +
+              " - " +
+              formikProps.values.positionTitle +
+              " was not published.";
+        const callBack1 = null;
+        const callBack2 = closeSaveModel;
+        const button1Text = "";
+        const button2Text = "CLOSE";
+        setState({
+          ...state,
+          button1Text,
+          button2Text,
+          isShowModal: true,
+          modalTitle,
+          modalDescription,
+          callBack1,
+          callBack2
+        });
+      }
     }
   }, [props.saveJobListingResponse]);
 
@@ -85,7 +181,7 @@ function PreviewJobListing(props) {
           <h4 style={styles.previewTitle}>Preview</h4>
         </Grid>
         <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
-          {formikProps.values.action === "ADD" &&
+          {/*{formikProps.values.action === "ADD" &&
             props.saveJobListingStatus === "SAVED" && (
               <h2 style={styles.savedMessage}>JobListing Saved Successfully</h2>
             )}
@@ -116,7 +212,7 @@ function PreviewJobListing(props) {
               <h2 style={styles.savedFailedMessage}>
                 JobListing Update Failed
               </h2>
-            )}
+            )}*/}
         </Grid>
         <Grid
           container
@@ -312,6 +408,64 @@ function PreviewJobListing(props) {
               style={{ "flex-flow": "wrap", minHeight: 50 }}
             />
           ))}
+        </Grid>
+        <Grid item xs={12} sm={12}>
+          {state.isShowModal && (
+            <div>
+              <Modal disablePortal disableEnforceFocus disableAutoFocus open>
+                <div
+                  style={{
+                    position: "absolute",
+                    width: 385,
+                    backgroundColor: "#FFF",
+                    borderRadius: "2px",
+                    border: "1px #fff",
+                    boxShadow: 5,
+                    padding: 8,
+                    left: "50%",
+                    top: "50%"
+                  }}
+                >
+                  <h2 id="modal-title" style={{ marginTop: 0 }}>
+                    {state.modalTitle}
+                  </h2>
+                  <p id="modal-description">{state.modalDescription}</p>
+                  <div style={{ textAlign: "right" }}>
+                    <Button
+                      variant="contained"
+                      onClick={state.callBack1}
+                      style={{
+                        width: 90,
+                        height: 36,
+                        borderRadius: 4,
+                        fontSize: 14,
+                        boxShadow: "none",
+                        marginRight: 12,
+                        backgroundColor: "#FFF"
+                      }}
+                    >
+                      {state.button1Text}
+                    </Button>
+                    <Button
+                      variant="contained"
+                      onClick={state.callBack2}
+                      style={{
+                        width: 100,
+                        height: 36,
+                        borderRadius: 4,
+                        fontSize: 14,
+                        boxShadow: "none",
+                        MozOutlineColor: "#e32686",
+                        backgroundColor: "#FFF"
+                      }}
+                    >
+                      {state.button2Text}
+                    </Button>
+                  </div>
+                </div>
+              </Modal>
+            </div>
+          )}
         </Grid>
       </Grid>
     </React.Fragment>

@@ -47,19 +47,6 @@ const styles = {
     wordWrap: "break-word"
   }
 };
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
-}
-function getModalStyle() {
-  const top = 50 + rand();
-  const left = 50 + rand();
-
-  return {
-    top: `${top}%`,
-    left: `${left}%`,
-    transform: `translate(-${top}%, -${left}%)`
-  };
-}
 function PreviewCandidate(props) {
   const { formikProps } = props;
   const [state, setState] = React.useState({
@@ -71,7 +58,6 @@ function PreviewCandidate(props) {
     button1Text: "CLOSE",
     button2Text: "SEARCH"
   });
-  const [modalStyle] = React.useState(getModalStyle);
   const goToHomePage = () => {
     props.dispatch(loadCandidatesSuccess(null));
     props.dispatch(clearAll());
@@ -443,7 +429,6 @@ function PreviewCandidate(props) {
                 border: "1px #fff",
                 boxShadow: 5,
                 padding: 8,
-                ...modalStyle,
                 left: "50%",
                 top: "50%"
               }}
