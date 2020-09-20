@@ -432,7 +432,7 @@ function PreviewJobListing(props) {
               variant="outlined"
               value={i.value}
               displayLabel={i.title}
-              style={{ "flex-flow": "wrap", minHeight: 50 }}
+              style={{ flexFlow: "wrap", minHeight: 50 }}
             />
           ))}
         </Grid>

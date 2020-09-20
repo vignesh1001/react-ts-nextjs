@@ -43,7 +43,7 @@ const ViewJobListingTable = props => {
           variant="outlined"
           value={state.isIncludeReq}
           displayLabel={""}
-          style={{ "flex-flow": "wrap", minHeight: 50 }}
+          style={{ flexFlow: "wrap", minHeight: 50 }}
           onChange={e => {
             /*if (e.target.checked) {
               props.dispatch(
