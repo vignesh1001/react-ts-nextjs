@@ -10,6 +10,7 @@
     "@material-ui/lab": "4.0.0-alpha.56",
     "@material-ui/styles": "^4.10.0",
     "@types/react": "16.9.44",
+    "@types/node": "latest",
     "axios": "0.19.2",
     "clsx": "1.1.1",
     "draft-js": "0.11.7",
@@ -35,6 +36,7 @@
     "yup": "0.29.3"
   },
   "devDependencies": {
+    "typescript": "4.0.3",
     "eslint": "^7.2.0",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^4.0.4",
