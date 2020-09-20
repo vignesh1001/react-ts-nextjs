@@ -27,7 +27,7 @@ function EmploymentCompenDetails() {
           variant="outlined"
           options={employmentWorkingType}
           color="red"
-          style={{ "flex-flow": "wrap" }}
+          style={{ flexFlow: "wrap" }}
         />
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
