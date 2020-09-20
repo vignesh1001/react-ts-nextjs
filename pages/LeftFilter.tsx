@@ -1,21 +1,32 @@
 import { Formik } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
-import { InputLabel, FormHelperText, Slider, Switch } from "@material-ui/core";
+import {
+  InputLabel,
+  FormHelperText,
+  Slider,
+  Switch,
+  FormControlLabel,
+  Checkbox,
+  Link,
+  Button
+} from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Button from "@material-ui/core/Button";
 import SearchIcon from "@material-ui/icons/Search";
+import { ExpandMore, ExpandLess } from "@material-ui/icons";
 import { Chip } from "@material-ui/core";
 import React, { useState } from "react";
 import { loadCandidates } from "../actions";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import * as jobTitles from "../constants/jobTitles";
+import { getSkillData, immiStatus } from "../constants/dropdown";
 import {
   professionalExpSlider,
   availabilitySlider,
   backSearchSlider
 } from "../constants/dropdown";
+import { withStyles } from "@material-ui/styles";
 
 const styles = {
   searchTextField: {
@@ -38,17 +49,31 @@ const titleColor = {
   color: "#404a9b",
   fontSize: 16,
   fontWeight: 500,
-  marginBottom: 30,
-  marginTop: 30
+  marginTop: 16
 };
 const advancedFilterTitleColor = {
   color: "#404a9b",
   fontSize: 16,
   fontWeight: 500,
-  marginBottom: 10
+  marginBottom: 8
 };
 const chipsStyle = {
-  ...buttonStyle
+  ...buttonStyle,
+  marginBottom: 8
+};
+const chipsStyleDisable = {
+  ...buttonStyle,
+  backgroundColor: "lightgray",
+  marginBottom: 8
+};
+const advancedSearchLink = {
+  textDecoration: "underline",
+  width: "100%",
+  textAlign: "left",
+  marginBottom: 16,
+  marginTop: 16,
+  color: "#e32686"
+  //display: "none"
 };
 const fieldTitle = {
   color: "#195091",
@@ -63,42 +88,89 @@ const searchButtonStyle = {
   height: 35
 };
 
+const SliderCSSComponent = withStyles({
+  root: {
+    color: "#54bdf1"
+  },
+  markLabel: {
+    color: "#596064",
+    fontSize: 12
+  },
+  thumbColorPrimary: {
+    backgroundColor: "#2280c8"
+  },
+  track: {
+    backgroundColor: "#2280c8"
+  },
+  valueLabel: {
+    display: "none"
+  }
+})(Slider);
+const isShowAdvancedSearch = true;
 export default function LeftFilter(props) {
   const [state, setState] = useState({
     isOnlyActivelyCandidate: true,
     isShowLoader: false,
+    isShowAdvSearch: false,
     isShowNoResults: false,
-    filterTitle: "",
-    filterSkills: "",
+    filterTitle: props.filterData.filterTitle
+      ? jobTitles.default.find(
+          i => i.value === props.filterData.filterTitle.value
+        )
+      : "",
+    filterSkills: props.filterData.filterSkills || [],
     filterLocation: "",
     filterTitleList: props.filterData.filterTitle
       ? [props.filterData.filterTitle.title]
       : [],
-    filterSkillsList: props.filterData.filterSkills
-      ? [props.filterData.filterSkills]
-      : [],
     filterLocationList: props.filterData.filterLocation
       ? [props.filterData.filterLocation]
       : [],
+    filterSkills_List: getSkillData(""),
+    filterTitle_List: jobTitles.default,
     filterTitleEnteredValue: "",
-    backSearchRange: [33, 49]
-    // filterJobSites: ["Dice", "Monster", "LinkedIn", "Career Builder"],
-    // selectedFilterJobSites: []
+    filterSkillsEnteredValue: "",
+    availability: 20,
+    backSearchRange: [20, 60],
+    professionalExpRange: [40, 60],
+    FilterJobSites: [
+      "Internal Conrep",
+      "LinkedIn",
+      "Dice",
+      "Monster",
+      "Career Builder"
+    ],
+    selectedFilterJobSites: [],
+    FilterLegalStatus: immiStatus,
+    selectedFilterLegalStatus: []
   });
   const handleDelete = (listName, e) => {
     state[listName].splice(state[listName].indexOf(e), 1);
     setState({ ...state, [listName]: state[listName] });
   };
-  /*const handleSearchIcon = () => {
-    alert("You clicked the delete icon.");
-  };*/
-  const handleChange = e => {
-    const { target } = e;
+
+  const handleChange = event => {
+    const { target } = event;
     const { name, value } = target;
     if (name === "isOnlyActivelyCandidate") {
       setState({
         ...state,
         isOnlyActivelyCandidate: !state.isOnlyActivelyCandidate
+      });
+    } else if (name === "filterTitle") {
+      const filterSkills = [];
+      const filterSkills_List = getSkillData(value || "");
+      state.filterSkills.forEach(i => {
+        const item = filterSkills_List.find(item => i.title === item.title);
+        if (item) {
+          filterSkills.push(item);
+        }
+      });
+      setState({
+        ...state,
+        [name]: value || "",
+        filterSkills,
+        filterSkills_List
       });
     } else {
       setState({ ...state, [name]: value });
@@ -107,24 +179,24 @@ export default function LeftFilter(props) {
   const handleSliderChange = (event, newValue) => {
     const { id } = event;
     setState({ ...state, [id]: newValue });
-    console.log("->", event, newValue);
-    // setValue(newValue);
   };
-  const handleOnClick = () => {
+  const handleSearch = () => {
     const { dispatch, filterData } = props;
     setState({ ...state, isShowLoader: true, isShowNoResults: false });
     const filterTitle =
-      filterData.filterTitle.title === state.filterTitleList.join("")
+      filterData.filterTitle.title === state.filterTitle.title
         ? filterData.filterTitle.value
-        : state.filterTitleList.join("");
+        : state.filterTitle.value;
+    debugger;
     if (
       filterTitle ||
-      state.filterSkillsList.length ||
+      state.filterSkills.length ||
       state.filterLocationList.length
     ) {
       dispatch(
         loadCandidates({
-          filterSkills: state.filterSkillsList.join(","),
+          ...state,
+          filterSkills: state.filterSkills,
           filterTitle: { value: filterTitle },
           filterLocation: state.filterLocationList.join(",")
         })
@@ -145,57 +217,54 @@ export default function LeftFilter(props) {
       setState({ ...state, [name]: "", [name + "List"]: state[name + "List"] });
     }
   };
-  /*const handleCheckBox = e => {
+  const handleCheckBox = e => {
     const { target } = e;
     const { name, value } = target;
-    const index = state.selectedFilterJobSites.indexOf(value);
-    if(index===-1){
-      state.selectedFilterJobSites.push(value);
+    const index = state["selected" + name].indexOf(value);
+    if (index === -1) {
+      state["selected" + name].push(value);
     } else {
-      state.selectedFilterJobSites.splice(index,1);
+      state["selected" + name].splice(index, 1);
     }
-    setState({...state});
-  }*/
-  const renderAutoComplete = () => {
-    const jobTitlesList = jobTitles.default;
-    let filterTitle = state.filterTitleList.length
-      ? jobTitlesList.find(item => item.title === state.filterTitleList[0])
-      : {
-          title: state.filterTitleEnteredValue,
-          value: state.filterTitleEnteredValue
-        };
-
-    filterTitle = jobTitlesList.find(
-      item => item.title === "JUNIOR DATA SCIENTIST"
-    );
+    setState({ ...state });
+  };
+  const renderAutoComplete = (listName, isMultiple) => {
+    const list = state[listName + "_List"];
     return (
       <Autocomplete
-        value={filterTitle}
         id="combo-box-demo"
-        options={jobTitlesList}
+        options={list}
+        value={state[listName]}
         getOptionLabel={option => option.title}
+        multiple={isMultiple}
         style={styles.searchTextField}
         onChange={(e, newValue) => {
-          handleKeyUp({
+          handleChange({
             target: {
-              name: "filterTitle",
-              value: newValue && newValue.value ? newValue.value : ""
-            },
-            keyCode: 13
+              value: newValue,
+              name: listName
+            }
           });
         }}
         freeSolo
-        searchText={filterTitle.title}
         onKeyUp={e => {
-          setState({ ...state, filterTitleEnteredValue: e.target.value });
+          setState({ ...state, [listName + "EnteredValue"]: e.target.value });
         }}
-        renderInput={params => <TextField {...params} />}
+        renderInput={params => <TextField {...params} variant="outlined" />}
       />
     );
   };
   return (
-    <Formik validationSchema={validationSchema} initialValues={initialValues}>
+    <Formik
+      validationSchema={validationSchema}
+      initialValues={initialValues}
+      onSubmit={e => {
+        console.log(e);
+        alert("Here");
+      }}
+    >
       {() => {
+        const ExpandOrLess = state.isShowAdvSearch ? ExpandLess : ExpandMore;
         return (
           <form
             onSubmit={e => {
@@ -207,74 +276,27 @@ export default function LeftFilter(props) {
               <InputLabel htmlFor="filterJOb" style={titleColor}>
                 Filter by Title
               </InputLabel>
-              {renderAutoComplete()}
-              {/*<TextField
-                value={state.filterTitle}
-                name="filterTitle"
-                onKeyUp={handleKeyUp}
-                onChange={handleChange}
-                id="filterJOb"
-                aria-describedby="helper-text-forJOb"
-                fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon onClick={handleSearchIcon} />
-                    </InputAdornment>
-                  ),
-                }}
-              />*/}
+              <div style={{ marginTop: 8 }}>
+                {renderAutoComplete("filterTitle", false)}
+              </div>
               <FormHelperText id="helper-text-forJOb" style={fieldTitle}>
-                Filter the job by title
+                Filter by title
               </FormHelperText>
-              {/*state.filterTitleList.map((i) => (
-                <Chip
-                  size="medium"
-                  label={i}
-                  onDelete={() => handleDelete("filterTitleList", i)}
-                  style={chipsStyle}
-                  key={"filterTitleList" + i}
-                />
-              ))*/}
             </div>
 
             <InputLabel htmlFor="filterJOb" style={titleColor}>
               Filter by Skills
             </InputLabel>
-            <div style={{ marginTop: 40 }}>
-              <TextField
-                value={state.filterSkills}
-                onKeyUp={handleKeyUp}
-                onChange={handleChange}
-                name="filterSkills"
-                id="filterSkills"
-                aria-describedby="my-helper-filterSkills"
-                fullWidth
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position="start">
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-              />
+            <div style={{ marginTop: 8 }}>
+              {renderAutoComplete("filterSkills", true)}
               <FormHelperText id="helper-text-filterSkills" style={fieldTitle}>
                 Filter by skill
               </FormHelperText>
             </div>
-            {state.filterSkillsList.map(i => (
-              <Chip
-                size="medium"
-                label={i}
-                onDelete={() => handleDelete("filterSkillsList", i)}
-                style={chipsStyle}
-                key={"filterSkillsList" + i}
-              />
-            ))}
             <InputLabel htmlFor="filterJOb" style={titleColor}>
               Filter by Location
             </InputLabel>
-            <div style={{ marginTop: 40 }}>
+            <div style={{ marginTop: 8 }}>
               <TextField
                 value={state.filterLocation}
                 onKeyUp={handleKeyUp}
@@ -307,134 +329,216 @@ export default function LeftFilter(props) {
                 key={"filterLocationList" + i}
               />
             ))}
-            {/* <div style={{ paddingTop: 40 }}>
-              <FormControl component="fieldset">
-                <FormLabel component="legend" style={{ color: "#00bfff" }}>
-                  Filter by other job sites
-                </FormLabel>
-                <Avatar
-                  style={{
-                    backgroundColor: "orange",
-                    marginLeft: 180,
-                    marginTop: -25
-                  }}
-                >
-                  {state.selectedFilterJobSites.length}
-                </Avatar>
-                <FormGroup aria-label="position" style={{ color: "#00bfff" }}>
-                  {state.filterJobSites.map(item => (
-                    <FormControlLabel
-                      value={item}
-                      control={<Checkbox color="primary" />}
-                      label={item}
-                      labelPlacement="end"
-                      onChange={handleCheckBox}
-                    />
-                  ))}
-                </FormGroup>
-              </FormControl>
-            </div> */}
-            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
-              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
-                Back Search
-              </InputLabel>
-              <Slider
-                defaultValue={33}
-                valueLabelFormat={value => {
-                  return `${
-                    backSearchSlider.find(i => i.value == value).oValue
-                  } Yr`;
-                }}
-                getAriaValueText={value => {
-                  return `${value} Year`;
-                }}
-                value={state.backSearchRange}
-                aria-labelledby="discrete-slider-restrict"
-                step={null}
-                scale={x => x}
-                valueLabelDisplay="auto"
-                marks={backSearchSlider}
-                name="backSearchRange"
-                id="backSearchRange"
-                onChange={handleSliderChange}
-              />
-            </div>
-            <div style={{ paddingBottom: 10, minHeight: 30 }}>
-              <InputLabel htmlFor="filterJOb" style={titleColor}>
-                <div style={{ width: "80%", float: "left" }}>
-                  Only Actively Looking Candidates
-                </div>
+            {isShowAdvancedSearch && (
+              <>
                 <div
                   style={{
-                    width: "20%",
-                    float: "left",
-                    marginTop: -12,
-                    textAlign: "right"
+                    marginTop: 16
                   }}
                 >
-                  <Switch
-                    checked={state.isOnlyActivelyCandidate}
-                    onChange={handleChange}
-                    name="isOnlyActivelyCandidate"
-                    color="secondary"
-                    style={{ float: "right" }}
+                  <InputLabel
+                    htmlFor="filterJOb"
+                    style={advancedFilterTitleColor}
+                  >
+                    Back Search
+                  </InputLabel>
+                  <SliderCSSComponent
+                    valueLabelFormat={value => {
+                      return `${
+                        backSearchSlider.find(i => i.value == value).tooltip
+                      } `;
+                    }}
+                    getAriaValueText={value => {
+                      return `${value} Year`;
+                    }}
+                    value={state.backSearchRange}
+                    aria-labelledby="discrete-slider-restrict"
+                    step={null}
+                    scale={x => x}
+                    valueLabelDisplay="auto"
+                    marks={backSearchSlider}
+                    name="backSearchRange"
+                    id="backSearchRange"
+                    onChange={(event, newVal) =>
+                      handleSliderChange({ id: "backSearchRange" }, newVal)
+                    }
+                    style={{ width: "96%", marginLeft: 8 }}
                   />
                 </div>
-              </InputLabel>
-            </div>
-            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
-              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
-                Legal Status
-              </InputLabel>
-            </div>
-            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
-              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
-                Professional Experiance
-              </InputLabel>
-              <Slider
-                defaultValue={33}
-                valueLabelFormat={value => {
-                  return `${
-                    professionalExpSlider.find(i => i.value == value).oValue
-                  } Yr`;
-                }}
-                getAriaValueText={value => {
-                  return `${value} Year`;
-                }}
-                aria-labelledby="discrete-slider-restrict"
-                step={null}
-                valueLabelDisplay="auto"
-                marks={professionalExpSlider}
-              />
-            </div>
-            <div style={{ width: "90%", marginLeft: 10, marginTop: 16 }}>
-              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
-                Availability
-              </InputLabel>
-              <Slider
-                defaultValue={33}
-                valueLabelFormat={value => {
-                  return `${
-                    availabilitySlider.find(i => i.value == value).oValue
-                  } Yr`;
-                }}
-                getAriaValueText={value => {
-                  return `${value} Year`;
-                }}
-                aria-labelledby="discrete-slider-restrict"
-                step={null}
-                scale={x => x}
-                valueLabelDisplay="auto"
-                marks={availabilitySlider}
-              />
-            </div>
+                <div>
+                  <Link
+                    component="button"
+                    variant="body2"
+                    onClick={() => {
+                      setState(prevState => ({
+                        ...prevState,
+                        isShowAdvSearch: !prevState.isShowAdvSearch
+                      }));
+                    }}
+                    style={advancedSearchLink}
+                  >
+                    Advanced Search
+                    <ExpandOrLess
+                      color="action"
+                      style={{
+                        fontSize: 25,
+                        position: "absolute",
+                        right: 16
+                      }}
+                    />
+                  </Link>
+                </div>
+                {state.isShowAdvSearch && (
+                  <React.Fragment>
+                    <div style={{ paddingBottom: 10, minHeight: 30 }}>
+                      <InputLabel htmlFor="filterJOb" style={titleColor}>
+                        <div style={{ width: "80%", float: "left" }}>
+                          Only Actively Looking Candidates
+                        </div>
+                        <div
+                          style={{
+                            width: "20%",
+                            float: "left",
+                            marginTop: -12,
+                            textAlign: "right"
+                          }}
+                        >
+                          <Switch
+                            checked={state.isOnlyActivelyCandidate}
+                            onChange={handleChange}
+                            name="isOnlyActivelyCandidate"
+                            color="secondary"
+                            style={{ float: "right" }}
+                          />
+                        </div>
+                      </InputLabel>
+                    </div>
+                    <div style={{ marginTop: 16 }}>
+                      <InputLabel
+                        htmlFor="filterJOb"
+                        style={advancedFilterTitleColor}
+                      >
+                        Legal Status
+                      </InputLabel>
+                      <div>
+                        {state.FilterLegalStatus.map(i => (
+                          <Chip
+                            name="FilterLegalStatus"
+                            size="medium"
+                            label={i.title}
+                            onClick={() =>
+                              handleCheckBox({
+                                target: {
+                                  name: "FilterLegalStatus",
+                                  value: i.value
+                                }
+                              })
+                            }
+                            style={
+                              state.selectedFilterLegalStatus.indexOf(i.value) >
+                              -1
+                                ? chipsStyle
+                                : chipsStyleDisable
+                            }
+                            key={"FilterLegalStatus" + i.value}
+                          />
+                        ))}
+                      </div>
+                    </div>
+                    <div style={{ marginTop: 16 }}>
+                      <InputLabel
+                        htmlFor="filterJOb"
+                        style={advancedFilterTitleColor}
+                      >
+                        Professional Experiance
+                      </InputLabel>
+                      <SliderCSSComponent
+                        valueLabelFormat={value => {
+                          return `${
+                            professionalExpSlider.find(i => i.value == value)
+                              .oValue
+                          } Yr`;
+                        }}
+                        getAriaValueText={value => {
+                          return `${value} Year`;
+                        }}
+                        value={state.professionalExpRange}
+                        aria-labelledby="discrete-slider-restrict"
+                        step={null}
+                        scale={x => x}
+                        valueLabelDisplay="auto"
+                        marks={professionalExpSlider}
+                        name="professionalExpRange"
+                        id="professionalExpRange"
+                        onChange={(event, newVal) =>
+                          handleSliderChange(
+                            { id: "professionalExpRange" },
+                            newVal
+                          )
+                        }
+                        style={{ width: "98%", marginLeft: 4 }}
+                      />
+                    </div>
+                    <div style={{ marginTop: 16 }}>
+                      <InputLabel
+                        htmlFor="filterJOb"
+                        style={advancedFilterTitleColor}
+                      >
+                        Availability
+                      </InputLabel>
+                      <SliderCSSComponent
+                        defaultValue={state.availability}
+                        valueLabelFormat={value => {
+                          return `${
+                            availabilitySlider.find(i => i.value == value)
+                              .oValue
+                          } Yr`;
+                        }}
+                        getAriaValueText={value => {
+                          return `${value} Year`;
+                        }}
+                        aria-labelledby="discrete-slider-restrict"
+                        step={null}
+                        scale={x => x}
+                        valueLabelDisplay="auto"
+                        marks={availabilitySlider}
+                        style={{ width: "96%", marginLeft: 8 }}
+                        onChange={(event, newVal) =>
+                          handleSliderChange({ id: "availability" }, newVal)
+                        }
+                      />
+                    </div>
+                    <div style={{ marginTop: 16 }}>
+                      <InputLabel
+                        htmlFor="filterJOb"
+                        style={advancedFilterTitleColor}
+                      >
+                        Filter by Source
+                      </InputLabel>
+                      {state.FilterJobSites.map(item => (
+                        <FormControlLabel
+                          key={"FilterJobSites_" + item}
+                          value={item}
+                          name="FilterJobSites"
+                          control={<Checkbox color="default" />}
+                          label={item}
+                          labelPlacement="end"
+                          onChange={handleCheckBox}
+                          style={{ color: "#374c97" }}
+                        />
+                      ))}
+                    </div>
+                  </React.Fragment>
+                )}
+              </>
+            )}
             <div>
               <Button
                 style={searchButtonStyle}
                 variant="contained"
                 color="secondary"
                 size="large"
-                onClick={handleOnClick}
+                onClick={handleSearch}
               >
                 SEARCH
               </Button>

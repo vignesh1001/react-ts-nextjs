@@ -7,10 +7,15 @@ export const exampleInitialState = {
   isLoading: false,
   resumes: null,
   candidateModalOpen: false,
+  saveCandidateStatus: "",
+  saveJobListingStatus: "",
   filterData: {
     filterTitle: "",
-    filterSkill: "",
+    filterSkill: ""
   },
+  addCandidate: {},
+  saveJobListingResponse: null,
+  selectedCandidate: null
 };
 
 function reducer(state = exampleInitialState, action) {
@@ -19,47 +24,94 @@ function reducer(state = exampleInitialState, action) {
       return {
         ...state,
         error: null,
-        isLoading: true,
+        isLoading: true
       };
+
     case actionTypes.LOAD_CANDIDATES_SUCCESS:
       return {
         ...state,
         isLoading: false,
         error: null,
-        ...{ candidates: action.data },
-      };
-
-    case actionTypes.UPDATE_RESUME_DATA:
-      return {
-        ...state,
-        ...{ resumes: [...state.resumes, action.data] },
-      };
-
-    case actionTypes.LOAD_RESUME_DATA_SUCCESS:
-      return {
-        ...state,
-        ...{ resumes: action.data },
-      };
-
-    case actionTypes.UI_TOGGLE_CANDIDATE_MODAL:
-      return {
-        ...state,
-        ...{ candidateModalOpen: !state.candidateModalOpen },
+        candidates: action.data
       };
 
     case actionTypes.FAILURE:
       return {
         ...state,
         isLoading: false,
-        candidates: null,
-        ...{ error: action.error },
+        candidates: { error: action.error }
       };
     case actionTypes.ADD_FILTER_CRITERIA:
       return {
         ...state,
-        ...{ filterData: action.data },
+        ...{ filterData: action.data }
       };
-
+    case actionTypes.ADD_CANDIDATE_SAVE:
+      return {
+        ...state,
+        saveCandidateStatus: "",
+        addCandidate: action.data,
+        saveCandidateResponse: null
+      };
+    case actionTypes.SAVE_CANDIDATE:
+      return {
+        ...state,
+        saveCandidateStatus: null
+      };
+    case actionTypes.SAVE_CANDIDATE_SUCCESS:
+      return {
+        ...state,
+        saveCandidateStatus: "CANDIDATE_SAVED",
+        saveCandidateResponse: action.data
+      };
+    case actionTypes.SAVE_CANDIDATE_FAILURE:
+      return {
+        ...state,
+        saveCandidateStatus: "CANDIDATE_FAILED",
+        saveCandidateResponse: { error: action.data }
+      };
+    case actionTypes.SAVE_JOBLISTING:
+      return {
+        ...state,
+        saveJobListingStatus: null
+      };
+    case actionTypes.SAVE_JOBLISTING_SUCCESS:
+      return {
+        ...state,
+        saveJobListingStatus: "SAVED",
+        saveJobListingResponse: action.data
+      };
+    case actionTypes.SAVE_JOBLISTING_FAILURE:
+      return {
+        ...state,
+        saveJobListingStatus: "FAILED",
+        saveJobListingResponse: null
+      };
+    case actionTypes.CLEARALL:
+      return {
+        ...state,
+        saveJobListingResponse: null,
+        saveCandidateResponse: null,
+        saveJobListingStatus: "",
+        saveCandidateStatus: "",
+        selectedCandidate: null
+      };
+    case actionTypes.SELECTED_CANDIDATE:
+      return {
+        ...state,
+        selectedCandidate: JSON.parse(JSON.stringify(action.data))
+      };
+    case actionTypes.LOAD_JOBLISTING_SUCCESS:
+      return {
+        ...state,
+        jobList: action.data.jobPosting,
+        isLoading: false
+      };
+    case actionTypes.TOGGLE_LOADER:
+      return {
+        ...state,
+        isLoading: !state.isLoading
+      };
     default:
       return state;
   }

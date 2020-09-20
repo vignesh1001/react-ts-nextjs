@@ -42,7 +42,7 @@ const initialValues = {
   candidate_resume: [],
   salesLead: "",
   recruittingLead: "",
-  submitToRequirement: "",
+  submitToRequirement: ""
 };
 
 const validationSchema = yup.object({
@@ -74,7 +74,7 @@ const validationSchema = yup.object({
     .required("Professional Experience is required"),
   primarySkills: yup
     .string("Enter Primary Skills")
-    .required("Primary Skills is required"),
+    .required("Primary Skills is required")
 });
 function AddCandidateForm(props) {
   const [state, setState] = React.useState({ isPreview: false });
@@ -84,7 +84,7 @@ function AddCandidateForm(props) {
     <Formik
       validationSchema={validationSchema}
       initialValues={initialValues}
-      onSubmit={(e) => {
+      onSubmit={e => {
         if (!state.isPreview) {
           togglePreviewMode();
           props.dispatch(addCandidateSave(e));
@@ -93,7 +93,7 @@ function AddCandidateForm(props) {
         }
       }}
     >
-      {(formikProps) => {
+      {formikProps => {
         return (
           <form>
             <Grid
@@ -101,7 +101,7 @@ function AddCandidateForm(props) {
               spacing={1}
               style={{
                 backgroundColor: "#FFF",
-                padding: "30px 90px 30px 40px",
+                padding: "30px 90px 30px 40px"
               }}
             >
               {state.isPreview ? (
@@ -127,7 +127,7 @@ function AddCandidateForm(props) {
                       borderRadius: 4,
                       fontSize: 14,
                       color: "#FFF",
-                      backgroundColor: "#234071",
+                      backgroundColor: "#234071"
                     }}
                   >
                     Save Candidate
@@ -145,7 +145,7 @@ function AddCandidateForm(props) {
                     color: "#FFF",
                     backgroundColor: !formikProps.isValid
                       ? "#f4a0cb"
-                      : "#e32686",
+                      : "#e32686"
                   }}
                 >
                   {state.isPreview ? "Submit Candidate" : "Preview Candidate"}
@@ -160,7 +160,7 @@ function AddCandidateForm(props) {
 }
 
 AddCandidateForm.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default AddCandidateForm;

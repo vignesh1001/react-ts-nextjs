@@ -1,70 +1,104 @@
-import { all, put, takeLatest } from "redux-saga/effects";
+import { all, put, takeLatest, takeEvery } from "redux-saga/effects";
 import es6promise from "es6-promise";
-
 import {
   actionTypes,
   loadCandidatesSuccess,
-  loadResumeDataSuccess,
-  failure
+  failure,
+  saveCandidatesSuccess,
+  saveJobListingSuccess,
+  saveCandidatesError,
+  saveJobListingError,
+  loadJobListingSuccess,
+  toggleLoader,
 } from "./actions";
+import { prepareSaveData, prepareSaveJOBListingData, prepareSearchPayload } from "./sagaUtil";
+import URLS from "./constants/URL";
 
 es6promise.polyfill();
 
-function* loadCandidatesSaga(filterData) {
-  const { data } = filterData;
-  const title = data.filterTitle ? data.filterTitle.value : "";
+function* loadJobListingSaga(filters) {
   try {
-    const res = yield fetch("http://localhost:3030/candidates");
-
+    yield put(toggleLoader());
+    const res = yield fetch(URLS.loadJobListing, {
+      method: "POST",
+      body: JSON.stringify(filters.data),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
     const data = yield res.json();
-    yield put(loadCandidatesSuccess(data));
+    yield put(loadJobListingSuccess(data));
   } catch (err) {
     yield put(failure(err));
   }
 }
 
-function* loadResumesSaga() {
+function* loadCandidatesSaga(filterData) {
   try {
-    const resumes = [
-      {
-        fileName: "Placeholder Resume 1",
-        labels: [
-          {
-            name: "Front End Developer",
-            score: 0.34
-          },
-          {
-            name: "Java Developer",
-            score: 0.89
-          }
-        ]
-      },
-      {
-        fileName: "Placeholder Resume 2",
-        labels: [
-          {
-            name: "IOS Developer",
-            score: 0.65
-          },
-          {
-            name: "Android Developer",
-            score: 0.75
-          }
-        ]
-      }
-    ];
-    yield put(loadResumeDataSuccess(resumes));
+      const formData = prepareSearchPayload(filterData);
+      const res = yield fetch(URLS.loadCandidates,{
+        method: 'POST',
+        body: JSON.stringify(formData),
+        headers: {
+          Accept: "application/json, text/plain, */*",
+          "Content-Type": "application/json",
+        },
+      });
+      const data = yield res.json();
+      yield put(loadCandidatesSuccess(data));
   } catch (err) {
-    console.log(err);
     yield put(failure(err));
+  }
+}
+
+function* saveCandidate(rData) {
+  const formData = prepareSaveData(rData);
+  try {
+    const res = yield fetch(URLS.saveCandidate, {
+      method: "POST",
+      body: formData,
+    });
+    const data = yield res.json();
+    if (data.message === "SUCCESS - " + rData.data.action) {
+      yield put(saveCandidatesSuccess(data));
+    } else if (data.message === "FAILED - " + rData.data.action) {
+      yield put(saveCandidatesError("Error"));
+    }
+  } catch (e) {
+    yield put(saveCandidatesError(e));
+  }
+}
+
+function* saveJobListing(rData) {
+  const formData = prepareSaveJOBListingData(rData);
+  try {
+    const res = yield fetch(URLS.saveJobListing, {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        Accept: "application/json, text/plain, */*",
+        "Content-Type": "application/json",
+      },
+    });
+    const data = yield res.json();
+    if (data.message === "SUCCESS - " + rData.data.action) {
+      yield put(saveJobListingSuccess(data));
+    } else if (data.message === "FAILED - " + rData.data.action) {
+      yield put(saveJobListingError("Error"));
+    }
+  } catch (e) {
+    yield put(saveJobListingError(e));
   }
 }
 
 function* rootSaga() {
   yield all([
     takeLatest(actionTypes.LOAD_CANDIDATES, loadCandidatesSaga),
-    takeLatest(actionTypes.LOAD_RESUMES, loadResumesSaga),
-    takeLatest(actionTypes.ADD_FILTER_CRITERIA, loadCandidatesSaga)
+    takeEvery(actionTypes.LOAD_JOBLISTING, loadJobListingSaga),
+    takeLatest(actionTypes.ADD_FILTER_CRITERIA, loadCandidatesSaga),
+    takeEvery(actionTypes.SAVE_CANDIDATE, saveCandidate),
+    takeEvery(actionTypes.SAVE_JOBLISTING, saveJobListing),
   ]);
 }
 

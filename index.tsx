@@ -9,8 +9,12 @@ import withReduxSaga from "next-redux-saga";
 import AddCandidate from "./pages/AddCandidate";
 import store from "./store";
 import { Provider } from "react-redux";
-
+import ListJobListing from "./ListJobListing";
+import ViewJobListingTable from "./pages/ViewJobListingTable";
+import Header from "./components/Header";
 import "./style.css";
+import "./components/forms/add-joblisting/style.css";
+
 interface AppProps {}
 interface AppState {
   name: string;
@@ -28,9 +32,15 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          {/*<LeftFilter filterData={{}} />*/}
-          {/*<GlobalSearch />*/}
+          <Header />
+          <LeftFilter filterData={{}} />
+          {/*
           <AddJobListing />
+          <ViewJobListingTable />
+          <ListJobListing />
+          <GlobalSearch />
+          <AddCandidate />
+          */}
         </Provider>
       </div>
     );

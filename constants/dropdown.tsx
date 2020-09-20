@@ -1,54 +1,55 @@
-import * as skills from "./skills";
+import { data as skills } from "./skills";
 
 export const referanceRelations = [
-  { title: "Friend", value: "Friend" },
-  { title: "Brother", value: "Brother" },
-  { title: "Sister", value: "Sister" },
-  { title: "Uncle", value: "Uncle" }
+  { title: "Co-Worker or Colleague", value: "Co-Worker or Colleague" },
+  { title: "Director", value: "Director" },
+  { title: "Lead or Supervisor", value: "Lead or Supervisor" },
+  { title: "Manager", value: "Manager" }
 ];
 export const priority = [
-  { title: "High", value: "High" },
-  { title: "Normal", value: "Normal" },
-  { title: "Low", value: "Low" }
+  { title: "Low", value: "low" },
+  { title: "Normal", value: "normal" },
+  { title: "High", value: "high" }
 ];
 export const professionalExpSlider = [
   { value: 0, oValue: 0, label: "no" },
-  { value: 16, oValue: 1, label: "1 yr" },
-  { value: 33, oValue: 3, label: "3 yr" },
-  { value: 49, oValue: 5, label: "5 yr" },
-  { value: 83, oValue: 10, label: "10 yr" },
+  { value: 20, oValue: 1, label: "1 yr" },
+  { value: 40, oValue: 3, label: "3 yr" },
+  { value: 60, oValue: 5, label: "5 yr" },
+  { value: 80, oValue: 10, label: "10 yr" },
   { value: 100, oValue: 20, label: "20 yr" }
 ];
 export const availabilitySlider = [
   { value: 0, oValue: 0, label: "now" },
-  { value: 16, oValue: 1, label: "1 week" },
-  { value: 33, oValue: 4, label: "1 mo" },
-  { value: 49, oValue: 8, label: "2 mo" },
-  { value: 83, oValue: 12, label: "3 mo" },
+  { value: 20, oValue: 1, label: "1 week" },
+  { value: 40, oValue: 4, label: "1 mo" },
+  { value: 60, oValue: 8, label: "2 mo" },
+  { value: 80, oValue: 12, label: "3 mo" },
   { value: 100, oValue: 24, label: "6 mo" }
 ];
 export const backSearchSlider = [
   { value: 0, oValue: 0, label: "Today", tooltip: "Today" },
-  { value: 16, oValue: 1, label: "1 month", tooltip: "1 m" },
-  { value: 33, oValue: 3, label: "3 month", tooltip: "3 m" },
-  { value: 49, oValue: 6, label: "6 month", tooltip: "6 m" },
-  { value: 83, oValue: 9, label: "9 month", tooltip: "9 m" },
-  { value: 100, oValue: 12, label: "1 year", tooltip: "1 y" }
+  { value: 20, oValue: 1, label: "1 mo", tooltip: "1 m" },
+  { value: 40, oValue: 3, label: "3 mo", tooltip: "3 m" },
+  { value: 60, oValue: 6, label: "6 mo", tooltip: "6 m" },
+  { value: 80, oValue: 9, label: "9 mo", tooltip: "9 m" },
+  { value: 100, oValue: 12, label: "1 yr", tooltip: "1 y" }
 ];
 export const employmentType = [
-  { title: "W2 with Benefits", value: "W2 with Benefits" },
+  { title: "Corp-to-Corp", value: "Corp-to-Corp" },
   { title: "W2 Non-Benefits", value: "W2 Non-Benefits" },
-  { title: "Corp-to-Corp", value: "Corp-to-Corp" }
+  { title: "W2 with Benefits", value: "W2 with Benefits" }
 ];
 
 export const getSkillData = title => {
   var list = [],
     fList = [];
+
   if (title) {
-    list = skills.default[title.value];
+    list = skills[title.value || title] || [];
   } else {
-    for (const item in skills.default) {
-      list = list.concat(skills.default[item]);
+    for (const item in skills) {
+      list = list.concat(skills[item]);
     }
   }
   list.forEach(item => {
@@ -59,17 +60,27 @@ export const getSkillData = title => {
   return fList.map(item => ({ title: item, value: item }));
 };
 export const workType = [
-  { title: "Hourly", value: "Hourly" },
-  { title: "Yearly", value: "Yearly" }
+  { title: "Hourly", value: "hourly" },
+  { title: "Yearly", value: "yearly" }
 ];
 export const workLocation = [
-  { title: "on site", value: "on-site" },
+  { title: "on site", value: "onsite" },
   { title: "remote", value: "remote" }
 ];
 export const employmentWorkingType = [
-  { title: "Fulltime", value: "Fulltime" },
-  { title: "Contract", value: "Contract" },
-  { title: "Contract to Hire", value: "ContractToHire" }
+  { title: "Contract", value: "contract" },
+  { title: "Contract to Hire", value: "contract_to_hire" },
+  { title: "Fulltime", value: "fulltime" }
+];
+export const jobListingBoardList = [
+  { title: "Carrer Builder", value: "careerbuilder" },
+  { title: "Dice", value: "dice" },
+  { title: "Glass Door", value: "glassdoor" },
+  { title: "Indeed", value: "indeed" },
+  { title: "Linkedin", value: "linkedin" },
+  { title: "Monster", value: "monster" },
+  { title: "Stack Overflow", value: "stackoverflow" },
+  { title: "Ziprecruiter", value: "ziprecruiter" }
 ];
 export const availabilityType = [
   { title: "Immediate", value: "Immediate" },
@@ -79,8 +90,8 @@ export const availabilityType = [
   { title: "One-month notice", value: "One-month notice" }
 ];
 export const scType = [
-  { title: "Yes", value: "Yes" },
-  { title: "No", value: "No" }
+  { title: "Yes", value: "yes" },
+  { title: "No", value: "no" }
 ];
 export const tpType = [
   { title: "Yes", value: "Yes" },
@@ -93,13 +104,13 @@ export const openToRelocate = [
 ];
 
 export const immiStatus = [
-  { title: "US Citizen", value: "US Citizen" },
-  { title: "Green Card", value: "Green Card" },
-  { title: "H1B", value: "H1B" },
-  { title: "H4 EAD", value: "H4 EAD" },
-  { title: "OPT EAD", value: "OPT EAD" },
-  { title: "L2 EAD", value: "L2 EAD" },
-  { title: "TN Visa", value: "TN Visa" }
+  { title: "Green Card", value: "greencard" },
+  { title: "H1B", value: "h1b" },
+  { title: "H4 EAD", value: "h4ead" },
+  { title: "L2 EAD", value: "l2ead" },
+  { title: "OPT EAD", value: "optead" },
+  { title: "TN Visa", value: "tnvisa" },
+  { title: "US Citizen", value: "uscitizen" }
 ];
 export const yearOfCompletion = [];
 for (var i = new Date().getFullYear(); i >= 1947; i--) {
