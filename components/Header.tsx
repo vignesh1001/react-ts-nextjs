@@ -40,7 +40,8 @@ const styles = {
 function Header({ dispatch }) {
   const [selectedTab, setSelectedTab] = React.useState("Candidates");
   React.useEffect(() => {
-    const route = Router.router.route;
+    debugger;
+    const route = Router.router ? Router.router.route : "";
     if (["/AddJobListing", "/ViewJobListing"].indexOf(route) > -1) {
       setSelectedTab("Requisitions");
     } else if (["/AddCandidate", "/SearchResults"].indexOf(route) > -1) {
