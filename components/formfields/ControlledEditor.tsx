@@ -1,19 +1,9 @@
 import React from "react";
-import {
-  EditorState,
-  convertToRaw,
-  convertFromHTML,
-  convertToHTML,
-  ContentState,
-  CompositeDecorator,
-  DefaultDraftBlockRenderMap,
-  getSafeBodyFromHTML
-} from "draft-js";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
 //import { Editor } from "react-draft-wysiwyg";
 import PropTypes from "prop-types";
-import draftToHtml from "draftjs-to-html";
 import htmlToDraft from "html-to-draftjs";
-
+import draftToHtml from "draftjs-to-html";
 import dynamic from "next/dynamic";
 
 const Editor = dynamic(
@@ -46,50 +36,16 @@ const styles = {
     paddingLeft: 8
   }
 };
-// const CustomConvertFromHTML = html => {
-//   // Correctly seperates paragraphs into their own blocks
-//   const blockRenderMap = DefaultDraftBlockRenderMap.set("span", {
-//     element: "span"
-//   });
-//   const blocksFromHTML = convertFromHTML(
-//     html,
-//     getSafeBodyFromHTML,
-//     blockRenderMap
-//   );
-//   blocksFromHTML.contentBlocks = blocksFromHTML.contentBlocks.map(block =>
-//     block.get("type") === "span" ? block.set("type", "myType") : block
-//   );
-//   return blocksFromHTML;
-// };
 function ControlledEditor(props) {
-  // assert hard-coded HTML string, convert it, bring it in as state
-
-  const blockRenderMap = DefaultDraftBlockRenderMap.set("p", { element: "p" });
-  const blocksFromHTML = convertFromHTML(
-    props.value,
-    getSafeBodyFromHTML,
-    blockRenderMap
-  );
-  const blocksFromHtml = htmlToDraft(props.value);
-  //const blocksFromHTML = convertFromHTML(props.value);
-  const { contentBlocks, entityMap } = blocksFromHtml;
+  const contentBlock = htmlToDraft(props.value);
   const contentState = ContentState.createFromBlockArray(
-    contentBlocks,
-    entityMap
-  );
-
-  const content = ContentState.createFromBlockArray(
-    blocksFromHTML.contentBlocks,
-    blocksFromHTML.entityMap
+    contentBlock.contentBlocks
   );
   const [editorState, setEditorState] = React.useState(
     EditorState.createWithContent(contentState)
   );
-
   const onEditorStateChange = editorState => {
     const value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    console.log(convertToHTML(convertToRaw(editorState.getCurrentContent())));
-    debugger;
     props.formikProps.setFieldValue(props.name, value);
     setEditorState(editorState);
   };
