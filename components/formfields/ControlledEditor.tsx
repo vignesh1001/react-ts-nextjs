@@ -1,9 +1,8 @@
 import React from "react";
 import { EditorState, convertToRaw, ContentState } from "draft-js";
-//import { Editor } from "react-draft-wysiwyg";
 import PropTypes from "prop-types";
-import htmlToDraft from "html-to-draftjs";
-import draftToHtml from "draftjs-to-html";
+//import htmlToDraft from "html-to-draftjs";
+//import draftToHtml from "draftjs-to-html";
 import dynamic from "next/dynamic";
 
 const Editor = dynamic(
@@ -37,18 +36,18 @@ const styles = {
   }
 };
 function ControlledEditor(props) {
-  const contentBlock = htmlToDraft(props.value);
-  const contentState = ContentState.createFromBlockArray(
-    contentBlock.contentBlocks
-  );
-  const [editorState, setEditorState] = React.useState(
-    EditorState.createWithContent(contentState)
-  );
-  const onEditorStateChange = editorState => {
-    const value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    props.formikProps.setFieldValue(props.name, value);
-    setEditorState(editorState);
-  };
+  //const contentBlock = htmlToDraft(props.value);
+  //const contentState = ContentState.createFromBlockArray(
+  //  contentBlock.contentBlocks
+  //);
+  //const [editorState, setEditorState] = React.useState(
+  //  EditorState.createWithContent(contentState)
+  //);
+  //const onEditorStateChange = editorState => {
+  //  const value = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+  //  props.formikProps.setFieldValue(props.name, value);
+  //  setEditorState(editorState);
+  //};
 
   return (
     <React.Fragment>
@@ -57,11 +56,11 @@ function ControlledEditor(props) {
       </label>
       <Editor
         {...props}
-        editorState={editorState}
+        //editorState={editorState}
         customStyleMap={styles.styleMap}
         wrapperClassName="demo-wrapper"
         editorClassName="demo-editor"
-        onEditorStateChange={onEditorStateChange}
+        // onEditorStateChange={onEditorStateChange}
         spellCheck={true}
       />
       {/*!(meta.touched && Boolean(meta.error)) && (
