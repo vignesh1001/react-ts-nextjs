@@ -6,17 +6,15 @@ import { connect } from "react-redux";
 function AddCandidate(props) {
   return (
     <React.Fragment>
-      {/*<Header {...props} />
-        <Box my={4}>
-            <Grid container>
-              <Grid item xs={3} style={{ paddingLeft: 24, paddingRight: 24 }}>
-              </Grid>
-              <Grid item xs={9} style={{ paddingRight: 24 }}>
-                <AddCandidateForm {...props}/>
-              </Grid>
-            </Grid>
-        </Box>*/}
-      <AddJobListingForm {...props} />
+      <Header {...props} />
+      <Box my={4}>
+        <Grid container>
+          <Grid item xs={3} style={{ paddingLeft: 24, paddingRight: 24 }} />
+          <Grid item xs={9} style={{ paddingRight: 24 }}>
+            <AddJobListingForm {...props} />
+          </Grid>
+        </Grid>
+      </Box>
     </React.Fragment>
   );
 }
