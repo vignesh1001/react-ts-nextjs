@@ -108,23 +108,24 @@ const SliderCSSComponent = withStyles({
 })(Slider);
 const isShowAdvancedSearch = true;
 export default function LeftFilter(props) {
+  const filterData = props.filterData
+    ? props.filterData
+    : { filterTitle: "", filterSkills: "", filterLocation: "" };
   const [state, setState] = useState({
     isOnlyActivelyCandidate: true,
     isShowLoader: false,
     isShowAdvSearch: false,
     isShowNoResults: false,
-    filterTitle: props.filterData.filterTitle
-      ? jobTitles.default.find(
-          i => i.value === props.filterData.filterTitle.value
-        )
+    filterTitle: filterData.filterTitle
+      ? jobTitles.default.find(i => i.value === filterData.filterTitle.value)
       : "",
-    filterSkills: props.filterData.filterSkills || [],
+    filterSkills: filterData.filterSkills || [],
     filterLocation: "",
-    filterTitleList: props.filterData.filterTitle
-      ? [props.filterData.filterTitle.title]
+    filterTitleList: filterData.filterTitle
+      ? [filterData.filterTitle.title]
       : [],
-    filterLocationList: props.filterData.filterLocation
-      ? [props.filterData.filterLocation]
+    filterLocationList: filterData.filterLocation
+      ? [filterData.filterLocation]
       : [],
     filterSkills_List: getSkillData(""),
     filterTitle_List: jobTitles.default,
