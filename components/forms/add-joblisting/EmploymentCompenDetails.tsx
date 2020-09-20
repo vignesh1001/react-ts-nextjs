@@ -12,8 +12,8 @@ const styles = {
     color: "black",
     marginTop: 5,
     marginRight: 12,
-    backgroundColor: "#00bfff",
-  },
+    backgroundColor: "#00bfff"
+  }
 };
 
 function EmploymentCompenDetails() {
@@ -76,10 +76,10 @@ function EmploymentCompenDetails() {
 EmploymentCompenDetails.propTypes = {
   formikProps: PropTypes.shape({
     values: PropTypes.shape({
-      candidate_resume: PropTypes.arrayOf(PropTypes.string.isRequired),
+      candidate_resume: PropTypes.arrayOf(PropTypes.string.isRequired)
     }).isRequired,
-    setFieldValue: PropTypes.func.isRequired,
-  }),
+    setFieldValue: PropTypes.func.isRequired
+  })
 };
 
 export default EmploymentCompenDetails;
