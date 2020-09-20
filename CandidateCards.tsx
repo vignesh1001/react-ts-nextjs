@@ -14,6 +14,10 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 import CandidateCard from "./CandidateCard";
+import Router from "next/router";
+import AddIcon from "@material-ui/icons/Add";
+import Button from "@material-ui/core/Button";
+import { clearAll } from "../actions";
 
 const useStyles1 = makeStyles(theme => ({
   root: {
@@ -95,9 +99,6 @@ TablePaginationActions.propTypes = {
 const useStyles2 = makeStyles(() => ({
   table: {
     minWidth: 500,
-    //marginTop: 16,
-    // marginLeft: theme.spacing(-2),
-    // marginRight: theme.spacing(-2),
     "& tr": {
       backgroundColor: "#FFF",
       marginLeft: 0,
@@ -126,46 +127,97 @@ export default function CandidateCards(props) {
     setPage(0);
   };
 
-  return (
-    <TableContainer>
-      <Table className={classes.table} aria-label="custom pagination table">
-        <TableBody>
-          {(rowsPerPage > 0
-            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            : rows
-          ).map((row, index) => (
-            <CandidateCard key={index} _source={row} />
-          ))}
+  const goToAddCandidate = () => {
+    Router.push("/AddCandidate");
+    props.dispatch(clearAll());
+  };
 
-          {emptyRows > 0 && (
-            <TableRow style={{ height: 53 * emptyRows }}>
-              <TableCell colSpan={6} />
-            </TableRow>
-          )}
-        </TableBody>
-        <TableFooter>
-          <TableRow>
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
-              colSpan={3}
-              count={rows.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              SelectProps={{
-                inputProps: { "aria-label": "rows per page" },
-                native: true
+  return (
+    <div>
+      <div
+        style={{
+          display: "flex",
+          color: "#FFF",
+          fontSize: 18,
+          paddingBottom: 12,
+          width: "100%",
+          marginTop: -24
+        }}
+      >
+        <div
+          style={{
+            width: "50%",
+            fontSize: 16,
+            fontWeight: "bold",
+            lineHeight: "40px"
+          }}
+        >
+          Candidate(s): {rows.length} Results
+        </div>
+        <div style={{ textAlign: "right", width: "50%" }}>
+          <Button
+            style={{
+              cursor: "pointer",
+              backgroundColor: "#e32686",
+              borderRadius: "50%",
+              minWidth: 40,
+              width: 40,
+              height: 40,
+              marginLeft: 24
+            }}
+            onClick={goToAddCandidate}
+          >
+            <AddIcon
+              style={{
+                fill: "#FFF",
+                width: 20,
+                height: 20
               }}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-              ActionsComponent={TablePaginationActions}
             />
-          </TableRow>
-        </TableFooter>
-      </Table>
-    </TableContainer>
+          </Button>
+        </div>
+      </div>
+      <TableContainer>
+        <Table className={classes.table} aria-label="custom pagination table">
+          <TableBody>
+            {(rowsPerPage > 0
+              ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              : rows
+            ).map((row, index) => (
+              <CandidateCard key={index} _source={row} {...props} />
+            ))}
+
+            {emptyRows > 0 && (
+              <TableRow style={{ height: 53 * emptyRows }}>
+                <TableCell colSpan={6} />
+              </TableRow>
+            )}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TablePagination
+                rowsPerPageOptions={[5, 10, 25, { label: "All", value: -1 }]}
+                colSpan={3}
+                count={rows.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                SelectProps={{
+                  inputProps: { "aria-label": "rows per page" },
+                  native: true
+                }}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+                ActionsComponent={TablePaginationActions}
+              />
+            </TableRow>
+          </TableFooter>
+        </Table>
+      </TableContainer>
+    </div>
   );
 }
 
 CandidateCards.propTypes = {
-  candidates: PropTypes.object.isRequired
+  candidates: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };

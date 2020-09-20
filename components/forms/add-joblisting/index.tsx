@@ -10,40 +10,13 @@ import InternalDetails from "./InternalDetails";
 import PreviewJobListing from "./PreviewJobListing";
 import { saveJobListing, clearAll } from "../../../actions";
 import Loader from "../../Loader";
+import { internalContacts } from "../../../constants/internalContacts";
 
-const initialValues = {
-  requisitionNumber: null,
-  noOfPosition: "",
-  priority: "",
-  clientName: "",
-  clientContact: "",
-  location: "onsite",
-  country: "",
-  state: "",
-  city: "",
-  zip: "",
-  employeementType: "fulltime",
-  duration: "",
-  rateBy: "hourly",
-  clientBillRate: "",
-  payRate: "",
-  positionTitle: "",
-  skills: "",
-  requirementDescription: "",
-  workAuthorizationStatus: "",
-  securityClearanceLevel: "",
-  internalContact: "",
-  coordinator: "",
-  recruitingLead: "",
-  salesLead: "",
-  recruiter: "",
-  recruiters: [],
-  jobListingBoard: [],
-  recruitingLeadsEmail: "",
-  salesLeadsEmail: "",
-  action: "ADD",
-};
-
+const recruitersList = internalContacts.map((i) => ({
+  title: i.Name,
+  value: i.Name,
+  email: i.Email,
+}));
 const validationSchema = yup.object({
   noOfPosition: yup
     .string("Enter a No.Of.Position")
@@ -80,12 +53,45 @@ function AddJobListingForm(props) {
   const [state, setState] = React.useState({
     isPreview: false,
     isShowLoader: false,
+    initialValues: {
+      requisitionNumber: null,
+      noOfPosition: "",
+      priority: "",
+      clientName: "",
+      clientContact: "",
+      location: "onsite",
+      country: "",
+      state: "",
+      city: "",
+      zip: "",
+      employeementType: "fulltime",
+      duration: "",
+      rateBy: "hourly",
+      clientBillRate: "",
+      payRate: "",
+      positionTitle: "",
+      skills: "",
+      requirementDescription: "",
+      workAuthorizationStatus: "",
+      securityClearanceLevel: "",
+      internalContact: "",
+      coordinator: "",
+      recruitingLead: "",
+      salesLead: "",
+      recruiter: "",
+      recruiters: [],
+      jobListingBoard: [],
+      recruitingLeadsEmail: "",
+      salesLeadsEmail: "",
+      action: "ADD",
+    },
   });
   const togglePreviewMode = () =>
     setState({
       ...state,
       isPreview: !state.isPreview,
       isShowJobListingError: false,
+      isShowLoader: false,
     });
   const toggleLoader = () =>
     setState((prevState) => ({
@@ -178,7 +184,20 @@ function AddJobListingForm(props) {
           "salesLead",
           item.internalDetails.salesLead
         );
-        tempFormikProps.setFieldValue("recruiters", item.recruiters);
+        tempFormikProps.setFieldValue("recruiters", []);
+        if (item.recruiters && item.recruiters.length) {
+          const recruiters = [];
+          item.recruiters.forEach((value) => {
+            const recruiter = recruitersList.find((i) => i.value === value);
+            recruiter &&
+              recruiters.push({
+                name: recruiter.value,
+                email: recruiter.email,
+              });
+          });
+
+          tempFormikProps.setFieldValue("recruiters", recruiters);
+        }
         tempFormikProps.setFieldValue(
           "recruitingLeadsEmail",
           item.internalDetails.recruitingLeadsEmail
@@ -187,6 +206,12 @@ function AddJobListingForm(props) {
           "salesLeadsEmail",
           item.internalDetails.salesLeadsEmail
         );
+        setTimeout(() => {
+          const errorList = Object.values(tempFormikProps.errors);
+          if (errorList && errorList.length) {
+            tempFormikProps.handleSubmit();
+          }
+        });
         toggleLoader();
       });
     }
@@ -194,7 +219,7 @@ function AddJobListingForm(props) {
   return (
     <Formik
       validationSchema={validationSchema}
-      initialValues={initialValues}
+      initialValues={state.initialValues}
       onSubmit={(e) => {
         if (!state.isPreview) {
           props.dispatch(clearAll());

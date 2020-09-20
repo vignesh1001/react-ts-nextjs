@@ -14,8 +14,8 @@ const styles = {
     color: "black",
     marginTop: 5,
     marginRight: 12,
-    backgroundColor: "#00bfff"
-  }
+    backgroundColor: "#00bfff",
+  },
 };
 
 function PositionDetails(props) {
@@ -43,22 +43,13 @@ function PositionDetails(props) {
         />
       </Grid>
       <Grid item xs={12} sm={12} style={styles.fieldWrapper}>
-        {/* <Textfield
-          name="requirementDescription"
-          id="requirementDescription"
-          variant="outlined"
-          
-          fullWidth
-          multiple
-          required
-        /> */}
         <ControlledEditor
           {...props}
           displayLabel="Requirement Description"
           name="requirementDescription"
           id="requirementDescription"
           variant="outlined"
-          value={props.formikProps.values.requirementDescription}
+          //value={props.formikProps.values.requirementDescription}
         />
       </Grid>
       <Grid item xs={6} sm={6} style={styles.fieldWrapper}>
@@ -69,7 +60,7 @@ function PositionDetails(props) {
           options={immiStatus}
           style={{
             width: "100%",
-            height: 49
+            height: 49,
           }}
         />
       </Grid>
@@ -81,7 +72,7 @@ function PositionDetails(props) {
           options={scType}
           style={{
             width: "100%",
-            height: 49
+            height: 49,
           }}
         />
       </Grid>
@@ -92,10 +83,11 @@ function PositionDetails(props) {
 PositionDetails.propTypes = {
   formikProps: PropTypes.shape({
     values: PropTypes.shape({
-      candidate_resume: PropTypes.arrayOf(PropTypes.string.isRequired)
+      candidate_resume: PropTypes.arrayOf(PropTypes.string.isRequired),
+      //requirementDescription: PropTypes.string,
     }).isRequired,
-    setFieldValue: PropTypes.func.isRequired
-  })
+    setFieldValue: PropTypes.func.isRequired,
+  }),
 };
 
 export default PositionDetails;

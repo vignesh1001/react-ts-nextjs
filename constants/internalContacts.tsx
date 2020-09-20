@@ -84,4 +84,8 @@ export const internalContacts = [
     Email: "matt@ptechpartners.com",
     Role: "Marketing"
   }
-];
+].sort((a, b) => {
+  if (a.Name < b.Name) return -1;
+  else if (a.Name > b.Name) return 1;
+  return 0;
+});

@@ -1,582 +1,594 @@
 [
-    {
-        "title": "DATA SCIENTIST",
-        "value": "DATA SCIENTIST"
-    },
-    {
-        "title": "JUNIOR DATA SCIENTIST",
-        "value": "DATA SCIENTIST"
-    },
-    {
-        "title": "SENIOR DATA SCIENTIST",
-        "value": "DATA SCIENTIST"
-    },
-    {
-        "title": "LEAD DATA SCIENTIST",
-        "value": "DATA SCIENTIST"
-    },
-    {
-        "title": "PRINCIPAL DATA SCIENTIST",
-        "value": "DATA SCIENTIST"
-    },
-    {
-        "title": "CHIEF DATA SCIENTIST",
-        "value": "DATA SCIENTIST"
-    },
-    {
-        "title": "PYTHON DEVELOPER",
-        "value": "PYTHON DEVELOPER"
-    },
-    {
-        "title": "SENIOR PYTHON DEVELOPER",
-        "value": "PYTHON DEVELOPER"
-    },
-    {
-        "title": "JUNIOR PYTHON DEVELOPER",
-        "value": "PYTHON DEVELOPER"
-    },
-    {
-        "title": "PYTHON FULL STACK DEVELOPER",
-        "value": "PYTHON DEVELOPER"
-    },
-    {
-        "title": "DJANGO DEVELOPER",
-        "value": "PYTHON DEVELOPER"
-    },
-    {
-        "title": "FULL STACK DJANGO DEVELOPER",
-        "value": "PYTHON DEVELOPER"
-    },
-    {
-        "title": "FLASK DEVELOPER",
-        "value": "PYTHON DEVELOPER"
-    },
-    {
-        "title": "DATA ENGINEER",
-        "value": "DATA ENGINEER"
-    },
-    {
-        "title": "SENIOR DATA ENGINEER",
-        "value": "DATA ENGINEER"
-    },
-    {
-        "title": "BIG DATA ENGINEER",
-        "value": "DATA ENGINEER"
-    },
-    {
-        "title": "DATA ANALYST",
-        "value": "DATA ANALYST"
-    },
-    {
-        "title": "SENIOR DATA ANALYST",
-        "value": "DATA ANALYST"
-    },
-    {
-        "title": "BUSINESS DATA ANALYST",
-        "value": "DATA ANALYST"
-    },
-    {
-        "title": "SENIOR BUSINESS DATA ANALYST",
-        "value": "DATA ANALYST"
-    },
-    {
-        "title": "STATISTICIAN",
-        "value": "STATISTICIAN"
-    },
-    {
-        "title": "SENIOR STATISTICIAN",
-        "value": "STATISTICIAN"
-    },
-    {
-        "title": "MACHINE LEARNING ENGINEER",
-        "value": "MACHINE LEARNING ENGINEER"
-    },
-    {
-        "title": "JAVA DEVELOPER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "SENIOR JAVA DEVELOPER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "J2EE DEVELOPER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "SENIOR J2EE DEVELOPER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "JAVA WEB ENGINEER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "JAVA ENGINEER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "SENIOR JAVA ENGINEER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "LEAD JAVA DEVELOPER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "JAVA FULL STACK DEVELOPER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": "SENIOR JAVA FULL STACK DEVELOPER",
-        "value": "JAVA DEVELOPER"
-    },
-    {
-        "title": ".NET ARCHITECT",
-        "value": ".NET ARCHITECT"
-    },
-    {
-        "title": ".NET SOLUTIONS ARCHITECT",
-        "value": ".NET ARCHITECT"
-    },
-    {
-        "title": ".NET ENTERPRISE ARCHITECT",
-        "value": ".NET ARCHITECT"
-    },
-    {
-        "title": ".NET ENGINEER",
-        "value": ".NET ARCHITECT"
-    },
-    {
-        "title": "SENIOR .NET ENGINEER",
-        "value": ".NET ARCHITECT"
-    },
-    {
-        "title": ".NET PRINCIPAL ENGINEER",
-        "value": ".NET ARCHITECT"
-    },
-    {
-        "title": ".NET DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": "SENIOR .NET DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": "JUNIOR .NET DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": ".NET LEAD",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": ".NET FULL STACK DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": "SENIOR .NET FULL STACK DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": ".NET WEB DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": "ASP .NET DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": ".NET CONSULTANT",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": "PROGRAMMER ANALYST",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": ".NET SUBJECT MATTER EXPERT",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": ".NET APPLICATIONS DEVELOPER",
-        "value": ".NET DEVELOPER"
-    },
-    {
-        "title": "C# DEVELOPER",
-        "value": "C# DEVELOPER"
-    },
-    {
-        "title": "FRONT END DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "SENIOR FRONT END DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "FRONT END WEB DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "FRONT END UI DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "SENIOR FRONT END WEB DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "SENIOR FRONT END UI DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "UI WEB DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "SENIOR UI WEB DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "FRONT END APPLICATION DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "SENIOR FRONT END APPLICATION DEVELOPER",
-        "value": "FRONT END DEVELOPER"
-    },
-    {
-        "title": "FRONT END ARCHITECT",
-        "value": "FRONT END ARCHITECT"
-    },
-    {
-        "title": "UI ARCHITECT",
-        "value": "FRONT END ARCHITECT"
-    },
-    {
-        "title": "SENIOR UI ARCHITECT",
-        "value": "FRONT END ARCHITECT"
-    },
-    {
-        "title": "MANUAL TESTER",
-        "value": "MANUAL TESTER"
-    },
-    {
-        "title": "QUALITY ASSURANCE ENGINEER",
-        "value": "MANUAL TESTER"
-    },
-    {
-        "title": "QUALITY ASSURANCE TESTER",
-        "value": "MANUAL TESTER"
-    },
-    {
-        "title": "QUALITY ASSURANCE ANALYST",
-        "value": "MANUAL TESTER"
-    },
-    {
-        "title": "SENIOR QUALITY ASSURANCE ENGINEER",
-        "value": "MANUAL TESTER"
-    },
-    {
-        "title": "SENIOR QUALITY ASSURANCE TESTER",
-        "value": "MANUAL TESTER"
-    },
-    {
-        "title": "SENIOR QUALITY ASSURANCE ANALYST",
-        "value": "MANUAL TESTER"
-    },
-    {
-        "title": "AUTOMATION TESTER",
-        "value": "AUTOMATION TESTER"
-    },
-    {
-        "title": "SELENIUM TESTER",
-        "value": "AUTOMATION TESTER"
-    },
-    {
-        "title": "QUALITY ASSURANCE AUTOMATION ENGINEER",
-        "value": "AUTOMATION TESTER"
-    },
-    {
-        "title": "SENIOR QUALITY ASSURANCE AUTOMATION ENGINEER",
-        "value": "AUTOMATION TESTER"
-    },
-    {
-        "title": "SDET",
-        "value": "SDET"
-    },
-    {
-        "title": "SYSTEMS ANALYST",
-        "value": "SYSTEMS ANALYST"
-    },
-    {
-        "title": "BUSINESS SYSTEMS ANALYST",
-        "value": "SYSTEMS ANALYST"
-    },
-    {
-        "title": "SENIOR BUSINESS SYSTEMS ANALYST",
-        "value": "SYSTEMS ANALYST"
-    },
-    {
-        "title": "TECHNICAL BUSINESS ANALYST",
-        "value": "SYSTEMS ANALYST"
-    },
-    {
-        "title": "SENIOR TECHNICAL BUSINESS ANALYST",
-        "value": "SYSTEMS ANALYST"
-    },
-    {
-        "title": "BUSINESS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "SENIOR BUSINESS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "LEAD BUSINESS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "IT BUSINESS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "SENIOR IT BUSINESS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "PROJECT BUSINESS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "BUSINESS SUPPORT ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "BUSINESS OPERATIONS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "BUSINESS TECHNOLOGY ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "ASSOCIATE BUSINESS ANALYST",
-        "value": "BUSINESS ANALYST"
-    },
-    {
-        "title": "PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "SENIOR PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "IT PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "TECHNICAL PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "AGILE PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "DIGITAL PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "WEBSITE PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "PROGRAM MANAGAER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "SENIOR PROGRAM MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "TECHNICAL PROGRAM MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "MARKETING PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "PROJECT MANAGEMENT SPECIALIST",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "PRINCIPAL PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "DELIVERY MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "ASSISTANT PROJECT MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "AGILE DELIVERY MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "PROJECT DELIVERY MANAGER",
-        "value": "PROJECT MANAGER"
-    },
-    {
-        "title": "SCRUM MASTER",
-        "value": "SCRUM MASTER"
-    },
-    {
-        "title": "AGILE COACH",
-        "value": "SCRUM MASTER"
-    },
-    {
-        "title": "PROJECT COORDINATOR",
-        "value": "PROJECT COORDINATOR"
-    },
-    {
-        "title": "SENIOR PROJECT COORDINATOR",
-        "value": "PROJECT COORDINATOR"
-    },
-    {
-        "title": "PMO COORDINATOR",
-        "value": "PROJECT COORDINATOR"
-    },
-    {
-        "title": "INFRASTRUCTURE PROJECT MANAGER",
-        "value": "INFRASTRUCTURE PROJECT MANAGER"
-    },
-    {
-        "title": "CYBER SECURITY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "SENIOR CYBER SECURITY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "INFORMATION SECURTIY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "SENIOR INFORMATION SECURITY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "CYBER SECURITY SPECIALIST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "ACCESS CONTROL ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "SYSTEMS SECURITY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "SENIOR SYSTEMS SECURITY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "NETWORK SECURITY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "SENIOR NETWORK SECURITY ANALYST",
-        "value": "CYBER SECURITY ANALYST"
-    },
-    {
-        "title": "CYBER SECURITY ADMINISTRATOR",
-        "value": "CYBER SECURITY ADMINISTRATOR"
-    },
-    {
-        "title": "NETWORK SECURITY ADMINISTRATOR",
-        "value": "CYBER SECURITY ADMINISTRATOR"
-    },
-    {
-        "title": "GRC CONSULTANT",
-        "value": "GRC CONSULTANT"
-    },
-    {
-        "title": "RISK CONSULTANT",
-        "value": "GRC CONSULTANT"
-    },
-    {
-        "title": "SECURITY OPERATIONS CENTER (SOC) ASSESSOR",
-        "value": "GRC CONSULTANT"
-    },
-    {
-        "title": "SECURITY CONTROL ANALYST/ASSESSOR",
-        "value": "GRC CONSULTANT"
-    },
-    {
-        "title": "CYBER SECURITY ARCHITECT",
-        "value": "CYBER SECURITY ARCHITECT"
-    },
-    {
-        "title": "INFORMATION SECURITY ARCHITECT",
-        "value": "CYBER SECURITY ARCHITECT"
-    },
-    {
-        "title": "SENIOR INFORMATION SECURITY ARCHITECT",
-        "value": "CYBER SECURITY ARCHITECT"
-    },
-    {
-        "title": "CYBER SECURITY ENGINEER",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "SENIOR CYBER SECURITY ENGINEER",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "INFORMATION SECURITY ENGINEER",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "SENIOR INFORMATION SECURITY ENGINEER",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "CYBER SECURITY CONSULTANT",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "SENIOR CYBER SECURITY CONSULTANT",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "APPLICATION SECURITY ENGINEER",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "INFORMATION ASSURANCE SPECIALIST",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "INFORMATION ASSURANCE ENGINEER",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "NETWORK AND SECURITY ENGINEER",
-        "value": "CYBER SECURITY ENGINEER"
-    },
-    {
-        "title": "CYBER SECURITY SPECIALIST",
-        "value": "CYBER SECURITY SPECIALIST"
-    }
+  {
+    "title": "DATA SCIENTIST",
+    "value": "DATA SCIENTIST"
+  },
+  {
+    "title": "JUNIOR DATA SCIENTIST",
+    "value": "DATA SCIENTIST"
+  },
+  {
+    "title": "SENIOR DATA SCIENTIST",
+    "value": "DATA SCIENTIST"
+  },
+  {
+    "title": "LEAD DATA SCIENTIST",
+    "value": "DATA SCIENTIST"
+  },
+  {
+    "title": "PRINCIPAL DATA SCIENTIST",
+    "value": "DATA SCIENTIST"
+  },
+  {
+    "title": "RESEARCH SCIENTIST",
+    "value": "RESEARCH SCIENTIST"
+  },
+  {
+    "title": "CHIEF DATA SCIENTIST",
+    "value": "DATA SCIENTIST"
+  },
+  {
+    "title": "PYTHON DEVELOPER",
+    "value": "PYTHON DEVELOPER"
+  },
+  {
+    "title": "SENIOR PYTHON DEVELOPER",
+    "value": "PYTHON DEVELOPER"
+  },
+  {
+    "title": "JUNIOR PYTHON DEVELOPER",
+    "value": "PYTHON DEVELOPER"
+  },
+  {
+    "title": "PYTHON FULL STACK DEVELOPER",
+    "value": "PYTHON DEVELOPER"
+  },
+  {
+    "title": "DJANGO DEVELOPER",
+    "value": "PYTHON DEVELOPER"
+  },
+  {
+    "title": "FULL STACK DJANGO DEVELOPER",
+    "value": "PYTHON DEVELOPER"
+  },
+  {
+    "title": "FLASK DEVELOPER",
+    "value": "PYTHON DEVELOPER"
+  },
+  {
+    "title": "DATA ENGINEER",
+    "value": "DATA ENGINEER"
+  },
+  {
+    "title": "SENIOR DATA ENGINEER",
+    "value": "DATA ENGINEER"
+  },
+  {
+    "title": "BIG DATA ENGINEER",
+    "value": "DATA ENGINEER"
+  },
+  {
+    "title": "DATA ANALYST",
+    "value": "DATA ANALYST"
+  },
+  {
+    "title": "SENIOR DATA ANALYST",
+    "value": "DATA ANALYST"
+  },
+  {
+    "title": "BUSINESS DATA ANALYST",
+    "value": "DATA ANALYST"
+  },
+  {
+    "title": "SENIOR BUSINESS DATA ANALYST",
+    "value": "DATA ANALYST"
+  },
+  {
+    "title": "STATISTICIAN",
+    "value": "STATISTICIAN"
+  },
+  {
+    "title": "SENIOR STATISTICIAN",
+    "value": "STATISTICIAN"
+  },
+  {
+    "title": "MACHINE LEARNING ENGINEER",
+    "value": "MACHINE LEARNING ENGINEER"
+  },
+  {
+    "title": "ANDROID DEVELOPER",
+    "value": "ANDROID DEVELOPER"
+  },
+  {
+    "title": "IOS DEVELOPER",
+    "value": "IOS DEVELOPER"
+  },
+  {
+    "title": "JAVA DEVELOPER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "SENIOR JAVA DEVELOPER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "J2EE DEVELOPER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "SENIOR J2EE DEVELOPER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "JAVA WEB ENGINEER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "JAVA ENGINEER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "SENIOR JAVA ENGINEER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "LEAD JAVA DEVELOPER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "JAVA FULL STACK DEVELOPER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": "SENIOR JAVA FULL STACK DEVELOPER",
+    "value": "JAVA DEVELOPER"
+  },
+  {
+    "title": ".NET ARCHITECT",
+    "value": ".NET ARCHITECT"
+  },
+  {
+    "title": ".NET SOLUTIONS ARCHITECT",
+    "value": ".NET ARCHITECT"
+  },
+  {
+    "title": ".NET ENTERPRISE ARCHITECT",
+    "value": ".NET ARCHITECT"
+  },
+  {
+    "title": ".NET ENGINEER",
+    "value": ".NET ARCHITECT"
+  },
+  {
+    "title": "SENIOR .NET ENGINEER",
+    "value": ".NET ARCHITECT"
+  },
+  {
+    "title": ".NET PRINCIPAL ENGINEER",
+    "value": ".NET ARCHITECT"
+  },
+  {
+    "title": ".NET DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": "SENIOR .NET DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": "JUNIOR .NET DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": ".NET LEAD",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": ".NET FULL STACK DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": "SENIOR .NET FULL STACK DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": ".NET WEB DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": "ASP .NET DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": ".NET CONSULTANT",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": "PROGRAMMER ANALYST",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": ".NET SUBJECT MATTER EXPERT",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": ".NET APPLICATIONS DEVELOPER",
+    "value": ".NET DEVELOPER"
+  },
+  {
+    "title": "C# DEVELOPER",
+    "value": "C# DEVELOPER"
+  },
+  {
+    "title": "FRONT END DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "SENIOR FRONT END DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "FRONT END WEB DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "FRONT END UI DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "SENIOR FRONT END WEB DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "SENIOR FRONT END UI DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "UI WEB DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "SENIOR UI WEB DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "FRONT END APPLICATION DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "SENIOR FRONT END APPLICATION DEVELOPER",
+    "value": "FRONT END DEVELOPER"
+  },
+  {
+    "title": "FRONT END ARCHITECT",
+    "value": "FRONT END ARCHITECT"
+  },
+  {
+    "title": "UI ARCHITECT",
+    "value": "FRONT END ARCHITECT"
+  },
+  {
+    "title": "SENIOR UI ARCHITECT",
+    "value": "FRONT END ARCHITECT"
+  },
+  {
+    "title": "MANUAL TESTER",
+    "value": "MANUAL TESTER"
+  },
+  {
+    "title": "QUALITY ASSURANCE ENGINEER",
+    "value": "MANUAL TESTER"
+  },
+  {
+    "title": "QUALITY ASSURANCE TESTER",
+    "value": "MANUAL TESTER"
+  },
+  {
+    "title": "QUALITY ASSURANCE ANALYST",
+    "value": "MANUAL TESTER"
+  },
+  {
+    "title": "SENIOR QUALITY ASSURANCE ENGINEER",
+    "value": "MANUAL TESTER"
+  },
+  {
+    "title": "SENIOR QUALITY ASSURANCE TESTER",
+    "value": "MANUAL TESTER"
+  },
+  {
+    "title": "SENIOR QUALITY ASSURANCE ANALYST",
+    "value": "MANUAL TESTER"
+  },
+  {
+    "title": "AUTOMATION TESTER",
+    "value": "AUTOMATION TESTER"
+  },
+  {
+    "title": "SELENIUM TESTER",
+    "value": "AUTOMATION TESTER"
+  },
+  {
+    "title": "QUALITY ASSURANCE AUTOMATION ENGINEER",
+    "value": "AUTOMATION TESTER"
+  },
+  {
+    "title": "SENIOR QUALITY ASSURANCE AUTOMATION ENGINEER",
+    "value": "AUTOMATION TESTER"
+  },
+  {
+    "title": "SDET",
+    "value": "SDET"
+  },
+  {
+    "title": "SYSTEMS ANALYST",
+    "value": "SYSTEMS ANALYST"
+  },
+  {
+    "title": "BUSINESS SYSTEMS ANALYST",
+    "value": "SYSTEMS ANALYST"
+  },
+  {
+    "title": "SENIOR BUSINESS SYSTEMS ANALYST",
+    "value": "SYSTEMS ANALYST"
+  },
+  {
+    "title": "TECHNICAL BUSINESS ANALYST",
+    "value": "SYSTEMS ANALYST"
+  },
+  {
+    "title": "SENIOR TECHNICAL BUSINESS ANALYST",
+    "value": "SYSTEMS ANALYST"
+  },
+  {
+    "title": "BUSINESS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "SENIOR BUSINESS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "LEAD BUSINESS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "IT BUSINESS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "SENIOR IT BUSINESS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "PROJECT BUSINESS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "BUSINESS SUPPORT ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "BUSINESS OPERATIONS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "BUSINESS TECHNOLOGY ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "ASSOCIATE BUSINESS ANALYST",
+    "value": "BUSINESS ANALYST"
+  },
+  {
+    "title": "PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "SENIOR PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "IT PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "TECHNICAL PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "AGILE PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "DIGITAL PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "WEBSITE PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "PROGRAM MANAGAER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "SENIOR PROGRAM MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "TECHNICAL PROGRAM MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "MARKETING PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "PROJECT MANAGEMENT SPECIALIST",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "PRINCIPAL PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "DELIVERY MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "ASSISTANT PROJECT MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "AGILE DELIVERY MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "PROJECT DELIVERY MANAGER",
+    "value": "PROJECT MANAGER"
+  },
+  {
+    "title": "SCRUM MASTER",
+    "value": "SCRUM MASTER"
+  },
+  {
+    "title": "AGILE COACH",
+    "value": "SCRUM MASTER"
+  },
+  {
+    "title": "PROJECT COORDINATOR",
+    "value": "PROJECT COORDINATOR"
+  },
+  {
+    "title": "SENIOR PROJECT COORDINATOR",
+    "value": "PROJECT COORDINATOR"
+  },
+  {
+    "title": "PMO COORDINATOR",
+    "value": "PROJECT COORDINATOR"
+  },
+  {
+    "title": "INFRASTRUCTURE PROJECT MANAGER",
+    "value": "INFRASTRUCTURE PROJECT MANAGER"
+  },
+  {
+    "title": "CYBER SECURITY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "SENIOR CYBER SECURITY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "INFORMATION SECURTIY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "SENIOR INFORMATION SECURITY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "CYBER SECURITY SPECIALIST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "ACCESS CONTROL ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "SYSTEMS SECURITY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "SENIOR SYSTEMS SECURITY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "NETWORK SECURITY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "SENIOR NETWORK SECURITY ANALYST",
+    "value": "CYBER SECURITY ANALYST"
+  },
+  {
+    "title": "CYBER SECURITY ADMINISTRATOR",
+    "value": "CYBER SECURITY ADMINISTRATOR"
+  },
+  {
+    "title": "NETWORK SECURITY ADMINISTRATOR",
+    "value": "CYBER SECURITY ADMINISTRATOR"
+  },
+  {
+    "title": "GRC CONSULTANT",
+    "value": "GRC CONSULTANT"
+  },
+  {
+    "title": "RISK CONSULTANT",
+    "value": "GRC CONSULTANT"
+  },
+  {
+    "title": "SECURITY OPERATIONS CENTER (SOC) ASSESSOR",
+    "value": "GRC CONSULTANT"
+  },
+  {
+    "title": "SECURITY CONTROL ANALYST/ASSESSOR",
+    "value": "GRC CONSULTANT"
+  },
+  {
+    "title": "CYBER SECURITY ARCHITECT",
+    "value": "CYBER SECURITY ARCHITECT"
+  },
+  {
+    "title": "INFORMATION SECURITY ARCHITECT",
+    "value": "CYBER SECURITY ARCHITECT"
+  },
+  {
+    "title": "SENIOR INFORMATION SECURITY ARCHITECT",
+    "value": "CYBER SECURITY ARCHITECT"
+  },
+  {
+    "title": "CYBER SECURITY ENGINEER",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "SENIOR CYBER SECURITY ENGINEER",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "INFORMATION SECURITY ENGINEER",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "SENIOR INFORMATION SECURITY ENGINEER",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "CYBER SECURITY CONSULTANT",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "SENIOR CYBER SECURITY CONSULTANT",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "APPLICATION SECURITY ENGINEER",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "INFORMATION ASSURANCE SPECIALIST",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "INFORMATION ASSURANCE ENGINEER",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "NETWORK AND SECURITY ENGINEER",
+    "value": "CYBER SECURITY ENGINEER"
+  },
+  {
+    "title": "CYBER SECURITY SPECIALIST",
+    "value": "CYBER SECURITY SPECIALIST"
+  }
 ]

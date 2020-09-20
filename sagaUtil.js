@@ -1,14 +1,20 @@
+import {
+  professionalExpSlider,
+  backSearchSlider,
+  availabilitySlider
+} from "./constants/dropdown";
+
 export const prepareSaveData = rData => {
   const { data: request } = rData;
   const formData = new FormData();
   const payment = {
-    payAmount: request.annualBaseSalary,
-    payRate: request.rate,
-    payRatePeriod: "1.0",
-    payType: request.empWorkType,
-    vendorPayType: " ",
-    bonusInPercentage: request.annualBonusPct,
-    benifit: request.empBenefits
+    payAmount: request.annualBaseSalary, // w2 benifits
+    payRate: request.rate, // Rate
+    payRatePeriod: "1.0", //missing
+    payType: request.empWorkType, // Radio group (Hourly or Yearly)
+    vendorPayType: " ", //missing
+    bonusInPercentage: request.annualBonusPct, // w2 benifits
+    benifit: request.empBenefits // w2 benifits
   };
   const fieldMapping = {
     fullName: "fullName",
@@ -46,31 +52,32 @@ export const prepareSaveData = rData => {
       keys.splice(keys.indexOf(i), 1);
     });
   } else if (request.action === "SUBMIT") {
-    const selectedInternalDetails = request.internalDetails.find(
-      i => i.requisitionNumber === request.requisitionNumber
-    );
-    formData.append(
-      "salesLeadsEmail",
-      selectedInternalDetails.internalDetails.salesLeadsEmail
-    );
-    formData.append(
-      "recruitingLeadsEmail",
-      selectedInternalDetails.internalDetails.recruitingLeadsEmail
-    );
+    if (request.internalDetails && request.internalDetails.length) {
+      const selectedInternalDetails = request.internalDetails.find(
+        i => i.requisitionNumber === request.requisitionNumber
+      );
+      formData.append(
+        "salesLeadsEmail",
+        selectedInternalDetails.internalDetails.salesLeadsEmail
+      );
+      formData.append(
+        "recruitingLeadsEmail",
+        selectedInternalDetails.internalDetails.recruitingLeadsEmail
+      );
+    }
   }
   keys.forEach(i => {
+    // skip if docId is not having value.
+    if (i === "documentId" && !request[fieldMapping[i]]) {
+      return;
+    }
     formData.append(i, request[fieldMapping[i]]);
   });
-
+  formData.append("source", request.resumeSource);
   formData.append("file", request.candidate_resume[0]);
   formData.append("fileName", request.candidate_resume[0].name);
   formData.append("payment", JSON.stringify(payment));
   formData.append("workAuthorizationForm", request.workAuthForm[0]);
-  //formData.append("", request.annualBaseSalary );// missing
-  //formData.append("", request.annualBonusPct );// missing
-  //formData.append("", request.empBenefits);// missing
-  //formData.append("", request.empWorkType );// missing
-  //formData.append("", request.rate );// missing
   const references = [];
   request.references.forEach(
     ({ fullName, position, relationship, email, phone }) => {
@@ -91,7 +98,7 @@ export const prepareSaveJOBListingData = rData => {
   requestData["numberOfPositions"] = request.noOfPosition;
   requestData["priority"] = request.priority;
   requestData["clientInfo"] = {
-    clinetName: request.clientName,
+    clientName: request.clientName,
     clientContact: request.clientContact
   };
   requestData["location"] = {
@@ -101,7 +108,7 @@ export const prepareSaveJOBListingData = rData => {
     zip: request.zip,
     country: request.country
   };
-  requestData["employmentType"] = request.employmentType;
+  requestData["employmentType"] = request.employeementType;
   requestData["duration"] = request.duration;
   requestData["compensationDetails"] = {
     wages: request.rateBy,
@@ -123,11 +130,70 @@ export const prepareSaveJOBListingData = rData => {
     recruitingLeadsEmail: request.recruitingLeadsEmail,
     salesLeadsEmail: request.salesLeadsEmail
   };
-  //requestData["recruiters"] = ["Jay", "Chandra"]; //request.recruiters.join(",");
-
+  requestData["recruiters"] = request.recruiters.map(i => i.name);
+  if (request.action === "UPDATE") {
+    requestData["requisitionNumber"] = request.requisitionNumber;
+  }
   if (request.action === "PUBLISH") {
     requestData["requisitionNumber"] = request.requisitionNumber;
-    requestData["jobPortal"] = request.jobListingBoard; //["dice", "glassdoor", "monster"];
+    requestData["jobPortal"] = request.jobListingBoard;
   }
   return { jobPosting: [requestData], action: request.action };
+};
+
+export const prepareSearchPayload = rData => {
+  const { data } = rData;
+  const {
+    filterSkills,
+    filterTitle,
+    filterLocation,
+    backSearchRange,
+    isOnlyActivelyCandidate,
+    selectedFilterLegalStatus,
+    professionalExpRange,
+    selectedFilterJobSites,
+    availability
+  } = data;
+  const title = filterTitle ? filterTitle.value : "";
+  const skills = filterSkills ? filterSkills.map(i => i.value).join(",") : "";
+  const payLoad = {
+    jobTitle: title || undefined,
+    skills: skills || undefined,
+    fieldName: filterLocation || undefined,
+    backSearch: backSearchRange && {
+      startMonth: backSearchSlider.find(i => i.value === backSearchRange[0])
+        .oValue,
+      endMonth: backSearchSlider.find(i => i.value === backSearchRange[1])
+        .oValue
+    },
+    activelyLooking: isOnlyActivelyCandidate ? "yes" : "no",
+    legalStatus: selectedFilterLegalStatus,
+    professionalExperience: professionalExpRange && {
+      startYear: professionalExpSlider.find(
+        i => i.value === professionalExpRange[0]
+      ).oValue,
+      endYear: professionalExpSlider.find(
+        i => i.value === professionalExpRange[1]
+      ).oValue
+    },
+    availability: availability && {
+      startWeek: 0,
+      endWeek: availabilitySlider.find(i => i.value === availability).oValue
+    },
+    source: selectedFilterJobSites
+    //documentId: []
+  };
+  /*{
+    "jobTitle" : "Front End Developer",
+    "skills" : "JavaScript,CSS,HTML5,LESS,SASS",
+    "fieldName" : "Chicago, IL",
+    "backSearch" : {"startMonth" : 1, "endMonth" : 3},
+    "activelyLooking" : "yes",
+    "legalStatus" : ["US Citizen","Green Card",],
+    "professionalExperience" : {"startYear" : 1, "endYear" : 3},
+    "availability" : {"startWeek" : 1, "endWeek" : 3},
+    "source" : ["Internal Conrep","LinkedIn"],
+    "documentId" : ["abcd","xys",]				
+  }*/
+  return payLoad;
 };

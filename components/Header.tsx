@@ -1,55 +1,108 @@
 import React from "react";
-import { Grid, AppBar, Toolbar } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
+import { AppBar, Toolbar, Grid, Typography, Link } from "@material-ui/core";
 import WorkIcon from "@material-ui/icons/Work";
 import PeopleIcon from "@material-ui/icons/People";
-import EventIcon from "@material-ui/icons/Event";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import Router from "next/router";
+import { loadCandidatesSuccess, clearAll } from "../actions";
+import PropTypes from "prop-types";
 
 const styles = {
   header: {
-    backgroundColor: "#27377e",
-    color: "#FFF"
+    backgroundColor: "#27377e"
   },
   headerIcon: {
-    width: 20,
-    height: 20,
-    paddingRight: 5
+    width: 21,
+    height: 21,
+    marginRight: 8
   },
   headerIconContainer: {
     display: "inline-flex",
-    padding: "0 8px",
-    marginTop: 2,
+    padding: "0 24px",
     cursor: "pointer",
-    opacity: 0.4
+    opacity: 0.4,
+    color: "#FFF",
+    fontWeight: "bold",
+    fontSize: 14,
+    textDecoration: "none",
+    verticalAlign: "super"
   },
   headerIconContainer_active: {
     display: "inline-flex",
-    padding: "0 8px",
-    marginTop: 2,
-    cursor: "pointer"
+    padding: "0 24px",
+    cursor: "pointer",
+    color: "#FFF",
+    fontSize: 14,
+    fontWeight: "bold",
+    textDecoration: "none",
+    verticalAlign: "super"
   }
 };
-
-function Header() {
+function Header({ dispatch }) {
+  const [selectedTab, setSelectedTab] = React.useState("Candidates");
+  React.useEffect(() => {
+    const route = Router.router.route;
+    if (["/AddJobListing", "/ViewJobListing"].indexOf(route) > -1) {
+      setSelectedTab("Requisitions");
+    } else if (["/AddCandidate", "/SearchResults"].indexOf(route) > -1) {
+      setSelectedTab("Candidates");
+    } else {
+      setSelectedTab("Candidates");
+    }
+  }, []);
+  const goToHomePage = () => {
+    dispatch(loadCandidatesSuccess(null));
+    dispatch(clearAll());
+    Router.push("/");
+  };
+  const goToOpenReqs = () => {
+    Router.push("/ViewJobListing");
+    dispatch(clearAll());
+  };
   return (
     <AppBar position="static" style={styles.header}>
-      <Toolbar style={{ minHeight: 50 }}>
+      <Toolbar style={{ padding: 0, minHeight: 50 }}>
         <Grid container>
-          <Grid item sm={8} lg={8} md={8} xl={8}>
-            Logo
-            <span style={styles.headerIconContainer_active}>
-              <SearchIcon style={styles.headerIcon} /> Resume Search
-            </span>
-            <span style={styles.headerIconContainer}>
-              <WorkIcon style={styles.headerIcon} /> Requisitions
-            </span>
-            <span style={styles.headerIconContainer}>
-              <PeopleIcon style={styles.headerIcon} /> Candidates
-            </span>
-          </Grid>
-          <Grid item sm={4} lg={4} md={4} xl={4}>
-            2
+          <Grid item style={{ paddingLeft: 24, paddingRight: 24 }}>
+            <Typography>
+              <img
+                src="/static/img/logo.svg"
+                style={{
+                  cursor: "pointer",
+                  paddingTop: 6,
+                  opacity: 0.7,
+                  height: 40,
+                  paddingRight: 40
+                }}
+              />
+
+              <Link
+                href="#"
+                color="inherit"
+                style={
+                  selectedTab === "Candidates"
+                    ? styles.headerIconContainer_active
+                    : styles.headerIconContainer
+                }
+                onClick={goToHomePage}
+              >
+                <PeopleIcon style={styles.headerIcon} />
+                <span>Candidates</span>
+              </Link>
+
+              <Link
+                href="#"
+                color="inherit"
+                style={
+                  selectedTab === "Requisitions"
+                    ? styles.headerIconContainer_active
+                    : styles.headerIconContainer
+                }
+                onClick={goToOpenReqs}
+              >
+                <WorkIcon style={styles.headerIcon} />
+                <span>Requisitions</span>
+              </Link>
+            </Typography>
           </Grid>
         </Grid>
       </Toolbar>
@@ -57,4 +110,7 @@ function Header() {
   );
 }
 
+Header.propTypes = {
+  dispatch: PropTypes.func.isRequired
+};
 export default Header;

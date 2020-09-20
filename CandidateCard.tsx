@@ -19,6 +19,8 @@ import {
   LinkedIn as LinkedInIcon
 } from "@material-ui/icons";
 import PropTypes from "prop-types";
+import { setSelectedCandidate } from "../actions";
+import Router from "next/router";
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -71,14 +73,15 @@ const useStyles = makeStyles(theme => ({
     color: "#000",
     fontSize: 21,
     marginBottom: theme.spacing(0.25),
-    width: 44,
+    width: "auto",
     height: 44,
     borderRadius: 5,
     border: "solid 2px #417505",
     backgroundColor: "#bffd7a",
     '& [class*="MuiChip-label-"]': {
       padding: 0
-    }
+    },
+    padding: "0 5px"
   },
   expansionPanel: {
     width: "100%",
@@ -126,19 +129,11 @@ const useStyles = makeStyles(theme => ({
 export default function CandidateCard(props) {
   const classes = useStyles();
   const { _source } = props;
-  // const elements = [
-  //   "Javascript",
-  //   "HTML",
-  //   "CSS",
-  //   "Material UI",
-  //   "React",
-  //   "Next.js",
-  //   "Immutable",
-  //   "Redux",
-  //   "Saga",
-  //   "Axios",
-  // ];
-
+  const goTOPreviewCondidate = () => {
+    props.dispatch(setSelectedCandidate(_source));
+    sessionStorage.setItem("selectedCondidate", JSON.stringify(_source));
+    setTimeout(() => Router.push("/AddCandidate"), 2000);
+  };
   return (
     <TableRow
       key={props.name}
@@ -169,6 +164,7 @@ export default function CandidateCard(props) {
         >
           {_source.communication.email}
         </Link>
+
         {_source.linkedInProfile && (
           <Button
             variant="text"
@@ -185,22 +181,43 @@ export default function CandidateCard(props) {
             LinkedIn
           </Button>
         )}
-        {/* <Link
-          style={{ display: "block", marginBottom: "4px" }}
-          href="/not-a-valid-path"
+        {_source.resumeLocation && (
+          <Link
+            style={{ display: "block", marginBottom: "4px" }}
+            href={_source.resumeLocation}
+          >
+            View Resume
+          </Link>
+        )}
+        <Button
+          onClick={goTOPreviewCondidate}
+          color="primary"
+          variant="text"
+          style={{
+            padding: "4px 0",
+            textTransform: "unset",
+            position: "absolute",
+            bottom: 16,
+            fontWeight: "500",
+            backgroundColor: "#3f51b5",
+            color: "#FFF",
+            width: "140px"
+          }}
         >
-          View Resume
-        </Link> */}
+          View Details/Submit
+        </Button>
       </TableCell>
       <TableCell style={{ border: "none" }} className={classes.skills}>
         <div className={classes.skillsHeader}>
           <Typography color="primary" variant="h6" component="h2" gutterBottom>
-            {_source.positionTitle} - {_source.currentCompany}
+            {_source.positionTitle}
           </Typography>
           <Typography variant="subtitle1" gutterBottom>
             Total Experience:{" "}
             <span style={{ fontWeight: "bold" }}>
-              {_source.professionalExperience}
+              {_source.professionalExperience === "0"
+                ? "Not Availabile"
+                : _source.professionalExperience + " Yrs"}
             </span>
           </Typography>
         </div>
@@ -229,7 +246,13 @@ export default function CandidateCard(props) {
         </div>
       </TableCell>
       <TableCell align="right" className={classes.other}>
-        <Chip label={_source.score * 100} className={classes.scoreIcon} />
+        {!isNaN(_source.score) &&
+          (_source.score + "").indexOf("Infinity") === -1 && (
+            <Chip
+              label={Math.round(_source.score * 100)}
+              className={classes.scoreIcon}
+            />
+          )}
         <Typography variant="subtitle1" component="p" gutterBottom>
           Actively Looking: {_source.activelyLooking ? "Yes" : "No"}
         </Typography>
@@ -337,6 +360,7 @@ CandidateCard.propTypes = {
   name: PropTypes.string.isRequired,
   phone: PropTypes.string.isRequired,
   _source: PropTypes.shape({
+    resumeLocation: PropTypes.string,
     fullName: PropTypes.string.isRequired,
     address: PropTypes.shape({
       city: PropTypes.string.isRequired,
@@ -382,5 +406,6 @@ CandidateCard.propTypes = {
         )
       })
     })
-  })
+  }),
+  dispatch: PropTypes.func
 };

@@ -35,24 +35,6 @@ function reducer(state = exampleInitialState, action) {
         candidates: action.data
       };
 
-    case actionTypes.UPDATE_RESUME_DATA:
-      return {
-        ...state,
-        ...{ resumes: [...state.resumes, action.data] }
-      };
-
-    case actionTypes.LOAD_RESUME_DATA_SUCCESS:
-      return {
-        ...state,
-        ...{ resumes: action.data }
-      };
-
-    case actionTypes.UI_TOGGLE_CANDIDATE_MODAL:
-      return {
-        ...state,
-        ...{ candidateModalOpen: !state.candidateModalOpen }
-      };
-
     case actionTypes.FAILURE:
       return {
         ...state,
@@ -122,14 +104,14 @@ function reducer(state = exampleInitialState, action) {
     case actionTypes.LOAD_JOBLISTING_SUCCESS:
       return {
         ...state,
-        jobList: action.data.jobPosting
+        jobList: action.data.jobPosting,
+        isLoading: false
       };
-    case actionTypes.TOGGLE_LOADER: {
+    case actionTypes.TOGGLE_LOADER:
       return {
         ...state,
         isLoading: !state.isLoading
       };
-    }
     default:
       return state;
   }

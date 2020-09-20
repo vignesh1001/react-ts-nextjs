@@ -115,14 +115,26 @@ const clientMap = {
   Zoro: ["Andy Goodfellow", "Bernard Estanislao", "Damian Ng"]
 };
 
-export const clientNames = Object.keys(clientMap).map(i => ({
-  title: i,
-  value: i
-}));
+export const clientNames = Object.keys(clientMap)
+  .map(i => ({
+    title: i,
+    value: i
+  }))
+  .sort((a, b) => {
+    if (a.title < b.title) return -1;
+    else if (a.title > b.title) return 1;
+    return 0;
+  });
 
 export const getClientContact = clientNames => {
-  if (clientNames) {
-    return clientMap[clientNames].map(i => ({ title: i, value: i }));
+  if (clientNames && clientMap[clientNames]) {
+    return clientMap[clientNames]
+      .map(i => ({ title: i, value: i }))
+      .sort((a, b) => {
+        if (a.title < b.title) return -1;
+        else if (a.title > b.title) return 1;
+        return 0;
+      });
   } else {
     /*let clientContacts = [];
         Object.keys(clientMap).forEach(i=> 
