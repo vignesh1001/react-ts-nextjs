@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { render } from "react-dom";
 import Hello from "./Hello";
-import LeftFilter from "./pages/LeftFilter";
+// import LeftFilter from "./pages/LeftFilter";
 import GlobalSearch from "./pages/GlobalSearch";
 import AddJobListing from "./pages/AddJobListing";
 import withRedux from "next-redux-wrapper";
@@ -14,6 +14,7 @@ import ViewJobListingTable from "./pages/ViewJobListingTable";
 import Header from "./components/Header";
 import "./style.css";
 import "./components/forms/add-joblisting/style.css";
+import LeftFilter from "./components/forms/view-requisition/LeftFilter";
 
 interface AppProps {}
 interface AppState {
@@ -33,7 +34,7 @@ class App extends Component<AppProps, AppState> {
       <div>
         <Provider store={s}>
           <Header />
-          <LeftFilter filterData={{}} />
+          <LeftFilter />
           {/*
           <AddJobListing />
           <ViewJobListingTable />

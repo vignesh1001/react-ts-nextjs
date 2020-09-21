@@ -1,20 +1,10 @@
 import { Formik } from "formik";
 import * as yup from "yup";
 import PropTypes from "prop-types";
-import {
-  InputLabel,
-  FormHelperText,
-  Slider,
-  Switch,
-  FormControlLabel,
-  Checkbox,
-  Link,
-  Button
-} from "@material-ui/core";
+import { InputLabel, Slider, Switch, Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import SearchIcon from "@material-ui/icons/Search";
-import { ExpandMore, ExpandLess } from "@material-ui/icons";
 import { Chip } from "@material-ui/core";
 import React, { useState } from "react";
 import { loadCandidates } from "../../../actions";
@@ -24,7 +14,6 @@ import {
   getSkillData,
   immiStatus,
   professionalExpSlider,
-  availabilitySlider,
   backSearchSlider
 } from "../../../constants/dropdown";
 import { withStyles } from "@material-ui/styles";
@@ -67,20 +56,6 @@ const chipsStyleDisable = {
   backgroundColor: "lightgray",
   marginBottom: 8
 };
-const advancedSearchLink = {
-  textDecoration: "underline",
-  width: "100%",
-  textAlign: "left",
-  marginBottom: 16,
-  marginTop: 16,
-  color: "#e32686"
-  //display: "none"
-};
-const fieldTitle = {
-  color: "#195091",
-  fontSize: 12,
-  paddingBottom: 8
-};
 const searchButtonStyle = {
   backgroundColor: "#d0006b",
   fontSize: 14,
@@ -107,26 +82,12 @@ const SliderCSSComponent = withStyles({
     display: "none"
   }
 })(Slider);
-const isShowAdvancedSearch = true;
+
 export default function LeftFilter(props) {
   const [state, setState] = useState({
-    isOnlyActivelyCandidate: true,
-    isShowLoader: false,
-    isShowAdvSearch: false,
-    isShowNoResults: false,
-    filterTitle: props.filterData.filterTitle
-      ? jobTitles.default.find(
-          i => i.value === props.filterData.filterTitle.value
-        )
-      : "",
-    filterSkills: props.filterData.filterSkills || [],
+    filterSkills: [],
     filterLocation: "",
-    filterTitleList: props.filterData.filterTitle
-      ? [props.filterData.filterTitle.title]
-      : [],
-    filterLocationList: props.filterData.filterLocation
-      ? [props.filterData.filterLocation]
-      : [],
+    filterLocationList: [],
     filterSkills_List: getSkillData(""),
     filterTitle_List: jobTitles.default,
     filterTitleEnteredValue: "",
@@ -134,16 +95,12 @@ export default function LeftFilter(props) {
     availability: 20,
     backSearchRange: [20, 60],
     professionalExpRange: [40, 60],
-    FilterJobSites: [
-      "Internal Conrep",
-      "LinkedIn",
-      "Dice",
-      "Monster",
-      "Career Builder"
-    ],
-    selectedFilterJobSites: [],
     FilterLegalStatus: immiStatus,
-    selectedFilterLegalStatus: []
+    selectedFilterLegalStatus: [],
+    isWillingToRelocate: true,
+    cadidateName: "",
+    education: "",
+    filterTitle: ""
   });
   const handleDelete = (listName, e) => {
     state[listName].splice(state[listName].indexOf(e), 1);
@@ -153,10 +110,10 @@ export default function LeftFilter(props) {
   const handleChange = event => {
     const { target } = event;
     const { name, value } = target;
-    if (name === "isOnlyActivelyCandidate") {
+    if (name === "isWillingToRelocate") {
       setState({
         ...state,
-        isOnlyActivelyCandidate: !state.isOnlyActivelyCandidate
+        isWillingToRelocate: !state.isWillingToRelocate
       });
     } else if (name === "filterTitle") {
       const filterSkills = [];
@@ -182,12 +139,8 @@ export default function LeftFilter(props) {
     setState({ ...state, [id]: newValue });
   };
   const handleSearch = () => {
-    const { dispatch, filterData } = props;
-    setState({ ...state, isShowLoader: true, isShowNoResults: false });
-    const filterTitle =
-      filterData.filterTitle.title === state.filterTitle.title
-        ? filterData.filterTitle.value
-        : state.filterTitle.value;
+    const { dispatch } = props;
+    const filterTitle = state.filterTitle ? state.filterTitle.value : "";
     debugger;
     if (
       filterTitle ||
@@ -265,7 +218,6 @@ export default function LeftFilter(props) {
       }}
     >
       {() => {
-        const ExpandOrLess = state.isShowAdvSearch ? ExpandLess : ExpandMore;
         return (
           <form
             onSubmit={e => {
@@ -280,9 +232,13 @@ export default function LeftFilter(props) {
               <div style={{ marginTop: 8 }}>
                 {renderAutoComplete("filterTitle", false)}
               </div>
-              <FormHelperText id="helper-text-forJOb" style={fieldTitle}>
-                Filter by title
-              </FormHelperText>
+            </div>
+
+            <InputLabel htmlFor="filterJOb" style={titleColor}>
+              Filter by Submission Stage
+            </InputLabel>
+            <div style={{ marginTop: 8 }}>
+              ------Filter by Submission Stage-------
             </div>
 
             <InputLabel htmlFor="filterJOb" style={titleColor}>
@@ -290,9 +246,6 @@ export default function LeftFilter(props) {
             </InputLabel>
             <div style={{ marginTop: 8 }}>
               {renderAutoComplete("filterSkills", true)}
-              <FormHelperText id="helper-text-filterSkills" style={fieldTitle}>
-                Filter by skill
-              </FormHelperText>
             </div>
             <InputLabel htmlFor="filterJOb" style={titleColor}>
               Filter by Location
@@ -314,12 +267,6 @@ export default function LeftFilter(props) {
                   )
                 }}
               />
-              <FormHelperText
-                id="helper-text-filterLocation"
-                style={fieldTitle}
-              >
-                Filter by location
-              </FormHelperText>
             </div>
             {state.filterLocationList.map(i => (
               <Chip
@@ -330,209 +277,157 @@ export default function LeftFilter(props) {
                 key={"filterLocationList" + i}
               />
             ))}
-            {isShowAdvancedSearch && (
-              <>
+            <div style={{ marginTop: 16 }}>
+              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
+                Legal Status
+              </InputLabel>
+              <div>
+                {state.FilterLegalStatus.map(i => (
+                  <Chip
+                    name="FilterLegalStatus"
+                    size="medium"
+                    label={i.title}
+                    onClick={() =>
+                      handleCheckBox({
+                        target: {
+                          name: "FilterLegalStatus",
+                          value: i.value
+                        }
+                      })
+                    }
+                    style={
+                      state.selectedFilterLegalStatus.indexOf(i.value) > -1
+                        ? chipsStyle
+                        : chipsStyleDisable
+                    }
+                    key={"FilterLegalStatus" + i.value}
+                  />
+                ))}
+              </div>
+            </div>
+            <div style={{ marginTop: 16 }}>
+              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
+                Professional Experiance
+              </InputLabel>
+              <SliderCSSComponent
+                valueLabelFormat={value => {
+                  return `${
+                    professionalExpSlider.find(i => i.value == value).oValue
+                  } Yr`;
+                }}
+                getAriaValueText={value => {
+                  return `${value} Year`;
+                }}
+                value={state.professionalExpRange}
+                aria-labelledby="discrete-slider-restrict"
+                step={null}
+                scale={x => x}
+                valueLabelDisplay="auto"
+                marks={professionalExpSlider}
+                name="professionalExpRange"
+                id="professionalExpRange"
+                onChange={(event, newVal) =>
+                  handleSliderChange({ id: "professionalExpRange" }, newVal)
+                }
+                style={{ width: "98%", marginLeft: 4 }}
+              />
+            </div>
+            <div
+              style={{
+                marginTop: 16
+              }}
+            >
+              <InputLabel htmlFor="filterJOb" style={advancedFilterTitleColor}>
+                Back Search(Resume Updated)
+              </InputLabel>
+              <SliderCSSComponent
+                valueLabelFormat={value => {
+                  return `${
+                    backSearchSlider.find(i => i.value == value).tooltip
+                  } `;
+                }}
+                getAriaValueText={value => {
+                  return `${value} Year`;
+                }}
+                value={state.backSearchRange}
+                aria-labelledby="discrete-slider-restrict"
+                step={null}
+                scale={x => x}
+                valueLabelDisplay="auto"
+                marks={backSearchSlider}
+                name="backSearchRange"
+                id="backSearchRange"
+                onChange={(event, newVal) =>
+                  handleSliderChange({ id: "backSearchRange" }, newVal)
+                }
+                style={{ width: "96%", marginLeft: 8 }}
+              />
+            </div>
+            <div style={{ paddingBottom: 10, minHeight: 30 }}>
+              <InputLabel htmlFor="filterJOb" style={titleColor}>
+                <div style={{ width: "80%", float: "left" }}>
+                  Willing to Relocate
+                </div>
                 <div
                   style={{
-                    marginTop: 16
+                    width: "20%",
+                    float: "left",
+                    marginTop: -12,
+                    textAlign: "right"
                   }}
                 >
-                  <InputLabel
-                    htmlFor="filterJOb"
-                    style={advancedFilterTitleColor}
-                  >
-                    Back Search
-                  </InputLabel>
-                  <SliderCSSComponent
-                    valueLabelFormat={value => {
-                      return `${
-                        backSearchSlider.find(i => i.value == value).tooltip
-                      } `;
-                    }}
-                    getAriaValueText={value => {
-                      return `${value} Year`;
-                    }}
-                    value={state.backSearchRange}
-                    aria-labelledby="discrete-slider-restrict"
-                    step={null}
-                    scale={x => x}
-                    valueLabelDisplay="auto"
-                    marks={backSearchSlider}
-                    name="backSearchRange"
-                    id="backSearchRange"
-                    onChange={(event, newVal) =>
-                      handleSliderChange({ id: "backSearchRange" }, newVal)
-                    }
-                    style={{ width: "96%", marginLeft: 8 }}
+                  <Switch
+                    checked={state.isWillingToRelocate}
+                    onChange={handleChange}
+                    name="isWillingToRelocate"
+                    color="secondary"
+                    style={{ float: "right" }}
                   />
                 </div>
-                <div>
-                  <Link
-                    component="button"
-                    variant="body2"
-                    onClick={() => {
-                      setState(prevState => ({
-                        ...prevState,
-                        isShowAdvSearch: !prevState.isShowAdvSearch
-                      }));
-                    }}
-                    style={advancedSearchLink}
-                  >
-                    Advanced Search
-                    <ExpandOrLess
-                      color="action"
-                      style={{
-                        fontSize: 25,
-                        position: "absolute",
-                        right: 16
-                      }}
-                    />
-                  </Link>
-                </div>
-                {state.isShowAdvSearch && (
-                  <React.Fragment>
-                    <div style={{ paddingBottom: 10, minHeight: 30 }}>
-                      <InputLabel htmlFor="filterJOb" style={titleColor}>
-                        <div style={{ width: "80%", float: "left" }}>
-                          Only Actively Looking Candidates
-                        </div>
-                        <div
-                          style={{
-                            width: "20%",
-                            float: "left",
-                            marginTop: -12,
-                            textAlign: "right"
-                          }}
-                        >
-                          <Switch
-                            checked={state.isOnlyActivelyCandidate}
-                            onChange={handleChange}
-                            name="isOnlyActivelyCandidate"
-                            color="secondary"
-                            style={{ float: "right" }}
-                          />
-                        </div>
-                      </InputLabel>
-                    </div>
-                    <div style={{ marginTop: 16 }}>
-                      <InputLabel
-                        htmlFor="filterJOb"
-                        style={advancedFilterTitleColor}
-                      >
-                        Legal Status
-                      </InputLabel>
-                      <div>
-                        {state.FilterLegalStatus.map(i => (
-                          <Chip
-                            name="FilterLegalStatus"
-                            size="medium"
-                            label={i.title}
-                            onClick={() =>
-                              handleCheckBox({
-                                target: {
-                                  name: "FilterLegalStatus",
-                                  value: i.value
-                                }
-                              })
-                            }
-                            style={
-                              state.selectedFilterLegalStatus.indexOf(i.value) >
-                              -1
-                                ? chipsStyle
-                                : chipsStyleDisable
-                            }
-                            key={"FilterLegalStatus" + i.value}
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <div style={{ marginTop: 16 }}>
-                      <InputLabel
-                        htmlFor="filterJOb"
-                        style={advancedFilterTitleColor}
-                      >
-                        Professional Experiance
-                      </InputLabel>
-                      <SliderCSSComponent
-                        valueLabelFormat={value => {
-                          return `${
-                            professionalExpSlider.find(i => i.value == value)
-                              .oValue
-                          } Yr`;
-                        }}
-                        getAriaValueText={value => {
-                          return `${value} Year`;
-                        }}
-                        value={state.professionalExpRange}
-                        aria-labelledby="discrete-slider-restrict"
-                        step={null}
-                        scale={x => x}
-                        valueLabelDisplay="auto"
-                        marks={professionalExpSlider}
-                        name="professionalExpRange"
-                        id="professionalExpRange"
-                        onChange={(event, newVal) =>
-                          handleSliderChange(
-                            { id: "professionalExpRange" },
-                            newVal
-                          )
-                        }
-                        style={{ width: "98%", marginLeft: 4 }}
-                      />
-                    </div>
-                    <div style={{ marginTop: 16 }}>
-                      <InputLabel
-                        htmlFor="filterJOb"
-                        style={advancedFilterTitleColor}
-                      >
-                        Availability
-                      </InputLabel>
-                      <SliderCSSComponent
-                        defaultValue={state.availability}
-                        valueLabelFormat={value => {
-                          return `${
-                            availabilitySlider.find(i => i.value == value)
-                              .oValue
-                          } Yr`;
-                        }}
-                        getAriaValueText={value => {
-                          return `${value} Year`;
-                        }}
-                        aria-labelledby="discrete-slider-restrict"
-                        step={null}
-                        scale={x => x}
-                        valueLabelDisplay="auto"
-                        marks={availabilitySlider}
-                        style={{ width: "96%", marginLeft: 8 }}
-                        onChange={(event, newVal) =>
-                          handleSliderChange({ id: "availability" }, newVal)
-                        }
-                      />
-                    </div>
-                    <div style={{ marginTop: 16 }}>
-                      <InputLabel
-                        htmlFor="filterJOb"
-                        style={advancedFilterTitleColor}
-                      >
-                        Filter by Source
-                      </InputLabel>
-                      {state.FilterJobSites.map(item => (
-                        <FormControlLabel
-                          key={"FilterJobSites_" + item}
-                          value={item}
-                          name="FilterJobSites"
-                          control={<Checkbox color="default" />}
-                          label={item}
-                          labelPlacement="end"
-                          onChange={handleCheckBox}
-                          style={{ color: "#374c97" }}
-                        />
-                      ))}
-                    </div>
-                  </React.Fragment>
-                )}
-              </>
-            )}
+              </InputLabel>
+            </div>
+            <InputLabel htmlFor="filterJOb" style={titleColor}>
+              Education
+            </InputLabel>
+            <div style={{ marginTop: 8 }}>
+              <TextField
+                value={state.education}
+                onKeyUp={handleKeyUp}
+                onChange={handleChange}
+                name="education"
+                id="education"
+                aria-describedby="my-helper-education"
+                fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </div>
+            <InputLabel htmlFor="filterJOb" style={titleColor}>
+              Filter by Candidate Name
+            </InputLabel>
+            <div style={{ marginTop: 8 }}>
+              <TextField
+                value={state.cadidateName}
+                onKeyUp={handleKeyUp}
+                onChange={handleChange}
+                name="cadidateName"
+                id="cadidateName"
+                aria-describedby="my-helper-cadidateName"
+                fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="start">
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+            </div>
             <div>
               <Button
                 style={searchButtonStyle}
@@ -541,7 +436,7 @@ export default function LeftFilter(props) {
                 size="large"
                 onClick={handleSearch}
               >
-                SEARCH
+                FILTER
               </Button>
             </div>
           </form>
@@ -555,10 +450,5 @@ LeftFilter.defaultProps = {
 };
 LeftFilter.propTypes = {
   handleClose: PropTypes.func.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  filterData: PropTypes.shape({
-    filterTitle: PropTypes.string,
-    filterSkills: PropTypes.string,
-    filterLocation: PropTypes.string
-  })
+  dispatch: PropTypes.func.isRequired
 };
