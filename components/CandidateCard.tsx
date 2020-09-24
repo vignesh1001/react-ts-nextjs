@@ -215,7 +215,8 @@ export default function CandidateCard(props) {
           <Typography variant="subtitle1" gutterBottom>
             Total Experience:{" "}
             <span style={{ fontWeight: "bold" }}>
-              {_source.professionalExperience === "0"
+              {!_source.professionalExperience ||
+              _source.professionalExperience === "0"
                 ? "Not Availabile"
                 : _source.professionalExperience + " Yrs"}
             </span>
