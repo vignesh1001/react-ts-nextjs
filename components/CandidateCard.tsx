@@ -272,26 +272,7 @@ export default function CandidateCard(props) {
             <Button color="primary" variant="contained" />
           </ExpansionPanelSummary>
           <ExpansionPanelDetails className={classes.expansionPanelDetails}>
-            <div className={classes.firstTab}>
-              {/* <Link
-                style={{ display: "block", marginBottom: "4px" }}
-                href={`tel:${props.phone}`}
-              >
-                Github
-              </Link>
-              <Link
-                style={{ display: "block", marginBottom: "4px" }}
-                href={`tel:${props.phone}`}
-              >
-                Portfolio Site
-              </Link>
-              <Link
-                style={{ display: "block", marginBottom: "4px" }}
-                href={`tel:${props.phone}`}
-              >
-                Dice Profile
-              </Link> */}
-            </div>
+            <div className={classes.firstTab} />
             <div className={classes.secondTab}>
               <Box mb={2}>
                 <Paper>

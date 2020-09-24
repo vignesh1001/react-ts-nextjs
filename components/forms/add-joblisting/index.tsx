@@ -12,10 +12,10 @@ import { saveJobListing, clearAll } from "../../../actions";
 import Loader from "../../Loader";
 import { internalContacts } from "../../../constants/internalContacts";
 
-const recruitersList = internalContacts.map((i) => ({
+const recruitersList = internalContacts.map(i => ({
   title: i.Name,
   value: i.Name,
-  email: i.Email,
+  email: i.Email
 }));
 const validationSchema = yup.object({
   noOfPosition: yup
@@ -46,7 +46,7 @@ const validationSchema = yup.object({
   positionTitle: yup
     .string("Enter your Position Title")
     .required("Position Title is required"),
-  skills: yup.string("Enter Skills").required("Skills is required"),
+  skills: yup.string("Enter Skills").required("Skills is required")
 });
 let tempFormikProps;
 function AddJobListingForm(props) {
@@ -83,20 +83,20 @@ function AddJobListingForm(props) {
       jobListingBoard: [],
       recruitingLeadsEmail: "",
       salesLeadsEmail: "",
-      action: "ADD",
-    },
+      action: "ADD"
+    }
   });
   const togglePreviewMode = () =>
     setState({
       ...state,
       isPreview: !state.isPreview,
       isShowJobListingError: false,
-      isShowLoader: false,
+      isShowLoader: false
     });
   const toggleLoader = () =>
-    setState((prevState) => ({
+    setState(prevState => ({
       ...prevState,
-      isShowLoader: !prevState.isShowLoader,
+      isShowLoader: !prevState.isShowLoader
     }));
   const handleSave = () => {
     const errorList = Object.values(tempFormikProps.errors);
@@ -110,13 +110,13 @@ function AddJobListingForm(props) {
     }
   };
   React.useEffect(() => {
-    const selectedJobListing = localStorage.getItem("setSelectedJobListing");
-    localStorage.removeItem("setSelectedJobListing");
-    if (selectedJobListing) {
-      togglePreviewMode();
+    //const selectedJobListing = localStorage.getItem("setSelectedJobListing");
+    if (props.selectedJobListing) {
+      const item = props.selectedJobListing; // || JSON.parse(selectedJobListing);
+      localStorage.removeItem("setSelectedJobListing");
+      // togglePreviewMode();
       toggleLoader();
       setTimeout(() => {
-        const item = JSON.parse(selectedJobListing);
         tempFormikProps.setFieldValue(
           "positionTitle",
           item.positionDetails.positionTitle
@@ -187,15 +187,14 @@ function AddJobListingForm(props) {
         tempFormikProps.setFieldValue("recruiters", []);
         if (item.recruiters && item.recruiters.length) {
           const recruiters = [];
-          item.recruiters.forEach((value) => {
-            const recruiter = recruitersList.find((i) => i.value === value);
+          item.recruiters.forEach(value => {
+            const recruiter = recruitersList.find(i => i.value === value);
             recruiter &&
               recruiters.push({
                 name: recruiter.value,
-                email: recruiter.email,
+                email: recruiter.email
               });
           });
-
           tempFormikProps.setFieldValue("recruiters", recruiters);
         }
         tempFormikProps.setFieldValue(
@@ -220,7 +219,7 @@ function AddJobListingForm(props) {
     <Formik
       validationSchema={validationSchema}
       initialValues={state.initialValues}
-      onSubmit={(e) => {
+      onSubmit={e => {
         if (!state.isPreview) {
           props.dispatch(clearAll());
           togglePreviewMode();
@@ -235,7 +234,7 @@ function AddJobListingForm(props) {
         }
       }}
     >
-      {(formikProps) => {
+      {formikProps => {
         tempFormikProps = formikProps;
         return (
           <form>
@@ -245,7 +244,7 @@ function AddJobListingForm(props) {
               spacing={1}
               style={{
                 backgroundColor: "#FFF",
-                padding: "30px 90px 30px 40px",
+                padding: "30px 90px 30px 40px"
               }}
             >
               {state.isPreview ? (
@@ -263,7 +262,7 @@ function AddJobListingForm(props) {
                           marginTop: -10,
                           marginLeft: 14,
                           marginBottom: 15,
-                          color: "red",
+                          color: "red"
                         }}
                       >
                         Please select the Job Listing Board, Before Publishing
@@ -292,7 +291,7 @@ function AddJobListingForm(props) {
                       fontSize: 14,
                       color: "#FFF",
                       backgroundColor: "#234071",
-                      marginRight: 12,
+                      marginRight: 12
                     }}
                     onClick={handleSave}
                   >
@@ -308,14 +307,14 @@ function AddJobListingForm(props) {
                           if (formikProps.values.jobListingBoard.length) {
                             setState({
                               ...state,
-                              isShowJobListingError: false,
+                              isShowJobListingError: false
                             });
                             toggleLoader();
                             formikProps.setFieldValue("action", "PUBLISH");
                             props.dispatch(
                               saveJobListing({
                                 ...formikProps.values,
-                                action: "PUBLISH",
+                                action: "PUBLISH"
                               })
                             );
                           } else {
@@ -331,7 +330,7 @@ function AddJobListingForm(props) {
                     borderRadius: 4,
                     fontSize: 14,
                     color: "#FFF",
-                    backgroundColor: "#e32686",
+                    backgroundColor: "#e32686"
                     //!formikProps.isValid
                     //? "#f4a0cb"
                     //: "#e32686",
@@ -349,7 +348,7 @@ function AddJobListingForm(props) {
 }
 
 AddJobListingForm.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 export default AddJobListingForm;

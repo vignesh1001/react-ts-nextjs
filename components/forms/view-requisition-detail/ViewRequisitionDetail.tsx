@@ -5,7 +5,15 @@ import ViewDetail from "./ViewDetail";
 import Router from "next/router";
 
 function ViewRequisitionDetail({ dispatch }) {
-  const [state, setState] = React.useState({ selectedJobListing: {} });
+  const [state, setState] = React.useState({
+    selectedJobListing: {
+      clientInfo: {},
+      location: {},
+      compensationDetails: {},
+      positionDetails: {},
+      internalDetails: {}
+    },
+  });
   React.useEffect(() => {
     localStorage.setItem(
       "setSelectedJobListing",
@@ -25,11 +33,11 @@ function ViewRequisitionDetail({ dispatch }) {
           country: "USA"
         },
         employmentType: "Fulltime/Contract to Hire",
-        duration: "",
+        duration: "8",
         compensationDetails: {
           wages: "Hourly",
-          clientBillRate: "",
-          payRate: ""
+          clientBillRate: "$50/h",
+          payRate: "$30/h W2, C2C or 1099"
         },
         positionDetails: {
           positionTitle: "Data Engineer",
@@ -63,11 +71,10 @@ function ViewRequisitionDetail({ dispatch }) {
     }
   }, []);
   return (
-    <Box my={4}>
-      <Grid container>
-        <ViewDetail selectedJobListing={state.selectedJobListing} />
-      </Grid>
-    </Box>
+    <Grid container>
+      <ViewDetail selectedJobListing={state.selectedJobListing} />
+
+    </Grid>
   );
 }
 
