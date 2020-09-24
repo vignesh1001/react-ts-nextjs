@@ -207,40 +207,7 @@ function PreviewJobListing(props) {
         <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
           <h4 style={styles.previewTitle}>Preview</h4>
         </Grid>
-        <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }}>
-          {/*{formikProps.values.action === "ADD" &&
-            props.saveJobListingStatus === "SAVED" && (
-              <h2 style={styles.savedMessage}>JobListing Saved Successfully</h2>
-            )}
-          {formikProps.values.action === "ADD" &&
-            props.saveJobListingStatus === "FAILED" && (
-              <h2 style={styles.savedFailedMessage}>JobListing Save Failed</h2>
-            )}
-          {formikProps.values.action === "PUBLISH" &&
-            props.saveJobListingStatus === "SAVED" && (
-              <h2 style={styles.savedMessage}>
-                JobListing Published Successfully
-              </h2>
-            )}
-          {formikProps.values.action === "PUBLISH" &&
-            props.saveJobListingStatus === "FAILED" && (
-              <h2 style={styles.savedFailedMessage}>
-                JobListing Published Failed
-              </h2>
-            )}
-          {formikProps.values.action === "UPDATE" &&
-            props.saveJobListingStatus === "SAVED" && (
-              <h2 style={styles.savedMessage}>
-                JobListing Updated Successfully
-              </h2>
-            )}
-          {formikProps.values.action === "UPDATE" &&
-            props.saveJobListingStatus === "FAILED" && (
-              <h2 style={styles.savedFailedMessage}>
-                JobListing Update Failed
-              </h2>
-            )}*/}
-        </Grid>
+        <Grid item xs={6} sm={6} style={{ paddingLeft: 0 }} />
         <Grid
           container
           style={{
