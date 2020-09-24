@@ -4,6 +4,7 @@ import Hello from "./Hello";
 // import LeftFilter from "./pages/LeftFilter";
 import GlobalSearch from "./pages/GlobalSearch";
 import AddJobListing from "./pages/AddJobListing";
+import ViewRequisitionDetail from "./pages/ViewRequisitionDetail";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
 import AddCandidate from "./pages/AddCandidate";
@@ -33,9 +34,10 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
+          <ViewRequisitionDetail />
+          {/*
           <Header />
           <LeftFilter />
-          {/*
           <AddJobListing />
           <ViewJobListingTable />
           <ListJobListing />
