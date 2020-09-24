@@ -4,7 +4,7 @@ import Hello from "./Hello";
 // import LeftFilter from "./pages/LeftFilter";
 import GlobalSearch from "./pages/GlobalSearch";
 import AddJobListing from "./pages/AddJobListing";
-import ViewRequisitionDetail from "./pages/ViewRequisitionDetail";
+// import ViewRequisitionDetail from "./pages/ViewRequisitionDetail";
 import withRedux from "next-redux-wrapper";
 import withReduxSaga from "next-redux-saga";
 import AddCandidate from "./pages/AddCandidate";
@@ -16,7 +16,7 @@ import Header from "./components/Header";
 import "./style.css";
 import "./components/forms/add-joblisting/style.css";
 import LeftFilter from "./components/forms/view-requisition/LeftFilter";
-
+import ViewRequisitionDetail from "./components/forms/view-requisition-detail/ViewRequisitionDetail";
 interface AppProps {}
 interface AppState {
   name: string;

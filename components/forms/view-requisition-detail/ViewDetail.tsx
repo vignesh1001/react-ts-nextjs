@@ -57,12 +57,9 @@ const styles = {
 };
 
 function ViewRequisitionDetail({ selectedJobListing }) {
-  
   return (
     <Box my={4}>
-      <Grid container>
-
-      </Grid>
+      <Grid container />
     </Box>
   );
 }
