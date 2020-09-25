@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Box, Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import ViewDetail from "./ViewDetail";
 import Router from "next/router";
 
@@ -22,7 +22,7 @@ function ViewRequisitionDetail({ dispatch }) {
         numberOfPositions: "1",
         priority: "high",
         clientInfo: {
-          clientName: "Peterson Technology partners",
+          clientName: "",
           clientContact: ""
         },
         location: {
@@ -47,7 +47,7 @@ function ViewRequisitionDetail({ dispatch }) {
           securityClearanceLevel: "yes"
         },
         internalDetails: {
-          internalContact: "nick shah",
+          internalContact: "",
           coOrdinator: "",
           recruitingLead: "",
           recruitingLeadsEmail: "nick@ptechpartners.com",

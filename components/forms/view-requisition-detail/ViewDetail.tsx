@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Grid, Button, Modal } from "@material-ui/core";
 import AddJobListingForm from "../add-joblisting";
+import { saveJobListing } from "../../../actions";
 const styles = {
   previewTitle: {
     margin: "10px 0",
@@ -73,8 +74,19 @@ function ViewRequisitionDetail(props) {
     formikProps: null
   });
   const handleUpdate = () => {
-    debugger;
-    console.log(state.formikProps);
+    if (state.formikProps.errors) {
+      const errorList = Object.values(state.formikProps.errors);
+      if (errorList.length > 0) {
+        alert(
+          errorList.join("\n") +
+            "\n        Please fill the above mandatory fields"
+        );
+      } else {
+        const payLoad = { ...state.formikProps.values, action: "UPDATE" };
+        console.log(payLoad);
+        props.dispatch(saveJobListing(payLoad));
+      }
+    }
   };
   return (
     <Grid

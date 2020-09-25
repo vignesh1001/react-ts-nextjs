@@ -48,7 +48,8 @@ const validationSchema = yup.object({
     .required("Position Title is required"),
   skills: yup.string("Enter Skills").required("Skills is required")
 });
-let tempFormikProps;
+let tempFormikProps: any = {};
+let values: any = {};
 function AddJobListingForm(props) {
   const [state, setState] = React.useState({
     isPreview: false,
@@ -112,7 +113,7 @@ function AddJobListingForm(props) {
     }
   };
   React.useEffect(() => {
-    //const selectedJobListing = localStorage.getItem("setSelectedJobListing");
+    // const selectedJobListing = localStorage.getItem("setSelectedJobListing");
     if (props.selectedJobListing) {
       const item = props.selectedJobListing; // || JSON.parse(selectedJobListing);
       localStorage.removeItem("setSelectedJobListing");
@@ -242,8 +243,9 @@ function AddJobListingForm(props) {
     >
       {formikProps => {
         tempFormikProps = formikProps;
-        if (state.isEditModel) {
-          setTimeout(() => props.formikProps(formikProps), 1000);
+        if (state.isEditModel && values !== formikProps.values) {
+          values = formikProps.values;
+          setTimeout(() => props.formikProps(tempFormikProps), 1000);
         }
         return (
           <form>
