@@ -1,8 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Grid, Button, Modal } from "@material-ui/core";
-import AddJobListingForm from "../add-joblisting";
-import { saveJobListing } from "../../../actions";
+import { Grid, Button } from "@material-ui/core";
+import ActionDropdown from "./ActionDropdown";
+import EditReqisitionModal from "./EditReqisitionModal";
+import Router from "next/router";
+
 const styles = {
   previewTitle: {
     margin: "10px 0",
@@ -65,28 +67,35 @@ const styles = {
     fontWeight: "bold"
   }
 };
-
+const requisitionActions = [
+  { title: "Add Candidate", value: "add_candidate" },
+  { title: "Put on Hold", value: "put_on_hold" },
+  { title: "Close Req", value: "close_req" },
+  { title: "Email Req", value: "email_req" },
+  { title: "Manage Posting", value: "manage_posting" }
+];
 function ViewRequisitionDetail(props) {
   const { selectedJobListing } = props;
   const [state, setState] = React.useState({
     isShowEditModal: false,
     isExpand: false,
-    formikProps: null
+    openCloseReqModel: false
   });
-  const handleUpdate = () => {
-    if (state.formikProps.errors) {
-      const errorList = Object.values(state.formikProps.errors);
-      if (errorList.length > 0) {
-        alert(
-          errorList.join("\n") +
-            "\n        Please fill the above mandatory fields"
-        );
-      } else {
-        const payLoad = { ...state.formikProps.values, action: "UPDATE" };
-        console.log(payLoad);
-        props.dispatch(saveJobListing(payLoad));
+
+  const handleReqisitionAction = action => {
+    switch (action) {
+      case "add_candidate": {
+        Router.push("/addCandidate");
+        break;
+      }
+      case "close_req": {
+        setState({ ...state, openCloseReqModel: true });
+        break;
       }
     }
+  };
+  const onCloseReqisitionModal = () => {
+    setState({ ...state, isShowEditModal: false });
   };
   return (
     <Grid
@@ -99,14 +108,23 @@ function ViewRequisitionDetail(props) {
         position: "relative"
       }}
     >
-      <Grid item xs={12} sm={12} style={{ paddingLeft: 0 }}>
-        <h4 style={styles.jobDetailsTitle}>
-          {selectedJobListing.positionDetails.positionTitle}
-          <span style={{ fontWeight: "normal", paddingLeft: 5 }}>
-            | #{selectedJobListing.requisitionNumber}
-          </span>
-        </h4>
-        <h6 style={styles.subJobDetailsTitle}>AllState</h6>
+      <Grid container style={{ paddingLeft: 0 }}>
+        <Grid item xs={8} sm={8}>
+          <h4 style={styles.jobDetailsTitle}>
+            {selectedJobListing.positionDetails.positionTitle}
+            <span style={{ fontWeight: "normal", paddingLeft: 5 }}>
+              | #{selectedJobListing.requisitionNumber}
+            </span>
+          </h4>
+          <h6 style={styles.subJobDetailsTitle}>AllState</h6>
+        </Grid>
+        <Grid item xs={4} sm={4} style={{ textAlign: "right" }}>
+          <ActionDropdown
+            options={requisitionActions}
+            onChange={e => handleReqisitionAction(e.target.value)}
+            value=""
+          />
+        </Grid>
       </Grid>
       <Grid item xs={5} sm={5}>
         <div>
@@ -282,72 +300,10 @@ function ViewRequisitionDetail(props) {
         </Button>
       </div>
       {state.isShowEditModal && (
-        <div>
-          <Modal disablePortal disableEnforceFocus disableAutoFocus open>
-            <div
-              style={{
-                position: "absolute",
-                width: "60%",
-                backgroundColor: "#FFF",
-                borderRadius: "2px",
-                border: "1px #fff",
-                boxShadow: 5,
-                padding: 8,
-                left: "20%",
-                top: "30px"
-              }}
-            >
-              <h4 id="modal-title" style={{ marginTop: 0 }}>
-                Edit Requisition
-              </h4>
-              <div
-                id="modal-description"
-                style={{ height: 400, overflowY: "auto", overflowX: "hidden" }}
-              >
-                <AddJobListingForm
-                  {...props}
-                  formikProps={formikProps =>
-                    setState({ ...state, formikProps })
-                  }
-                />
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <Button
-                  onClick={() => setState({ ...state, isShowEditModal: false })}
-                  variant="contained"
-                  style={{
-                    width: 100,
-                    padding: 0,
-                    height: 36,
-                    borderRadius: 4,
-                    fontSize: 14,
-                    boxShadow: "none",
-                    marginRight: 12,
-                    backgroundColor: "#FFF"
-                  }}
-                >
-                  CANCEL
-                </Button>
-                <Button
-                  variant="contained"
-                  onClick={handleUpdate}
-                  style={{
-                    width: 100,
-                    height: 36,
-                    padding: 0,
-                    borderRadius: 4,
-                    fontSize: 14,
-                    boxShadow: "none",
-                    MozOutlineColor: "#e32686",
-                    backgroundColor: "#FFF"
-                  }}
-                >
-                  UPDATE
-                </Button>
-              </div>
-            </div>
-          </Modal>
-        </div>
+        <EditReqisitionModal
+          {...props}
+          onCloseReqisitionModal={onCloseReqisitionModal}
+        />
       )}
     </Grid>
   );
