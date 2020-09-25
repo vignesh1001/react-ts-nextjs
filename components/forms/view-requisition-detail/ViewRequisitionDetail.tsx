@@ -48,10 +48,10 @@ function ViewRequisitionDetail({ dispatch }) {
         },
         internalDetails: {
           internalContact: "nick shah",
-          coOrdinator: "jay johnson",
-          recruitingLead: "nick shah",
+          coOrdinator: "",
+          recruitingLead: "",
           recruitingLeadsEmail: "nick@ptechpartners.com",
-          salesLead: "jay johnson",
+          salesLead: "",
           salesLeadsEmail: "jay@ptechpartners.com"
         },
         recruiters: [],
