@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Grid, Button } from "@material-ui/core";
 import ActionDropdown from "./ActionDropdown";
 import EditReqisitionModal from "./EditReqisitionModal";
+import ManagePostModal from "./ManagePostModal";
 import Router from "next/router";
 
 const styles = {
@@ -78,8 +79,9 @@ function ViewRequisitionDetail(props) {
   const { selectedJobListing } = props;
   const [state, setState] = React.useState({
     isShowEditModal: false,
-    isExpand: false,
-    openCloseReqModel: false
+    openCloseReqModel: false,
+    isShowManagePostingModal: false,
+    isExpand: false
   });
 
   const handleReqisitionAction = action => {
@@ -88,8 +90,8 @@ function ViewRequisitionDetail(props) {
         Router.push("/addCandidate");
         break;
       }
-      case "close_req": {
-        setState({ ...state, openCloseReqModel: true });
+      case "manage_posting": {
+        setState({ ...state, isShowManagePostingModal: true });
         break;
       }
     }
@@ -97,6 +99,10 @@ function ViewRequisitionDetail(props) {
   const onCloseReqisitionModal = () => {
     setState({ ...state, isShowEditModal: false });
   };
+  const onCloseManagePostingModal = () => {
+    setState({ ...state, isShowManagePostingModal: false });
+  };
+
   return (
     <Grid
       container
@@ -201,7 +207,9 @@ function ViewRequisitionDetail(props) {
         </div>
         <div style={styles.section}>
           <span style={styles.labelStyle}>Posted: </span>
-          {selectedJobListing.jobPortal}
+          {selectedJobListing.jobPortal
+            ? selectedJobListing.jobPortal.join(", ")
+            : ""}
         </div>
         {state.isExpand && (
           <React.Fragment>
@@ -303,6 +311,12 @@ function ViewRequisitionDetail(props) {
         <EditReqisitionModal
           {...props}
           onCloseReqisitionModal={onCloseReqisitionModal}
+        />
+      )}
+      {state.isShowManagePostingModal && (
+        <ManagePostModal
+          {...props}
+          onCloseManagePostingModal={onCloseManagePostingModal}
         />
       )}
     </Grid>

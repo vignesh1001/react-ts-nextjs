@@ -38,7 +38,7 @@ const styles = {
 };
 
 function CheckBoxComponent(props) {
-  const [filed, meta] = useField(props);
+  let [filed, meta] = useField(props);
   const classes = useStyles();
   const height = 40;
   return (

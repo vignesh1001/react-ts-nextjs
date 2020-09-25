@@ -31,12 +31,12 @@ const EditReqisitionModal = props => {
             position: "absolute",
             width: "60%",
             backgroundColor: "#FFF",
-            borderRadius: "2px",
+            borderRadius: 2,
             border: "1px #fff",
             boxShadow: 5,
             padding: 8,
             left: "20%",
-            top: "30px"
+            top: 30
           }}
         >
           <h4 id="modal-title" style={{ marginTop: 0 }}>

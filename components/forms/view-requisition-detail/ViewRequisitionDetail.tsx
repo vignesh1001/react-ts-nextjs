@@ -55,16 +55,23 @@ function ViewRequisitionDetail({ dispatch }) {
           salesLeadsEmail: "jay@ptechpartners.com"
         },
         recruiters: [],
-        jobPortal: [],
+        jobPortal: ["[dice, glassdoor, monster]"],
         jobStatus: "open",
         recruitersString: "",
         jobPortalString: ""
       })
     );
-    let selectedJobListing = localStorage.getItem("setSelectedJobListing");
+    let selectedJobListing: any = localStorage.getItem("setSelectedJobListing");
     if (selectedJobListing) {
       localStorage.removeItem("setSelectedJobListing");
       selectedJobListing = JSON.parse(selectedJobListing);
+      if (selectedJobListing.jobPortal && selectedJobListing.jobPortal.length) {
+        selectedJobListing.jobPortal = selectedJobListing.jobPortal[0]
+          .replace("[", "")
+          .replace("]", "")
+          .replace(/ /g, "")
+          .split(",");
+      }
       setState(prevState => ({ ...prevState, selectedJobListing }));
     } else {
       Router.push("/viewjoblisting");
