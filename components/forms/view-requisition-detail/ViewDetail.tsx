@@ -69,8 +69,13 @@ function ViewRequisitionDetail(props) {
   const { selectedJobListing } = props;
   const [state, setState] = React.useState({
     isShowEditModal: false,
-    isExpand: false
+    isExpand: false,
+    formikProps: null
   });
+  const handleUpdate = () => {
+    debugger;
+    console.log(state.formikProps);
+  };
   return (
     <Grid
       container
@@ -285,13 +290,18 @@ function ViewRequisitionDetail(props) {
               </h4>
               <div
                 id="modal-description"
-                style={{ height: 400, overflowY: "auto" }}
+                style={{ height: 400, overflowY: "auto", overflowX: "hidden" }}
               >
-                <AddJobListingForm {...props} />
+                <AddJobListingForm
+                  {...props}
+                  formikProps={formikProps =>
+                    setState({ ...state, formikProps })
+                  }
+                />
               </div>
               <div style={{ textAlign: "right" }}>
                 <Button
-                
+                  onClick={() => setState({ ...state, isShowEditModal: false })}
                   variant="contained"
                   style={{
                     width: 100,
@@ -308,7 +318,7 @@ function ViewRequisitionDetail(props) {
                 </Button>
                 <Button
                   variant="contained"
-                  
+                  onClick={handleUpdate}
                   style={{
                     width: 100,
                     height: 36,

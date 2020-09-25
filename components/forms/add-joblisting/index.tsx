@@ -52,7 +52,9 @@ let tempFormikProps;
 function AddJobListingForm(props) {
   const [state, setState] = React.useState({
     isPreview: false,
+    isEditModel: false,
     isShowLoader: false,
+    isShowJobListingError: false,
     initialValues: {
       requisitionNumber: null,
       noOfPosition: "",
@@ -115,7 +117,11 @@ function AddJobListingForm(props) {
       const item = props.selectedJobListing; // || JSON.parse(selectedJobListing);
       localStorage.removeItem("setSelectedJobListing");
       // togglePreviewMode();
-      toggleLoader();
+      setState(preState => ({
+        ...preState,
+        isEditModel: true,
+        isShowLoader: true
+      }));
       setTimeout(() => {
         tempFormikProps.setFieldValue(
           "positionTitle",
@@ -236,6 +242,9 @@ function AddJobListingForm(props) {
     >
       {formikProps => {
         tempFormikProps = formikProps;
+        if (state.isEditModel) {
+          setTimeout(() => props.formikProps(formikProps), 1000);
+        }
         return (
           <form>
             {state.isShowLoader && <Loader />}
@@ -244,7 +253,7 @@ function AddJobListingForm(props) {
               spacing={1}
               style={{
                 backgroundColor: "#FFF",
-                padding: "30px 90px 30px 40px"
+                padding: state.isEditModel ? 2 : "30px 90px 30px 40px"
               }}
             >
               {state.isPreview ? (
@@ -280,65 +289,70 @@ function AddJobListingForm(props) {
                   <InternalDetails {...props} formikProps={formikProps} />
                 </React.Fragment>
               )}
-              <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
-                {state.isPreview && (
+              {!state.isEditModel && (
+                <Grid item xs={12} sm={12} style={{ paddingTop: 6 }}>
+                  {state.isPreview && (
+                    <Button
+                      variant="contained"
+                      style={{
+                        width: 174,
+                        height: 36,
+                        borderRadius: 4,
+                        fontSize: 14,
+                        color: "#FFF",
+                        backgroundColor: "#234071",
+                        marginRight: 12
+                      }}
+                      onClick={handleSave}
+                    >
+                      Save
+                    </Button>
+                  )}
                   <Button
                     variant="contained"
+                    onClick={
+                      state.isPreview
+                        ? () => {
+                            // PREVIEW - PUBLISH CLIENT EVENT
+                            if (formikProps.values.jobListingBoard.length) {
+                              setState({
+                                ...state,
+                                isShowJobListingError: false
+                              });
+                              toggleLoader();
+                              formikProps.setFieldValue("action", "PUBLISH");
+                              props.dispatch(
+                                saveJobListing({
+                                  ...formikProps.values,
+                                  action: "PUBLISH"
+                                })
+                              );
+                            } else {
+                              setState({
+                                ...state,
+                                isShowJobListingError: true
+                              });
+                            }
+                          }
+                        : //
+                          formikProps.handleSubmit
+                    }
                     style={{
-                      width: 174,
+                      width: 190,
                       height: 36,
                       borderRadius: 4,
                       fontSize: 14,
                       color: "#FFF",
-                      backgroundColor: "#234071",
-                      marginRight: 12
+                      backgroundColor: "#e32686"
+                      //!formikProps.isValid
+                      //? "#f4a0cb"
+                      //: "#e32686",
                     }}
-                    onClick={handleSave}
                   >
-                    Save
+                    {state.isPreview ? "Publish" : "Preview"}
                   </Button>
-                )}
-                <Button
-                  variant="contained"
-                  onClick={
-                    state.isPreview
-                      ? () => {
-                          // PREVIEW - PUBLISH CLIENT EVENT
-                          if (formikProps.values.jobListingBoard.length) {
-                            setState({
-                              ...state,
-                              isShowJobListingError: false
-                            });
-                            toggleLoader();
-                            formikProps.setFieldValue("action", "PUBLISH");
-                            props.dispatch(
-                              saveJobListing({
-                                ...formikProps.values,
-                                action: "PUBLISH"
-                              })
-                            );
-                          } else {
-                            setState({ ...state, isShowJobListingError: true });
-                          }
-                        }
-                      : //
-                        formikProps.handleSubmit
-                  }
-                  style={{
-                    width: 190,
-                    height: 36,
-                    borderRadius: 4,
-                    fontSize: 14,
-                    color: "#FFF",
-                    backgroundColor: "#e32686"
-                    //!formikProps.isValid
-                    //? "#f4a0cb"
-                    //: "#e32686",
-                  }}
-                >
-                  {state.isPreview ? "Publish" : "Preview"}
-                </Button>
-              </Grid>
+                </Grid>
+              )}
             </Grid>
           </form>
         );

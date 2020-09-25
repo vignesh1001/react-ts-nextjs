@@ -12,7 +12,7 @@ function ViewRequisitionDetail({ dispatch }) {
       compensationDetails: {},
       positionDetails: {},
       internalDetails: {}
-    },
+    }
   });
   React.useEffect(() => {
     localStorage.setItem(
@@ -23,19 +23,19 @@ function ViewRequisitionDetail({ dispatch }) {
         priority: "high",
         clientInfo: {
           clientName: "Peterson Technology partners",
-          clientContact: "999-999-9999"
+          clientContact: ""
         },
         location: {
-          workType: "onsite/remote",
+          workType: "onsite",
           city: "chicago",
-          state: "illinois",
+          state: "NV",
           zip: "60169",
           country: "USA"
         },
         employmentType: "Fulltime/Contract to Hire",
         duration: "8",
         compensationDetails: {
-          wages: "Hourly",
+          wages: "hourly",
           clientBillRate: "$50/h",
           payRate: "$30/h W2, C2C or 1099"
         },
@@ -43,7 +43,7 @@ function ViewRequisitionDetail({ dispatch }) {
           positionTitle: "Data Engineer",
           skills: "python",
           requirementDescription: "Data Engineer",
-          workAuthorizationStatus: "GC",
+          workAuthorizationStatus: "greencard",
           securityClearanceLevel: "yes"
         },
         internalDetails: {
@@ -54,11 +54,11 @@ function ViewRequisitionDetail({ dispatch }) {
           salesLead: "jay johnson",
           salesLeadsEmail: "jay@ptechpartners.com"
         },
-        recruiters: ["[nick, jay]"],
-        jobPortal: ["[dice, glassdoor, monster]"],
+        recruiters: [],
+        jobPortal: [],
         jobStatus: "open",
-        recruitersString: "[[nick, jay]]",
-        jobPortalString: "[[dice, glassdoor, monster]]"
+        recruitersString: "",
+        jobPortalString: ""
       })
     );
     let selectedJobListing = localStorage.getItem("setSelectedJobListing");
@@ -73,7 +73,6 @@ function ViewRequisitionDetail({ dispatch }) {
   return (
     <Grid container>
       <ViewDetail selectedJobListing={state.selectedJobListing} />
-
     </Grid>
   );
 }
