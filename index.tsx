@@ -13,6 +13,7 @@ import { Provider } from "react-redux";
 import ListJobListing from "./ListJobListing";
 import ViewJobListingTable from "./pages/ViewJobListingTable";
 import Header from "./components/Header";
+import Vote from "./Vote";
 import "./style.css";
 import "./components/forms/add-joblisting/style.css";
 import LeftFilter from "./components/forms/view-requisition/LeftFilter";
@@ -34,7 +35,7 @@ class App extends Component<AppProps, AppState> {
     return (
       <div>
         <Provider store={s}>
-          <ViewRequisitionDetail />
+          <Vote a={20} />
           {/*
           <Header />
           <LeftFilter />
